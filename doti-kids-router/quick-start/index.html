@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Quick Start · 自己安装一点守护 | 一点守护</title>
+<title>快速开始 · 自己安装一点守护 | 一点守护</title>
 <meta name="description" content="把一点守护装到自己的 OpenWrt 路由器：确认系统（不合适先刷官方 OpenWrt）、检查软件源、一条命令安装、手机连上 DOTI-TEMP-ADMIN 用微信小程序「一点守护」绑定。">
 <meta name="robots" content="index,follow">
 <meta name="theme-color" content="#5b3bff">
 <link rel="canonical" href="https://doti.entdiy.xyz/quick-start/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="一点守护 Doti">
-<meta property="og:title" content="Quick Start · 自己安装一点守护">
+<meta property="og:title" content="快速开始 · 自己安装一点守护">
 <meta property="og:description" content="OpenWrt 22.03 及以上路由器，大约 5 分钟装好。">
 <meta property="og:url" content="https://doti.entdiy.xyz/quick-start/">
 <meta property="og:image" content="https://doti.entdiy.xyz/assets/og.jpg">
@@ -195,7 +195,7 @@ var _hmt = _hmt || [];
 <div class="wrap">
   <div class="head">
     <a class="back" href="../"><span lang="zh">← 返回首页</span><span lang="en">← Home</span></a>
-    <div class="kicker">Quick Start</div>
+    <div class="kicker"><span lang="zh">快速开始</span><span lang="en">Quick Start</span></div>
     <h1><span lang="zh">自己安装一点守护</span><span lang="en">Install Doti yourself</span></h1>
     <p class="lead"><span lang="zh">家里有闲置的路由器，就能自己装上一点守护。跟着下面几步做，系统合适的话大约 5 分钟；需要先刷机的，按型号另找教程。页面上的地址和命令都能一键复制。</span><span lang="en">Have a spare router? You can install Doti on it yourself. With the right system it takes about 5 minutes; if it needs reflashing first, follow a guide for your model. Every link and command below has a copy button.</span></p>
     <div class="needs">
@@ -343,7 +343,7 @@ var _hmt = _hmt || [];
   // 语言、外观和首页共用记忆
   var q = (location.search.match(/[?&]lang=(zh|en)/) || [])[1];
   var lang = q || get('doti.lang') || ((navigator.language || 'zh').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en');
-  function setLang(l) { lang = l; root.setAttribute('data-lang', l); root.lang = l === 'zh' ? 'zh-CN' : 'en'; document.title = l === 'zh' ? 'Quick Start · 自己安装一点守护 | 一点守护' : 'Quick Start · Install Doti yourself | Doti'; }
+  function setLang(l) { lang = l; root.setAttribute('data-lang', l); root.lang = l === 'zh' ? 'zh-CN' : 'en'; document.title = l === 'zh' ? '快速开始 · 自己安装一点守护 | 一点守护' : 'Quick Start · Install Doti yourself | Doti'; }
   setLang(lang);
   document.getElementById('lang').onclick = function () { setLang(lang === 'zh' ? 'en' : 'zh'); put('doti.lang', lang); };
   var mq = window.matchMedia('(prefers-color-scheme: dark)');
