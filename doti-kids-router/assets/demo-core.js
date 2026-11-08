@@ -85,8 +85,7 @@
         function fromTemplate(key, net) {
             const t = tplOf(key);
             return {
-                limitKbps: 100,
-                lanFree: false,
+                ...ADV_DEFAULT,
                 ...net,
                 template: key,
                 surfMin: t.surfMin,
@@ -95,6 +94,13 @@
                 windows: sleep(...t.sleep || [])
             };
         }
+        const ADV_DEFAULT = {
+            limitKbps: 100,
+            kidView: "detail",
+            lanFree: true,
+            allowDoh: true
+        };
+        const advIsDefault = n => Object.keys(ADV_DEFAULT).every(k => n[k] == null || n[k] === ADV_DEFAULT[k]);
         const SPEEDS = [ {
             v: 0,
             n: "断网",
@@ -113,9 +119,9 @@
         function advSummary(n) {
             const a = [];
             if (n.limitKbps != null && n.limitKbps !== 100) a.push(n.limitKbps === 0 ? "限速时断网" : "限速时网速" + speedName(n.limitKbps));
-            if (n.lanFree) a.push("局域网不计时");
+            if (n.lanFree === false) a.push("局域网也计时");
             if (n.kidView === "simple") a.push("孩子查看极简");
-            if (n.allowDoh) a.push("不拦加密 DNS");
+            if (n.allowDoh === false) a.push("拦截加密 DNS");
             return a.join(" · ");
         }
         function adjusted(net) {
@@ -152,6 +158,7 @@
             openAll: "今天一直开放",
             limitAll: "今天一直限速"
         };
+        const planOn = (n, now) => !!(n && n.plan && (n.plan.action !== "open" || !n.plan.until || n.plan.until > (now || Math.floor(Date.now() / 1e3))));
         function planText(p) {
             return p.action === "open" ? "临时开放 " + minLabel(p.minutes) : ACTIONS[p.action];
         }
@@ -275,7 +282,7 @@
                 };
             }
             o.word = o.cls === "open" ? "开放中" : o.cls === "limit" ? n.limitKbps === 0 ? "断网中" : "限速中" : "读不到";
-            o.main = n.plan ? {
+            o.main = planOn(n, now) ? {
                 action: "auto",
                 text: "取消临时安排"
             } : o.cls === "limit" ? {
@@ -457,6 +464,7 @@
             template: key
         });
         module.exports = {
+            planOn: planOn,
             kidCard: kidCard,
             SPEEDS: SPEEDS,
             speedName: speedName,
@@ -484,7 +492,9 @@
             hm: hm,
             usedText: usedText,
             card: card,
-            planText: planText
+            planText: planText,
+            ADV_DEFAULT: ADV_DEFAULT,
+            advIsDefault: advIsDefault
         };
     };
     defs["usage"] = function(module, exports, require) {
@@ -498,20 +508,24 @@
             if (b >= 1e6) return Math.round(b / 1e6) + "MB";
             return Math.max(0, Math.round(b / 1e3)) + "KB";
         }
-        function build(days, key) {
+        function build(days, key, mac, last = "今天") {
             const week = (days || []).map((d, i, all) => {
                 const n = (d.networks || []).find(x => x.key === key);
                 const hs = n ? n.hours : [];
-                const open = hs.reduce((s, h) => s + h.openMin, 0), limit = 0;
+                const open = hs.reduce((s, h) => s + (mac ? ((h.devs || []).find(v => v.mac === mac) || {
+                    openMin: 0
+                }).openMin : h.openMin), 0), limit = 0;
                 const dt = new Date(d.date.replace(/-/g, "/"));
                 return {
                     date: d.date,
-                    label: i === all.length - 1 ? "今天" : WEEK[dt.getDay()],
+                    has: d.has !== false,
+                    label: i === all.length - 1 ? last : WEEK[dt.getDay()],
                     open: open,
                     limit: limit,
                     total: open + limit,
                     md: dt.getMonth() + 1 + " 月 " + dt.getDate() + " 日",
-                    hours: hs
+                    hours: hs,
+                    events: (d.events || {})[key] || null
                 };
             });
             const avgMin = week.length ? Math.round(week.reduce((s, d) => s + d.total, 0) / week.length) : 0;
@@ -611,7 +625,7 @@
         }
         function devicesOf(day, devices) {
             const m = {};
-            for (const h of day.hours || []) for (const d of h.devs || []) {
+            for (const x of [].concat(day)) for (const h of x && x.hours || []) for (const d of h.devs || []) {
                 const x = m[d.mac] = m[d.mac] || {
                     mac: d.mac,
                     min: 0,
@@ -1148,7 +1162,7 @@
                     });
                 }
                 if (q.op === "regen") {
-                    S.pw[q.key] = String(Math.floor(1e7 + Math.random() * 9e7));
+                    S.pw[q.key] = q.password || String(Math.floor(1e7 + Math.random() * 9e7));
                     return ok({
                         key: q.key,
                         ssid: "DOTI-DEMO-0" + q.key.slice(1),
