@@ -279,7 +279,7 @@ var _hmt = _hmt || [];
           <div class="note"><i class="ic">⏱️</i><div><span lang="zh">一般半分钟左右装好，门铃组件会随安装一起从软件源下载。提示「软件源更新失败」或缺组件时，回到第 3 步换镜像、更新通过后再执行一次。</span><span lang="en">It usually takes about half a minute; the doorbell component is downloaded from the feeds as part of the install. If it says the feed update failed or something is missing, go back to step 3, switch mirrors, update until it passes, and run it again.</span></div></div>
         </div>
         <div class="pane" id="pb">
-          <p class="p"><span lang="zh">不想用命令行，就用电脑下载 <span class="kbd">doti_all.ipk</span>（在下面任一发布页的最新版里），再到路由器管理页上传。<span class="b">只适用于 22.03–24.10</span>：25.x 的管理页只装有官方签名的包，请用上面的命令装。</span><span lang="en">Prefer not to use the command line? Download <span class="kbd">doti_all.ipk</span> from the latest release on either page and upload it in the web admin. <span class="b">22.03–24.10 only</span>: on 25.x the web admin only installs officially signed packages, so use the command above.</span></p>
+          <p class="p"><span lang="zh">不想用命令行，就用电脑下载 <span class="kbd">doti-kids-router_all.ipk</span>（在下面任一发布页的最新版里），再到路由器管理页上传。<span class="b">只适用于 22.03–24.10</span>：25.x 的管理页只装有官方签名的包，请用上面的命令装。</span><span lang="en">Prefer not to use the command line? Download <span class="kbd">doti-kids-router_all.ipk</span> from the latest release on either page and upload it in the web admin. <span class="b">22.03–24.10 only</span>: on 25.x the web admin only installs officially signed packages, so use the command above.</span></p>
           <div class="lbl"><span lang="zh">gitee 发布页</span><span lang="en">gitee releases</span><small lang="zh">国内下载快</small><small lang="en">faster in China</small></div>
           <div class="copy"><code>https://gitee.com/xautlx/doti-kids-router/releases</code><button type="button" data-copy="https://gitee.com/xautlx/doti-kids-router/releases"><span lang="zh">复制</span><span lang="en">Copy</span></button></div>
           <div class="lbl"><span lang="zh">GitHub 发布页</span><span lang="en">GitHub releases</span></div>
@@ -308,9 +308,9 @@ var _hmt = _hmt || [];
         <h2><span class="n">6</span><span lang="zh">核对安装包</span><span lang="en">Verify the package</span><span class="opt" lang="zh">可选</span><span class="opt" lang="en">optional</span></h2>
         <p><span lang="zh">安装包由 GitHub Actions 从公开代码自动构建，发布页附有 <span class="kbd">SHA256SUMS</span>。算一下下载文件的 SHA256，和它一致就说明是公开构建的同一个文件：</span><span lang="en">Packages are built by GitHub Actions from the public code, and each release ships a <span class="kbd">SHA256SUMS</span> file. If your download’s SHA256 matches, it’s the exact file built in public:</span></p>
         <div class="lbl"><span lang="zh">路由器上 / Mac / Linux</span><span lang="en">Router / Mac / Linux</span></div>
-        <div class="copy"><code>sha256sum /tmp/doti.ipk</code><button type="button" data-copy="sha256sum /tmp/doti.ipk"><span lang="zh">复制</span><span lang="en">Copy</span></button></div>
+        <div class="copy"><code>sha256sum doti-kids-router_all.ipk</code><button type="button" data-copy="sha256sum doti-kids-router_all.ipk"><span lang="zh">复制</span><span lang="en">Copy</span></button></div>
         <div class="lbl">Windows</div>
-        <div class="copy"><code>certutil -hashfile 文件名.ipk SHA256</code><button type="button" data-copy="certutil -hashfile 文件名.ipk SHA256"><span lang="zh">复制</span><span lang="en">Copy</span></button></div>
+        <div class="copy"><code>certutil -hashfile doti-kids-router_all.ipk SHA256</code><button type="button" data-copy="certutil -hashfile doti-kids-router_all.ipk SHA256"><span lang="zh">复制</span><span lang="en">Copy</span></button></div>
         <p><span lang="zh">也可以下载源码，执行 <span class="kbd">python3 build.py</span> 自己打包，得到的文件和发布页的一模一样。</span><span lang="en">You can also build it yourself with <span class="kbd">python3 build.py</span> from the source — you’ll get a byte-identical file.</span></p>
       </section>
 
