@@ -11,7 +11,7 @@
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="一点守护 Doti">
 <meta property="og:title" content="快速开始 · 自己安装一点守护">
-<meta property="og:description" content="OpenWrt 22.03 及以上路由器，大约 5 分钟装好。">
+<meta property="og:description" content="OpenWrt 22.03 及以上路由器，五步装好，家长不用懂网络。">
 <meta property="og:url" content="https://doti.entdiy.xyz/quick-start/">
 <meta property="og:image" content="https://doti.entdiy.xyz/assets/og.jpg">
 <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
@@ -108,6 +108,16 @@ h1{margin:8px 0 12px;font-size:44px;line-height:1.25;font-weight:850;letter-spac
 .tabs button.on{background:var(--card);color:var(--brand);box-shadow:0 2px 8px rgba(0,0,0,.08)}
 .pane{display:none}.pane.on{display:block}
 /* 提示框 */
+.fold{margin-top:16px;border:1px solid var(--line);border-radius:14px;padding:4px 16px;background:var(--card)}
+.fold>summary{cursor:pointer;padding:10px 0;font-weight:700;color:var(--brand);list-style:none}
+.fold>summary::-webkit-details-marker{display:none}
+.fold>summary::before{content:"▸ "}
+.fold[open]>summary::before{content:"▾ "}
+.fold>:last-child{margin-bottom:12px}
+.tips{margin:12px 0 0;padding-left:20px;color:var(--t2)}
+.tips li{margin:6px 0}
+.faq dt{margin-top:18px;font-weight:700;color:var(--t1)}
+.faq dd{margin:6px 0 0;color:var(--t2)}
 .note{display:flex;gap:12px;margin-top:16px;padding:14px 16px;border-radius:14px;background:var(--brand-soft);color:var(--t2);font-size:15px}
 .note.warn{background:color-mix(in srgb,var(--spark) 26%,var(--card))}
 .note .ic{flex:none;font-style:normal}
@@ -180,7 +190,8 @@ var _hmt = _hmt || [];
       <a href="../#why"><span lang="zh">为什么</span><span lang="en">Why</span></a>
       <a href="../#how"><span lang="zh">怎么工作</span><span lang="en">How it works</span></a>
       <a href="../#setup"><span lang="zh">怎么用</span><span lang="en">Setup</span></a>
-      <a href="../#trust"><span lang="zh">使用安心</span><span lang="en">Peace of mind</span></a>
+      <a href="../#trust"><span lang="zh">放心</span><span lang="en">Peace of mind</span></a>
+      <a href="../#fee"><span lang="zh">费用</span><span lang="en">Cost</span></a>
       <a class="qs on" href="./" aria-current="page"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></svg><span lang="zh">快速开始</span><span lang="en">Quick Start</span></a>
     </nav>
     <div class="tools">
@@ -197,86 +208,91 @@ var _hmt = _hmt || [];
     <a class="back" href="../"><span lang="zh">← 返回首页</span><span lang="en">← Home</span></a>
     <div class="kicker"><span lang="zh">快速开始</span><span lang="en">Quick Start</span></div>
     <h1><span lang="zh">自己安装一点守护</span><span lang="en">Install Doti yourself</span></h1>
-    <p class="lead"><span lang="zh">家里有闲置的路由器，就能自己装上一点守护。跟着下面几步做，系统合适的话大约 5 分钟；需要先刷机的，按型号另找教程。页面上的地址和命令都能一键复制。</span><span lang="en">Have a spare router? You can install Doti on it yourself. With the right system it takes about 5 minutes; if it needs reflashing first, follow a guide for your model. Every link and command below has a copy button.</span></p>
+    <p class="lead"><span lang="zh">家里有一台 OpenWrt 路由器，就能自己装上一点守护：跟着下面 5 步走，不用刷机的话大约 10 分钟。命令和地址都有「复制」按钮，照着粘贴就行。</span><span lang="en">Got a router running OpenWrt? You can install Doti yourself in 5 steps — about 10 minutes if no reflash is needed. Every command and address has a Copy button.</span></p>
     <div class="needs">
       <span><i><svg class="rt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 13 5 5M17 13l2-8"/><rect x="2" y="13" width="20" height="7" rx="2"/><path d="M6 16.5h.01M10 16.5h.01"/></svg></i><span lang="zh">预装或可刷机 OpenWrt 系统的路由器</span><span lang="en">A router with OpenWrt, pre-installed or flashable</span></span>
       <span><i>💻</i><span lang="zh">一台电脑</span><span lang="en">A computer</span></span>
       <span><i>📱</i><span lang="zh">一部装了微信的手机</span><span lang="en">A phone with WeChat</span></span>
     </div>
-    <div class="note buy"><i class="ic">💡</i><div><span lang="zh"><span class="b">关于费用：</span>绑定后第一年全部功能先用（包括不在家远程管理），不用先付钱。一年后想继续远程管理，就付已经用过的这一年；不需要远程，什么都不用做——你自己装的程序照常按规则管孩子的网络，回家连上 WiFi 照常管理。不自动扣费。</span><span lang="en"><span class="b">About cost:</span> After pairing, everything — including remote management — is on for the first year, with nothing to pay up front. After a year, if you want to keep remote access, you pay for the year you’ve just used; if you don’t need it, do nothing — the software you installed keeps enforcing your rules, and you manage it at home on your WiFi as usual. Nothing is charged automatically.</span></div></div>
+    <div class="note buy"><i class="ic">💡</i><div><span lang="zh"><span class="b">费用：</span>在家管理一直免费；不在家的远程管理一年一期，每期都先用、再决定付不付（期内优惠价 36 元，过期按原价 60 元），不自动扣费（<a href="#faq">详细说明</a>）。</span><span lang="en"><span class="b">Cost:</span> managing at home is always free; remote management runs in yearly periods, each one use first, then decide (¥36 during the period, ¥60 after) — nothing is charged automatically (<a href="#faq">details</a>).</span></div></div>
     <div class="note buy"><i class="ic">🎁</i><div><span lang="zh"><span class="b">不想折腾？</span>打开微信小程序「一点守护」，点「联系客服」，咨询当前是否可提供预装路由器或预装服务。</span><span lang="en"><span class="b">Rather skip the tinkering?</span> Open the “一点守护” mini program in WeChat, tap “Contact us” and ask whether a pre-installed router or installation service is currently available.</span></div></div>
   </div>
 
   <div class="body">
     <nav class="toc" aria-label="Steps">
-      <a href="#s1"><b>1</b><span lang="zh">确认系统</span><span lang="en">Check the system</span></a>
-      <a href="#s2"><b>2</b><span lang="zh">接好、检查网络</span><span lang="en">Connect &amp; check</span></a>
+      <a href="#s1"><b>1</b><span lang="zh">确认能不能装</span><span lang="en">Check the system</span></a>
+      <a href="#s2"><b>2</b><span lang="zh">接好、登录路由器</span><span lang="en">Connect &amp; check</span></a>
       <a href="#s3"><b>3</b><span lang="zh">更新软件源</span><span lang="en">Update feeds</span></a>
       <a href="#s4"><b>4</b><span lang="zh">安装</span><span lang="en">Install</span></a>
       <a href="#s5"><b>5</b><span lang="zh">手机绑定</span><span lang="en">Pair your phone</span></a>
-      <a href="#s6"><b>6</b><span lang="zh">核对安装包</span><span lang="en">Verify</span></a>
+      <a href="#faq"><b>?</b><span lang="zh">常见问题</span><span lang="en">FAQ</span></a>
     </nav>
 
     <div class="steps">
       <section class="step" id="s1">
-        <h2><span class="n">1</span><span lang="zh">确认路由器系统，不合适就先刷 OpenWrt</span><span lang="en">Check the router’s system — reflash if needed</span></h2>
-        <p><span lang="zh">一点守护要用 OpenWrt 22.03 起才有的新防火墙（firewall4），所以<span class="b">厂商原装固件、21.02 及更早的 OpenWrt 都装不上</span>。旧路由器多数要先刷成官方 OpenWrt。先看看现在是什么系统：</span><span lang="en">Doti needs the firewall (firewall4) that OpenWrt introduced in 22.03, so <span class="b">stock vendor firmware and OpenWrt 21.02 or older won’t work</span>. Most older routers need to be reflashed with official OpenWrt first. Check what yours runs:</span></p>
-        <div class="note"><i class="ic">🧭</i><div><span lang="zh"><span class="b">在现有系统上装</span>：确认是官方 OpenWrt <span class="b">22.03（2022 年 9 月发布）及以上</span>就行，不用重刷。<br><span class="b">打算全新刷机</span>：建议刷 <span class="b">24.10 系列最新版</span>（我们测试验证过 24.10.8）。它用大家熟悉的 opkg 装软件，网上的教程也大多按它写；固件选择器默认是最新版本，记得在版本里选 24.10。<br>25.x 改用 apk 装软件，我们也做过测试，同样支持。支持的最老版本 22.03、24.10 和 25.12，我们都在真机上做过安装和功能测试。</span><span lang="en"><span class="b">Installing on the current system</span>: official OpenWrt <span class="b">22.03 (released Sep 2022) or later</span> is all you need — no reflash.<br><span class="b">Flashing from scratch</span>: we recommend the <span class="b">latest 24.10 release</span> (we’ve tested and verified 24.10.8). It installs software with the familiar opkg, which most guides online assume; the firmware selector defaults to the newest release, so pick 24.10 in the version list.<br>25.x switches to apk for installing software — we’ve tested it and it’s supported too. The oldest supported release (22.03), 24.10 and 25.12 have all been install- and feature-tested on real routers.</span></div></div>
-        <ul>
-          <li><span lang="zh">管理页：<span class="kbd">状态 → 概览</span> 里的「固件版本」</span><span lang="en">Web admin: “Firmware Version” under <span class="kbd">Status → Overview</span></span></li>
-          <li><span lang="zh">或者 SSH 登录路由器后执行：</span><span lang="en">Or SSH into the router and run:</span></li>
-        </ul>
+        <h2><span class="n">1</span><span lang="zh">确认能不能装</span><span lang="en">Check it can be installed</span></h2>
+        <p><span lang="zh">一点守护需要 <span class="b">OpenWrt 22.03 或更新的版本</span>（要用它起才有的新防火墙），最稳的是官方 OpenWrt。在路由器管理页 <span class="kbd">状态 → 概览</span> 看「固件版本」，或者 SSH 登录后执行：</span><span lang="en">Doti needs <span class="b">OpenWrt 22.03 or newer</span> (it relies on the newer firewall that arrived then); official OpenWrt is the safest bet. Check “Firmware Version” under <span class="kbd">Status → Overview</span> in the web admin, or run this over SSH:</span></p>
         <div class="copy"><code>cat /etc/openwrt_release</code><button type="button" data-copy="cat /etc/openwrt_release"><span lang="zh">复制</span><span lang="en">Copy</span></button></div>
         <div class="branch">
-          <div class="ok"><b lang="zh">✓ 官方 OpenWrt 22.03（2022 年 9 月）及以上，含 25.x</b><b lang="en">✓ Official OpenWrt 22.03 (Sep 2022) or later, incl. 25.x</b><span lang="zh">现有系统就能装，不用重刷，直接看第 2 步。</span><span lang="en">You can install on it as is — go straight to step 2.</span></div>
-          <div class="mid"><b lang="zh">? 基于新版 OpenWrt 的第三方固件</b><b lang="en">? Third-party builds on recent OpenWrt</b><span lang="zh">如 ImmortalWrt 23.05，一般能装，我们没逐个测过；装不上就刷官方版。</span><span lang="en">e.g. ImmortalWrt 23.05 — usually fine but untested; reflash official OpenWrt if it fails.</span></div>
-          <div class="no"><b lang="zh">✕ 厂商原装、21.02 及更早、不是 OpenWrt</b><b lang="en">✕ Stock firmware, 21.02 or older, not OpenWrt</b><span lang="zh">先刷官方 OpenWrt，建议 24.10 系列最新版。</span><span lang="en">Reflash official OpenWrt first — the latest 24.10 release is recommended.</span></div>
+          <div class="ok"><b lang="zh">✓ 官方 OpenWrt 22.03 及以上（含 25.x）</b><b lang="en">✓ Official OpenWrt 22.03+ (incl. 25.x)</b><span lang="zh">能直接装：同一页的「可用空间」要有 800KB 以上，不够会装不上。接着看第 2 步。</span><span lang="en">Good to go — just make sure “Free space” on the same page shows at least 800KB, or it won’t fit. Then on to step 2.</span></div>
+          <div class="mid"><b lang="zh">? 基于新版 OpenWrt 的第三方或厂商固件</b><b lang="en">? Third-party or vendor firmware built on recent OpenWrt</b><span lang="zh">如 ImmortalWrt 23.05、部分 GL.iNet 原装系统，一般能装，但没逐个测过：先按第 2–4 步试，第 4 步报错再刷官方版。</span><span lang="en">e.g. ImmortalWrt 23.05 or some GL.iNet stock firmware — usually fine but not tested model by model: try steps 2–4 first, and reflash official OpenWrt only if step 4 fails.</span></div>
+          <div class="no"><b lang="zh">✕ 不是 OpenWrt 的原装系统、21.02 及更早</b><b lang="en">✕ Non-OpenWrt stock firmware, 21.02 or older</b><span lang="zh">要先刷官方 OpenWrt，见下面「需要先刷机？」。</span><span lang="en">Reflash official OpenWrt first — see “Need to reflash?” below.</span></div>
         </div>
-        <div class="lbl"><span lang="zh">查型号、下固件</span><span lang="en">Find your model &amp; firmware</span><small lang="zh">OpenWrt 官方固件选择器</small><small lang="en">official firmware selector</small></div>
-        <div class="copy"><code>https://firmware-selector.openwrt.org/</code><button type="button" data-copy="https://firmware-selector.openwrt.org/"><span lang="zh">复制</span><span lang="en">Copy</span></button></div>
-        <div class="lbl"><span lang="zh">国内镜像</span><span lang="en">Mirror in China</span><small lang="zh">官方站下载慢时用，清华大学开源镜像站</small><small lang="en">Tsinghua University mirror</small></div>
-        <div class="copy"><code>https://mirrors.tuna.tsinghua.edu.cn/openwrt/releases/</code><button type="button" data-copy="https://mirrors.tuna.tsinghua.edu.cn/openwrt/releases/"><span lang="zh">复制</span><span lang="en">Copy</span></button></div>
-        <p><span lang="zh">各型号刷机方法差别很大，请搜「<span class="b">型号 + OpenWrt 刷机</span>」找对应教程。硬件至少要 16MB 存储、128MB 内存（OpenWrt 官方建议），更老的 4MB / 32MB 机器装不了新版 OpenWrt。</span><span lang="en">Flashing steps differ a lot between models — search “<span class="b">your model + OpenWrt install</span>” for a guide. You’ll need at least 16 MB flash and 128 MB RAM (OpenWrt’s recommendation); older 4 MB / 32 MB devices can’t run current OpenWrt.</span></p>
-        <div class="note warn"><i class="ic">⚠️</i><div><span lang="zh"><span class="b">刷机有把路由器刷坏（变砖）的风险</span>，建议用闲置的旧路由器，别拿家里正在用的那台试。觉得没把握的话，可以在小程序「一点守护」里联系客服，咨询当前是否可提供预装路由器或预装服务。</span><span lang="en"><span class="b">Flashing can brick a router.</span> Use a spare one, not the router your family relies on. Not confident? Contact us in the 一点守护 mini program to ask whether a pre-installed router or installation service is currently available.</span></div></div>
+        <details class="fold"><summary><span lang="zh">需要先刷机？</span><span lang="en">Need to reflash?</span></summary>
+          <p><span lang="zh">建议刷 <span class="b">24.10 系列最新版</span>（我们测过 24.10.8；它用 opkg 装软件，网上教程大多按它写）。25.x 改用 apk，也测过、同样支持。各型号刷机方法差别很大，请搜「<span class="b">型号 + OpenWrt 刷机</span>」找教程。硬件至少要 16MB 存储、128MB 内存。</span><span lang="en">We recommend the <span class="b">latest 24.10 release</span> (tested on 24.10.8; it uses opkg, which most guides assume). 25.x uses apk and is supported too. Flashing differs a lot by model — search “your model + OpenWrt install”. You need at least 16 MB flash and 128 MB RAM.</span></p>
+          <div class="lbl"><span lang="zh">查型号、下固件</span><span lang="en">Find your model &amp; firmware</span><small lang="zh">OpenWrt 官方固件选择器（版本里选 24.10）</small><small lang="en">official firmware selector (pick 24.10)</small></div>
+          <div class="copy"><code>https://firmware-selector.openwrt.org/</code><button type="button" data-copy="https://firmware-selector.openwrt.org/"><span lang="zh">复制</span><span lang="en">Copy</span></button></div>
+          <div class="lbl"><span lang="zh">国内镜像</span><span lang="en">Mirror in China</span><small lang="zh">官方站下载慢时用，清华大学开源镜像站</small><small lang="en">Tsinghua University mirror</small></div>
+          <div class="copy"><code>https://mirrors.tuna.tsinghua.edu.cn/openwrt/releases/</code><button type="button" data-copy="https://mirrors.tuna.tsinghua.edu.cn/openwrt/releases/"><span lang="zh">复制</span><span lang="en">Copy</span></button></div>
+          <div class="note warn"><i class="ic">⚠️</i><div><span lang="zh"><span class="b">刷机有把路由器刷坏（变砖）的风险</span>，建议用闲置的旧路由器，别拿家里正在用的那台试。</span><span lang="en"><span class="b">Flashing can brick a router.</span> Use a spare one, not the router your family relies on.</span></div></div>
+        </details>
       </section>
 
       <section class="step" id="s2">
-        <h2><span class="n">2</span><span lang="zh">接好路由器，SSH 登录</span><span lang="en">Connect it and SSH in</span></h2>
-        <p><span lang="zh">用网线把光猫或原来路由器的 <span class="kbd">LAN</span> 口，接到 OpenWrt 路由器的 <span class="kbd">WAN</span> 口。原来的 WiFi 照常用。</span><span lang="en">Run a cable from a <span class="kbd">LAN</span> port on your modem or existing router to the <span class="kbd">WAN</span> port of the OpenWrt router. Your existing WiFi keeps working.</span></p>
+        <h2><span class="n">2</span><span lang="zh">接好路由器，用电脑登录</span><span lang="en">Connect it and log in from a computer</span></h2>
+        <p><span lang="zh">用网线把光猫或原来路由器的 <span class="kbd">LAN</span> 口，接到 OpenWrt 路由器的 <span class="kbd">WAN</span> 口。原来的 WiFi 不受影响，家里其他设备照常用。接下来让电脑连这台 OpenWrt 路由器（网线插它的 LAN 口，或连它的 WiFi）。</span><span lang="en">Run a cable from a <span class="kbd">LAN</span> port on your modem or existing router to the <span class="kbd">WAN</span> port of the OpenWrt router. Your existing WiFi isn’t affected. Then connect your computer to this OpenWrt router (cable into its LAN port, or join its WiFi).</span></p>
         <div class="wire"><span lang="zh">光猫 / 原来的路由器 · LAN</span><span lang="en">Modem / router · LAN</span><i>──网线──</i><span class="g" lang="zh">WAN · 一点守护路由器</span><span class="g" lang="en">WAN · Doti router</span></div>
         <p><span lang="zh">电脑连上这台路由器（网线或它的 WiFi），SSH 登录：Windows 打开 PowerShell，Mac 打开「终端」，执行下面的命令（地址按你的路由器改，OpenWrt 默认是 192.168.1.1）：</span><span lang="en">Connect your computer to this router (cable or its WiFi) and SSH in — PowerShell on Windows, Terminal on Mac (OpenWrt’s default address is 192.168.1.1):</span></p>
         <div class="copy"><code>ssh root@192.168.1.1</code><button type="button" data-copy="ssh root@192.168.1.1"><span lang="zh">复制</span><span lang="en">Copy</span></button></div>
+        <ul class="tips">
+          <li><span lang="zh">第一次登录会问 <span class="kbd">Are you sure you want to continue connecting</span>，输入 <span class="kbd">yes</span> 回车。</span><span lang="en">First time, it asks <span class="kbd">Are you sure you want to continue connecting</span> — type <span class="kbd">yes</span> and press Enter.</span></li>
+          <li><span lang="zh">刚刷好的 OpenWrt 没有密码，问密码时直接回车；自己设过的就输入那个密码（输入时屏幕上不显示）。</span><span lang="en">A freshly flashed OpenWrt has no password — just press Enter; otherwise type yours (it won’t show on screen).</span></li>
+          <li><span lang="zh">看到 <span class="kbd">root@OpenWrt</span> 开头的提示，就是登录成功了。</span><span lang="en">A prompt starting with <span class="kbd">root@OpenWrt</span> means you’re in.</span></li>
+          <li><span lang="zh">连不上：光猫或原来的路由器也是 192.168.1.1 时会冲突。先拔掉这台路由器 WAN 口的网线，让电脑只连这台路由器再试；想一劳永逸，可以在管理页 <span class="kbd">网络 → 接口</span> 把它的 LAN 地址改成 192.168.2.1 之类，再插回网线；改完电脑断开重连一次，以后都用新地址登录。</span><span lang="en">Can’t connect? If your modem or old router is also 192.168.1.1 they clash. Unplug the cable from this router’s WAN port, keep your computer connected to this router and try again; for good, change its LAN address under <span class="kbd">Network → Interfaces</span> to something like 192.168.2.1, plug the cable back in, reconnect your computer and use the new address from then on.</span></li>
+        </ul>
         <div class="note"><i class="ic">⏱️</i><div><span lang="zh">路由器刚开机或刚刷完系统时，网络要一两分钟才就绪，稍等再进行下一步。</span><span lang="en">Right after a reboot or a fresh flash, give the router a minute or two before the next step — its network is still coming up.</span></div></div>
       </section>
 
       <section class="step" id="s3">
         <h2><span class="n">3</span><span lang="zh">更新软件源</span><span lang="en">Update the package feeds</span><span class="opt" lang="zh">必做</span><span class="opt" lang="en">required</span></h2>
-        <p><span lang="zh">一点守护的远程管理要用门铃组件 <span class="kbd">mosquitto-client-nossl</span>，<span class="b">官方 OpenWrt 不自带，安装时要从软件源下载</span>。所以先在 SSH 里更新一次软件源，确认路由器能连上软件源，<span class="b">通过了再做第 4 步</span>，安装才能一次成功。按系统版本选一条：</span><span lang="en">Doti’s remote management needs the doorbell component <span class="kbd">mosquitto-client-nossl</span>. <span class="b">Official OpenWrt doesn’t ship it, so it’s downloaded from the package feeds during install.</span> Update the feeds once in SSH to make sure the router can reach them, and <span class="b">only move on to step 4 once this passes</span> — then the install succeeds first time. Pick the line for your release:</span></p>
+        <p><span lang="zh">一点守护安装时要用一个小组件（远程管理靠它），<span class="b">官方 OpenWrt 不自带，安装时要从软件源下载</span>（包名 <span class="kbd">mosquitto-client-nossl</span>）。所以先在 SSH 里更新一次软件源，确认路由器能连上软件源，<span class="b">通过了再做第 4 步</span>，安装才能一次成功。按系统版本选一条：</span><span lang="en">Installing Doti needs a small component (remote management relies on it). <span class="b">Official OpenWrt doesn’t ship it, so it’s downloaded from the package feeds during install</span> (package <span class="kbd">mosquitto-client-nossl</span>). Update the feeds once in SSH to make sure the router can reach them, and <span class="b">only move on to step 4 once this passes</span> — then the install succeeds first time. Pick the line for your release:</span></p>
         <div class="lbl">22.03–24.10<small lang="zh">opkg</small><small lang="en">opkg</small></div>
         <div class="copy"><code>opkg update</code><button type="button" data-copy="opkg update"><span lang="zh">复制</span><span lang="en">Copy</span></button></div>
         <div class="lbl">25.x<small lang="zh">apk</small><small lang="en">apk</small></div>
         <div class="copy"><code>apk update</code><button type="button" data-copy="apk update"><span lang="zh">复制</span><span lang="en">Copy</span></button></div>
         <div class="branch two">
-          <div class="ok"><b lang="zh">✓ 通过</b><b lang="en">✓ Passed</b><span lang="zh">输出里没有 <span class="kbd">Failed</span>、<span class="kbd">ERROR</span>（opkg 每个软件源都显示 <span class="kbd">Signature check passed</span>），接着做第 4 步。</span><span lang="en">No <span class="kbd">Failed</span> or <span class="kbd">ERROR</span> in the output (opkg shows <span class="kbd">Signature check passed</span> for each feed) — go on to step 4.</span></div>
+          <div class="ok"><b lang="zh">✓ 通过</b><b lang="en">✓ Passed</b><span lang="zh">输出里没有 <span class="kbd">Failed</span>、<span class="kbd">ERROR</span>（opkg 每个软件源都显示 <span class="kbd">Signature check passed</span>；25.x 的 apk 正常列完就算通过），接着做第 4 步。</span><span lang="en">No <span class="kbd">Failed</span> or <span class="kbd">ERROR</span> in the output (opkg shows <span class="kbd">Signature check passed</span> for each feed; on 25.x, apk just finishes listing the feeds) — go on to step 4.</span></div>
           <div class="no"><b lang="zh">✕ 没通过</b><b lang="en">✕ Failed</b><span lang="zh">出现 <span class="kbd">Failed to download</span>、<span class="kbd">ERROR</span> 等：先确认路由器能上网；国内网络把软件源换成清华镜像（下面按版本选一条），再更新一次，直到通过。</span><span lang="en">You see <span class="kbd">Failed to download</span>, <span class="kbd">ERROR</span> or similar: check the router is online. In China, switch the feeds to the Tsinghua mirror (pick the line for your release below) and update again until it passes.</span></div>
         </div>
+        <details class="fold"><summary><span lang="zh">国内网络：换成清华镜像再更新</span><span lang="en">In China: switch to the Tsinghua mirror</span></summary>
         <div class="lbl"><span lang="zh">换清华镜像 · 22.03–24.10</span><span lang="en">Tsinghua mirror · 22.03–24.10</span></div>
         <div class="copy"><code>sed -i 's_downloads.openwrt.org_mirrors.tuna.tsinghua.edu.cn/openwrt_' /etc/opkg/distfeeds.conf</code><button type="button" data-copy="sed -i 's_downloads.openwrt.org_mirrors.tuna.tsinghua.edu.cn/openwrt_' /etc/opkg/distfeeds.conf"><span lang="zh">复制</span><span lang="en">Copy</span></button></div>
         <div class="lbl"><span lang="zh">换清华镜像 · 25.x</span><span lang="en">Tsinghua mirror · 25.x</span></div>
         <div class="copy"><code>sed -i 's_downloads.openwrt.org_mirrors.tuna.tsinghua.edu.cn/openwrt_' /etc/apk/repositories.d/distfeeds.list</code><button type="button" data-copy="sed -i 's_downloads.openwrt.org_mirrors.tuna.tsinghua.edu.cn/openwrt_' /etc/apk/repositories.d/distfeeds.list"><span lang="zh">复制</span><span lang="en">Copy</span></button></div>
-        <div class="note"><i class="ic">💡</i><div><span lang="zh">软件源列表放在内存里，路由器重启后就没了。重启过的话，安装前再更新一次。</span><span lang="en">The feed lists live in memory and are gone after a reboot — if the router restarted, update again before installing.</span></div></div>
+        </details>
+        <div class="note"><i class="ic">💡</i><div><span lang="zh">软件源列表放在内存里，路由器重启后就没了。第 3 步之后重启过路由器的话，第 4 步前再做一次第 3 步。</span><span lang="en">The feed lists live in memory and are gone after a reboot — if the router restarted after step 3, redo step 3 before step 4.</span></div></div>
       </section>
 
       <section class="step" id="s4">
         <h2><span class="n">4</span><span lang="zh">安装一点守护</span><span lang="en">Install Doti</span></h2>
         <div class="tabs" role="tablist">
           <button type="button" class="on" data-pane="pa"><span lang="zh">推荐 · 一条命令装好</span><span lang="en">Recommended · One command</span></button>
-          <button type="button" data-pane="pb"><span lang="zh">下载安装包手动装</span><span lang="en">Download &amp; upload</span></button>
+          <button type="button" data-pane="pb"><span lang="zh">下载安装包手动装（仅 22.03–24.10）</span><span lang="en">Download &amp; upload</span></button>
         </div>
         <div class="pane on" id="pa">
           <p class="p"><span lang="zh">第 3 步通过后，还在刚才的 SSH 里，执行下面这条命令。它会检查系统、下载最新版对应的安装包（22.03–24.10 用 ipk，25.x 用 apk）、校验后装好，升级程序也会自动补装：</span><span lang="en">Once step 3 passes, in the same SSH session, run this. It checks the system, downloads the right package for it (ipk for 22.03–24.10, apk for 25.x), verifies and installs it; the updater installs itself too:</span></p>
           <div class="copy"><code>cd /tmp &amp;&amp; wget -O install.sh https://gitee.com/xautlx/doti-kids-router/raw/main/install.sh &amp;&amp; sh install.sh</code><button type="button" data-copy="cd /tmp &amp;&amp; wget -O install.sh https://gitee.com/xautlx/doti-kids-router/raw/main/install.sh &amp;&amp; sh install.sh"><span lang="zh">复制</span><span lang="en">Copy</span></button></div>
-          <div class="note"><i class="ic">⏱️</i><div><span lang="zh">一般半分钟左右装好，门铃组件会随安装一起从软件源下载。提示「软件源更新失败」或缺组件时，回到第 3 步换镜像、更新通过后再执行一次。</span><span lang="en">It usually takes about half a minute; the doorbell component is downloaded from the feeds as part of the install. If it says the feed update failed or something is missing, go back to step 3, switch mirrors, update until it passes, and run it again.</span></div></div>
+          <div class="note"><i class="ic">⏱️</i><div><span lang="zh">一般半分钟左右装好，那个小组件会随安装一起从软件源下载。提示「软件源更新失败」或缺组件时，回到第 3 步换镜像、更新通过后再执行一次。</span><span lang="en">It usually takes about half a minute; that component is downloaded from the feeds as part of the install. If it says the feed update failed or something is missing, go back to step 3, switch mirrors, update until it passes, and run it again.</span></div></div>
         </div>
         <div class="pane" id="pb">
           <p class="p"><span lang="zh">不想用命令行，就用电脑下载 <span class="kbd">doti-kids-router_all.ipk</span>（在下面任一发布页的最新版里），再到路由器管理页上传。<span class="b">只适用于 22.03–24.10</span>：25.x 的管理页只装有官方签名的包，请用上面的命令装。</span><span lang="en">Prefer not to use the command line? Download <span class="kbd">doti-kids-router_all.ipk</span> from the latest release on either page and upload it in the web admin. <span class="b">22.03–24.10 only</span>: on 25.x the web admin only installs officially signed packages, so use the command above.</span></p>
@@ -289,23 +305,25 @@ var _hmt = _hmt || [];
             <li><span lang="zh">进入 <span class="kbd">系统 → 软件包</span>，点 <span class="kbd">上传软件包…</span>。</span><span lang="en">Go to <span class="kbd">System → Software</span> and click <span class="kbd">Upload Package…</span>.</span></li>
             <li><span lang="zh">选刚下载的文件，点 <span class="kbd">上传</span>，再点 <span class="kbd">安装</span>。</span><span lang="en">Choose the file, click <span class="kbd">Upload</span>, then <span class="kbd">Install</span>.</span></li>
           </ol>
-          <p class="p"><span lang="zh">上传前也要先更新软件源：在 SSH 里做第 3 步，或在管理页 <span class="kbd">系统 → 软件包</span> 点「更新列表」，没有报错再上传。门铃组件会在安装时从软件源下载。</span><span lang="en">Update the feeds before uploading too: do step 3 over SSH, or click “Update lists” on <span class="kbd">System → Software</span>, and upload once it finishes without errors. The doorbell component is downloaded from the feeds during install.</span></p>
+          <p class="p"><span lang="zh">上传前也要先更新软件源：在 SSH 里做第 3 步，或在管理页 <span class="kbd">系统 → 软件包</span> 点「更新列表」，没有报错再上传。那个小组件会在安装时从软件源下载。</span><span lang="en">Update the feeds before uploading too: do step 3 over SSH, or click “Update lists” on <span class="kbd">System → Software</span>, and upload once it finishes without errors. That component is downloaded from the feeds during install.</span></p>
         </div>
         <div class="note"><i class="ic">✅</i><div><span lang="zh">装好后，管理页 <span class="kbd">服务 → 一点守护</span> 能看到安装成功、当前版本和最近更新时间。</span><span lang="en">Once installed, <span class="kbd">Services → 一点守护</span> in the web admin shows the installed version and last update time.</span></div></div>
       </section>
 
       <section class="step" id="s5">
         <h2><span class="n">5</span><span lang="zh">手机连上家长 WiFi，用小程序绑定</span><span lang="en">Pair your phone in WeChat</span></h2>
-        <p><span lang="zh">装好 1–2 分钟后，路由器会开一个不用密码的临时家长 WiFi：</span><span lang="en">1–2 minutes after installing, the router opens a temporary, password-free parents’ WiFi:</span></p>
+        <p><span lang="zh">装好 1–2 分钟后，路由器会开一个不用密码的临时家长 WiFi（只在还没绑定时开，专门用来绑定）：</span><span lang="en">1–2 minutes after installing, the router opens a temporary, password-free parents’ WiFi (only while it’s unpaired, just for pairing):</span></p>
         <div class="wifi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2.5 9a14 14 0 0 1 19 0M5.8 12.4a9.3 9.3 0 0 1 12.4 0M9.1 15.8a4.6 4.6 0 0 1 5.8 0"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>DOTI-TEMP-ADMIN</div>
         <p><span lang="zh">手机连上它，打开微信小程序「一点守护」，按提示绑定路由器、设置孩子的 WiFi。设置时会给这个 WiFi 改名并设上密码。</span><span lang="en">Join it on your phone, open the “一点守护” mini program in WeChat, and follow the prompts to pair the router and set up the kids’ WiFi. Setup renames this WiFi and gives it a password.</span></p>
         <div class="wx"><img src="../assets/intro-wechat.svg" alt=""><span lang="zh">微信里搜索「一点守护」</span><span lang="en">Search WeChat for “一点守护”</span></div>
+        <div class="note"><i class="ic">✅</i><div><span lang="zh">绑定好以后，这个临时 WiFi 会改名成 <span class="kbd">DOTI-编号-ADMIN</span> 并设上密码，搜不到 DOTI-TEMP-ADMIN 是正常的。</span><span lang="en">After pairing, this WiFi is renamed <span class="kbd">DOTI-xxxx-ADMIN</span> with a password — not seeing DOTI-TEMP-ADMIN any more is normal.</span></div></div>
         <div class="note warn"><i class="ic">⏱</i><div><span lang="zh"><span class="b">请在 1 小时内完成绑定。</span>为了安全，这个不用密码的 WiFi 只开 1 小时，到时自动关闭；过了时间，把路由器断电再开，会再开 1 小时。</span><span lang="en"><span class="b">Finish pairing within 1 hour.</span> For safety, this open WiFi closes automatically after an hour. If you miss it, power-cycle the router to get another hour.</span></div></div>
-        <div class="note"><i class="ic">🔑</i><div><span lang="zh"><span class="b">路由器管理页和 SSH 的 root 密码会跟着家长 WiFi 密码走。</span>出于安全考虑：root 没有密码时，连上家里网络的人都能登录路由器管理页，改掉或关掉一点守护的设置。所以原来没设 root 密码的，绑定后自动设成家长 WiFi 密码，以后在小程序里改家长 WiFi 密码也会跟着改，解除绑定时清空；自己设过 root 密码的不动。</span><span lang="en"><span class="b">The root password (web admin and SSH) follows the parents’ WiFi password.</span> This is for safety: with no root password, anyone on your home network could log in to the router’s web admin and change or turn off Doti’s settings. So if root had no password, pairing sets it to the parents’ WiFi password; changing that password in the mini program changes root too, and unpairing clears it. A root password you set yourself is left alone.</span></div></div>
+        <div class="note"><i class="ic">🔑</i><div><span lang="zh"><span class="b">路由器管理页的 root 密码：</span>原来没设的，绑定后自动设成家长 WiFi 密码（免得连上家里网络的人改掉设置），以后在小程序里改家长 WiFi 密码时，它会一起改；自己设过的不动。所以请记好家长 WiFi 密码，它也管着路由器的设置。</span><span lang="en"><span class="b">Router admin (root) password:</span> if you never set one, pairing sets it to the parents’ WiFi password (so nobody on your network can change the settings) and changes it whenever you change the parents’ WiFi password in the mini program; a password you set yourself is left alone. So keep the parents’ WiFi password safe — it also guards the router settings.</span></div></div>
+        <div class="note"><i class="ic">👉</i><div><span lang="zh"><span class="b">接下来：</span>跟着小程序给每个孩子设好 WiFi 和规则，孩子的手机、平板、电视连上自己的 WiFi，就开始管理了。</span><span lang="en"><span class="b">Next:</span> follow the mini program to set up each kid’s WiFi and rules. Once their phones, tablets and TVs join their own WiFi, Doti takes it from there.</span></div></div>
       </section>
 
       <section class="step" id="s6">
-        <h2><span class="n">6</span><span lang="zh">核对安装包</span><span lang="en">Verify the package</span><span class="opt" lang="zh">可选</span><span class="opt" lang="en">optional</span></h2>
+        <h2><span class="n">＋</span><span lang="zh">核对安装包</span><span lang="en">Verify the package</span><span class="opt" lang="zh">给技术用户 · 可选</span><span class="opt" lang="en">optional</span></h2>
         <p><span lang="zh">安装包由 GitHub Actions 从公开代码自动构建，发布页附有 <span class="kbd">SHA256SUMS</span>。算一下下载文件的 SHA256，和它一致就说明是公开构建的同一个文件：</span><span lang="en">Packages are built by GitHub Actions from the public code, and each release ships a <span class="kbd">SHA256SUMS</span> file. If your download’s SHA256 matches, it’s the exact file built in public:</span></p>
         <div class="lbl"><span lang="zh">路由器上 / Mac / Linux</span><span lang="en">Router / Mac / Linux</span></div>
         <div class="copy"><code>sha256sum doti-kids-router_all.ipk</code><button type="button" data-copy="sha256sum doti-kids-router_all.ipk"><span lang="zh">复制</span><span lang="en">Copy</span></button></div>
@@ -314,9 +332,19 @@ var _hmt = _hmt || [];
         <p><span lang="zh">也可以下载源码，执行 <span class="kbd">python3 build.py</span> 自己打包，得到的文件和发布页的一模一样。</span><span lang="en">You can also build it yourself with <span class="kbd">python3 build.py</span> from the source — you’ll get a byte-identical file.</span></p>
       </section>
 
+      <section class="step" id="faq">
+        <h2><span class="n">?</span><span lang="zh">常见问题</span><span lang="en">FAQ</span></h2>
+        <dl class="faq">
+          <dt><span lang="zh">更新软件源一直失败？</span><span lang="en">Feed update keeps failing?</span></dt><dd><span lang="zh">先确认路由器能上网；国内网络按第 3 步换成清华镜像再更新。</span><span lang="en">Make sure the router is online; in China switch to the Tsinghua mirror (step 3) and update again.</span></dd>
+          <dt><span lang="zh">安装命令报错、装不上？</span><span lang="en">The install command fails?</span></dt><dd><span lang="zh">多半是软件源没更新通过，回到第 3 步更新通过后再执行；剩余空间不足 800KB 的路由器也装不了。</span><span lang="en">Usually the feeds weren’t updated — redo step 3 until it passes. Routers with under 800 KB free can’t install it.</span></dd>
+          <dt><span lang="zh">搜不到 DOTI-TEMP-ADMIN？</span><span lang="en">Can’t see DOTI-TEMP-ADMIN?</span></dt><dd><span lang="zh">装好后要等 1–2 分钟；超过 1 小时没绑定会自动关闭，把路由器断电再开就会重新出现。</span><span lang="en">Give it 1–2 minutes after installing. It closes after an hour if unpaired — power-cycle the router to bring it back.</span></dd>
+          <dt><span lang="zh">费用怎么算？</span><span lang="en">How much does it cost?</span></dt><dd><span lang="zh">在家管理（手机连着家里的 WiFi）一直免费。不在家时的远程管理按路由器算、全家共用，一年一期，<b>每一期都是先用、再决定付不付</b>：在这一期里付是优惠价 36 元（原价 60 元/年）；过了期再补这一期，按原价 60 元。第一期从绑定次月起算 12 个月（比如 11 月 15 日绑定，到第二年 11 月底）。不自动扣费；不付也不会断网，孩子的规则照常执行，只是不能在外面管。</span><span lang="en">Managing at home (phone on your home WiFi) is always free. Remote management while you're out is per router and shared by the whole family, one year per period, and <b>every period is use first, then decide</b>: pay during the period and it's ¥36 (list price ¥60/yr); pay for it after it ends and it's ¥60. Your first period counts 12 months from the month after you set up (set up on 15 November → through the end of next November). Nothing is charged automatically, and if you don't pay nothing gets cut off — your kids' rules keep running; you just can't manage from outside.</span></dd>
+        </dl>
+      </section>
+
       <section class="step done">
         <h2><span lang="zh">遇到问题？</span><span lang="en">Need help?</span></h2>
-        <p><span lang="zh">在小程序「一点守护」里点「联系客服」，或者到开源仓库提问。装不上、不想折腾，也可以找客服咨询当前是否可提供预装路由器或预装服务。</span><span lang="en">Tap “Contact us” in the 一点守护 mini program, or open an issue in the repository. If it won’t install or you’d rather not bother, ask us whether a pre-installed router or installation service is currently available.</span></p>
+        <p><span lang="zh">在小程序「一点守护」里点「联系客服」，或者到开源仓库提问。</span><span lang="en">Tap “Contact us” in the 一点守护 mini program, or open an issue in the repository. If it won’t install or you’d rather not bother, ask us whether a pre-installed router or installation service is currently available.</span></p>
         <div class="helps">
           <a class="btn" href="https://gitee.com/xautlx/doti-kids-router" target="_blank" rel="noopener">gitee</a>
           <a class="btn" href="https://github.com/xautlx/doti-kids-router" target="_blank" rel="noopener">GitHub</a>
