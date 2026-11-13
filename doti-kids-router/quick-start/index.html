@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>快速开始 · 自己安装一点守护 | 一点守护</title>
-<meta name="description" content="把一点守护装到自己的 OpenWrt 路由器：确认系统（不合适先刷官方 OpenWrt）、检查软件源、一条命令安装、手机连上不用密码的 DOTI-编号-ADMIN 用微信小程序「一点守护」绑定。">
+<meta name="description" content="把一点守护装到自己的 OpenWrt 路由器：确认系统（不合适先刷官方 OpenWrt）、检查软件源、一条命令安装、手机连上不用密码的 DOTI-XXXX-ADMIN 用微信小程序「一点守护」绑定。">
 <meta name="robots" content="index,follow">
 <meta name="theme-color" content="#5b3bff">
 <link rel="canonical" href="https://doti.top/quick-start/">
@@ -315,10 +315,10 @@ var _hmt = _hmt || [];
       <section class="step" id="s5">
         <h2><span class="n">5</span><span lang="zh">手机连上家长 WiFi，用小程序绑定</span><span lang="en">Pair your phone in WeChat</span></h2>
         <p><span lang="zh">装好 1–2 分钟后，会出现路由器的家长 WiFi，还没绑定时不用密码：</span><span lang="en">1–2 minutes after installing, the router’s parents’ WiFi appears — no password until it’s paired:</span></p>
-        <div class="wifi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2.5 9a14 14 0 0 1 19 0M5.8 12.4a9.3 9.3 0 0 1 12.4 0M9.1 15.8a4.6 4.6 0 0 1 5.8 0"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>DOTI-编号-ADMIN</div>
+        <div class="wifi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2.5 9a14 14 0 0 1 19 0M5.8 12.4a9.3 9.3 0 0 1 12.4 0M9.1 15.8a4.6 4.6 0 0 1 5.8 0"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>DOTI-XXXX-ADMIN</div>
         <p><span lang="zh">手机连上它，打开微信小程序「一点守护」，按提示绑定路由器、给家长 WiFi 设个密码就好了；孩子的 WiFi 进小程序后按引导再连。</span><span lang="en">Join it on your phone, open the “一点守护” mini program in WeChat, and follow the prompts to pair the router and give the parents’ WiFi a password; the mini program then walks you through connecting the kids’ devices.</span></p>
         <div class="wx"><img src="../assets/intro-wechat.svg" alt=""><span lang="zh">微信里搜索「一点守护」</span><span lang="en">Search WeChat for “一点守护”</span></div>
-        <div class="note"><i class="ic">✅</i><div><span lang="zh">编号是路由器的 4 位编号，安装完成时命令行里会显示完整名字；一开始不用密码，绑定时会给它设上密码，名字不变。</span><span lang="en">xxxx is the router’s 4-character code — the install command prints the full name when it finishes. It starts with no password; pairing adds one and keeps the name.</span></div></div>
+        <div class="note"><i class="ic">✅</i><div><span lang="zh">XXXX 是路由器的 4 位编号，安装完成时命令行里会显示完整名字；一开始不用密码，绑定时会给它设上密码，名字不变。</span><span lang="en">XXXX is the router’s 4-character code — the install command prints the full name when it finishes. It starts with no password; pairing adds one and keeps the name.</span></div></div>
         <div class="note warn"><i class="ic">⏱</i><div><span lang="zh"><span class="b">请在 30 分钟内完成绑定。</span>为了安全，这个不用密码的 WiFi 只开 30 分钟，到时自动关闭；过了时间，把路由器断电再开，会再开 30 分钟。</span><span lang="en"><span class="b">Finish pairing within 30 minutes.</span> For safety, this open WiFi closes automatically after 30 minutes. If you miss it, power-cycle the router to get another 30 minutes.</span></div></div>
         <div class="note"><i class="ic">🔑</i><div><span lang="zh"><span class="b">路由器管理页的 root 密码：</span>原来没设的，绑定后自动设成家长 WiFi 密码，以后改家长 WiFi 密码时一起改；自己设过的不动。家长 WiFi 密码随时能在小程序「路由器」页查看，它也是路由器管理页的密码。</span><span lang="en"><span class="b">Router admin (root) password:</span> if you never set one, pairing sets it to the parents’ WiFi password and keeps it in step when you change that password; one you set yourself is left alone. You can look up the parents’ WiFi password any time on the mini program’s Router page — it’s also the router admin password.</span></div></div>
         <div class="note"><i class="ic">👉</i><div><span lang="zh"><span class="b">接下来：</span>跟着小程序给每个孩子设好 WiFi 和规则，孩子的手机、平板、电视连上自己的 WiFi，就开始管理了。</span><span lang="en"><span class="b">Next:</span> follow the mini program to set up each kid’s WiFi and rules. Once their phones, tablets and TVs join their own WiFi, Doti takes it from there.</span></div></div>
@@ -339,7 +339,7 @@ var _hmt = _hmt || [];
         <dl class="faq">
           <dt><span lang="zh">更新软件源一直失败？</span><span lang="en">Feed update keeps failing?</span></dt><dd><span lang="zh">先确认路由器能上网；国内网络按第 3 步换成清华镜像再更新。</span><span lang="en">Make sure the router is online; in China switch to the Tsinghua mirror (step 3) and update again.</span></dd>
           <dt><span lang="zh">安装命令报错、装不上？</span><span lang="en">The install command fails?</span></dt><dd><span lang="zh">多半是软件源没更新通过，回到第 3 步更新通过后再执行；剩余空间不足 800KB 的路由器也装不了。</span><span lang="en">Usually the feeds weren’t updated — redo step 3 until it passes. Routers with under 800 KB free can’t install it.</span></dd>
-          <dt><span lang="zh">搜不到 DOTI-编号-ADMIN？</span><span lang="en">Can’t see DOTI-xxxx-ADMIN?</span></dt><dd><span lang="zh">装好后要等 1–2 分钟；超过 30 分钟没绑定会自动关闭，把路由器断电再开就会重新出现。</span><span lang="en">Give it 1–2 minutes after installing. It closes after 30 minutes if unpaired — power-cycle the router to bring it back.</span></dd>
+          <dt><span lang="zh">搜不到 DOTI-XXXX-ADMIN？</span><span lang="en">Can’t see DOTI-XXXX-ADMIN?</span></dt><dd><span lang="zh">装好后要等 1–2 分钟；超过 30 分钟没绑定会自动关闭，把路由器断电再开就会重新出现。</span><span lang="en">Give it 1–2 minutes after installing. It closes after 30 minutes if unpaired — power-cycle the router to bring it back.</span></dd>
           <dt><span lang="zh">费用怎么算？</span><span lang="en">How much does it cost?</span></dt><dd><span lang="zh">在家管理一直免费；远程管理一年一期，<b>每期都先用</b>，期内付 36 元，过期再补按原价 60 元。不自动扣费，不付也不断网。详见<a href="../#fee">首页「费用」</a>。</span><span lang="en">Managing at home is always free. Remote management runs in yearly periods, <b>each one use first</b>: ¥36 during the period, ¥60 if you pay after it ends. Nothing is charged automatically, and nothing gets cut off if you don't pay. See <a href="../#fee">Cost on the home page</a>.</span></dd>
         </dl>
       </section>
