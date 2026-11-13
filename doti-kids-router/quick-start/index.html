@@ -4,16 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>快速开始 · 自己安装一点守护 | 一点守护</title>
-<meta name="description" content="把一点守护装到自己的 OpenWrt 路由器：确认系统（不合适先刷官方 OpenWrt）、检查软件源、一条命令安装、手机连上 DOTI-TEMP-ADMIN 用微信小程序「一点守护」绑定。">
+<meta name="description" content="把一点守护装到自己的 OpenWrt 路由器：确认系统（不合适先刷官方 OpenWrt）、检查软件源、一条命令安装、手机连上不用密码的 DOTI-编号-ADMIN 用微信小程序「一点守护」绑定。">
 <meta name="robots" content="index,follow">
 <meta name="theme-color" content="#5b3bff">
-<link rel="canonical" href="https://doti.entdiy.xyz/quick-start/">
+<link rel="canonical" href="https://doti.top/quick-start/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="一点守护 Doti">
 <meta property="og:title" content="快速开始 · 自己安装一点守护">
 <meta property="og:description" content="OpenWrt 22.03 及以上路由器，五步装好，家长不用懂网络。">
-<meta property="og:url" content="https://doti.entdiy.xyz/quick-start/">
-<meta property="og:image" content="https://doti.entdiy.xyz/assets/og.jpg">
+<meta property="og:url" content="https://doti.top/quick-start/">
+<meta property="og:image" content="https://doti.top/assets/og.jpg">
 <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
 <style>
@@ -51,10 +51,14 @@ html[data-lang="zh"] [lang="en"],html[data-lang="en"] [lang="zh"]{display:none!i
 .wrap{max-width:1080px;margin:0 auto;padding:0 32px}
 /* 顶栏（和首页一样） */
 .nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid var(--line)}
-.nav .wrap{display:flex;align-items:center;gap:28px;height:68px}
+.nav .wrap{max-width:1180px;display:flex;align-items:center;gap:28px;height:68px}   /* 顶栏和首页同宽，正文仍 1080 */
 .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px}
 .brand img{width:34px;height:34px;border-radius:9px}
 .brand small{font-weight:600;font-size:13px;color:var(--t3)}
+.brand img.lk{width:auto;height:40px;border-radius:0}
+.brand img.lk.d{display:none}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .brand img.lk.l{display:none}:root:not([data-theme="light"]) .brand img.lk.d{display:block}}
+:root[data-theme="dark"] .brand img.lk.l{display:none}:root[data-theme="dark"] .brand img.lk.d{display:block}
 .links{display:flex;gap:24px;margin-left:12px;font-size:15px;color:var(--t2)}
 .links a:hover{color:var(--brand)}
 .links a.qs{display:inline-flex;align-items:center;gap:4px;color:var(--brand);font-weight:700}
@@ -185,13 +189,12 @@ var _hmt = _hmt || [];
 
 <header class="nav">
   <div class="wrap">
-    <a class="brand" href="../"><img src="../assets/logo.svg" alt=""><span lang="zh">一点守护</span><span lang="en">Doti</span><small lang="zh">孩子上网时间管理</small><small lang="en">Screen time for kids</small></a>
+    <a class="brand" href="../"><img class="lk l" lang="zh" src="../assets/logo-lockup.svg?v=4bc1366a" alt="一点守护 www.doti.top"><img class="lk d" lang="zh" src="../assets/logo-lockup-dark.svg?v=474ea081" alt="一点守护 www.doti.top"><img lang="en" src="../assets/logo.svg" alt=""><span lang="en">Doti</span><small lang="en">Screen time for kids</small></a>
     <nav class="links">
       <a href="../#why"><span lang="zh">为什么</span><span lang="en">Why</span></a>
       <a href="../#how"><span lang="zh">怎么工作</span><span lang="en">How it works</span></a>
       <a href="../#setup"><span lang="zh">怎么用</span><span lang="en">Setup</span></a>
-      <a href="../#trust"><span lang="zh">放心</span><span lang="en">Peace of mind</span></a>
-      <a href="../#fee"><span lang="zh">费用</span><span lang="en">Cost</span></a>
+      <a href="../#trust"><span lang="zh">使用安心</span><span lang="en">Peace of mind</span></a>
       <a class="qs on" href="./" aria-current="page"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></svg><span lang="zh">快速开始</span><span lang="en">Quick Start</span></a>
     </nav>
     <div class="tools">
@@ -214,7 +217,7 @@ var _hmt = _hmt || [];
       <span><i>💻</i><span lang="zh">一台电脑</span><span lang="en">A computer</span></span>
       <span><i>📱</i><span lang="zh">一部装了微信的手机</span><span lang="en">A phone with WeChat</span></span>
     </div>
-    <div class="note buy"><i class="ic">💡</i><div><span lang="zh"><span class="b">费用：</span>在家管理一直免费；不在家的远程管理一年一期，每期都先用、再决定付不付（期内优惠价 36 元，过期按原价 60 元），不自动扣费（<a href="#faq">详细说明</a>）。</span><span lang="en"><span class="b">Cost:</span> managing at home is always free; remote management runs in yearly periods, each one use first, then decide (¥36 during the period, ¥60 after) — nothing is charged automatically (<a href="#faq">details</a>).</span></div></div>
+    <div class="note buy"><i class="ic">💡</i><div><span lang="zh"><span class="b">费用：</span>在家管理一直免费；不在家的远程管理一年一期，每期都先用、再决定付不付（期内优惠价 36 元，过期按原价 60 元），不自动扣费（<a href="../#fee">详细说明</a>）。</span><span lang="en"><span class="b">Cost:</span> managing at home is always free; remote management runs in yearly periods, each one use first, then decide (¥36 during the period, ¥60 after) — nothing is charged automatically (<a href="../#fee">details</a>).</span></div></div>
     <div class="note buy"><i class="ic">🎁</i><div><span lang="zh"><span class="b">不想折腾？</span>打开微信小程序「一点守护」，点「联系客服」，咨询当前是否可提供预装路由器或预装服务。</span><span lang="en"><span class="b">Rather skip the tinkering?</span> Open the “一点守护” mini program in WeChat, tap “Contact us” and ask whether a pre-installed router or installation service is currently available.</span></div></div>
   </div>
 
@@ -231,7 +234,7 @@ var _hmt = _hmt || [];
     <div class="steps">
       <section class="step" id="s1">
         <h2><span class="n">1</span><span lang="zh">确认能不能装</span><span lang="en">Check it can be installed</span></h2>
-        <p><span lang="zh">一点守护需要 <span class="b">OpenWrt 22.03 或更新的版本</span>（要用它起才有的新防火墙），最稳的是官方 OpenWrt。在路由器管理页 <span class="kbd">状态 → 概览</span> 看「固件版本」，或者 SSH 登录后执行：</span><span lang="en">Doti needs <span class="b">OpenWrt 22.03 or newer</span> (it relies on the newer firewall that arrived then); official OpenWrt is the safest bet. Check “Firmware Version” under <span class="kbd">Status → Overview</span> in the web admin, or run this over SSH:</span></p>
+        <p><span lang="zh">一点守护需要 <span class="b">OpenWrt 22.03 或更新的版本</span>，最稳的是官方 OpenWrt。在路由器管理页 <span class="kbd">状态 → 概览</span> 看「固件版本」，或者 SSH 登录后执行：</span><span lang="en">Doti needs <span class="b">OpenWrt 22.03 or newer</span> — official OpenWrt is the safest bet. Check “Firmware Version” under <span class="kbd">Status → Overview</span> in the web admin, or run this over SSH:</span></p>
         <div class="copy"><code>cat /etc/openwrt_release</code><button type="button" data-copy="cat /etc/openwrt_release"><span lang="zh">复制</span><span lang="en">Copy</span></button></div>
         <div class="branch">
           <div class="ok"><b lang="zh">✓ 官方 OpenWrt 22.03 及以上（含 25.x）</b><b lang="en">✓ Official OpenWrt 22.03+ (incl. 25.x)</b><span lang="zh">能直接装：同一页的「可用空间」要有 800KB 以上，不够会装不上。接着看第 2 步。</span><span lang="en">Good to go — just make sure “Free space” on the same page shows at least 800KB, or it won’t fit. Then on to step 2.</span></div>
@@ -264,8 +267,8 @@ var _hmt = _hmt || [];
       </section>
 
       <section class="step" id="s3">
-        <h2><span class="n">3</span><span lang="zh">更新软件源</span><span lang="en">Update the package feeds</span><span class="opt" lang="zh">必做</span><span class="opt" lang="en">required</span></h2>
-        <p><span lang="zh">一点守护安装时要用一个小组件（远程管理靠它），<span class="b">官方 OpenWrt 不自带，安装时要从软件源下载</span>（包名 <span class="kbd">mosquitto-client-nossl</span>）。所以先在 SSH 里更新一次软件源，确认路由器能连上软件源，<span class="b">通过了再做第 4 步</span>，安装才能一次成功。按系统版本选一条：</span><span lang="en">Installing Doti needs a small component (remote management relies on it). <span class="b">Official OpenWrt doesn’t ship it, so it’s downloaded from the package feeds during install</span> (package <span class="kbd">mosquitto-client-nossl</span>). Update the feeds once in SSH to make sure the router can reach them, and <span class="b">only move on to step 4 once this passes</span> — then the install succeeds first time. Pick the line for your release:</span></p>
+        <h2><span class="n">3</span><span lang="zh">更新软件源</span><span lang="en">Update the package feeds</span><span class="opt" lang="zh">可选</span><span class="opt" lang="en">optional</span></h2>
+        <p><span lang="zh">安装时要从软件源下载一个小组件（包名 <span class="kbd">mosquitto-client-nossl</span>，远程管理用）。<span class="b">第 4 步的安装脚本会自动补装，优先用国内镜像，一般不用做这一步</span>；想先确认路由器能连上软件源，或者安装时报软件源连不上，再按系统版本运行一条：</span><span lang="en">The install downloads a small component from the package feeds (package <span class="kbd">mosquitto-client-nossl</span>, used for remote management), <span class="b">the step 4 install script fetches it automatically, trying a mirror in China first, so you can usually skip this step</span>. To check the router can reach the feeds first, or if the install reports a feed problem, run the line for your release:</span></p>
         <div class="lbl">22.03–24.10<small lang="zh">opkg</small><small lang="en">opkg</small></div>
         <div class="copy"><code>opkg update</code><button type="button" data-copy="opkg update"><span lang="zh">复制</span><span lang="en">Copy</span></button></div>
         <div class="lbl">25.x<small lang="zh">apk</small><small lang="en">apk</small></div>
@@ -280,7 +283,6 @@ var _hmt = _hmt || [];
         <div class="lbl"><span lang="zh">换清华镜像 · 25.x</span><span lang="en">Tsinghua mirror · 25.x</span></div>
         <div class="copy"><code>sed -i 's_downloads.openwrt.org_mirrors.tuna.tsinghua.edu.cn/openwrt_' /etc/apk/repositories.d/distfeeds.list</code><button type="button" data-copy="sed -i 's_downloads.openwrt.org_mirrors.tuna.tsinghua.edu.cn/openwrt_' /etc/apk/repositories.d/distfeeds.list"><span lang="zh">复制</span><span lang="en">Copy</span></button></div>
         </details>
-        <div class="note"><i class="ic">💡</i><div><span lang="zh">软件源列表放在内存里，路由器重启后就没了。第 3 步之后重启过路由器的话，第 4 步前再做一次第 3 步。</span><span lang="en">The feed lists live in memory and are gone after a reboot — if the router restarted after step 3, redo step 3 before step 4.</span></div></div>
       </section>
 
       <section class="step" id="s4">
@@ -292,7 +294,7 @@ var _hmt = _hmt || [];
         <div class="pane on" id="pa">
           <p class="p"><span lang="zh">第 3 步通过后，还在刚才的 SSH 里，执行下面这条命令。它会检查系统、下载最新版对应的安装包（22.03–24.10 用 ipk，25.x 用 apk）、校验后装好，升级程序也会自动补装：</span><span lang="en">Once step 3 passes, in the same SSH session, run this. It checks the system, downloads the right package for it (ipk for 22.03–24.10, apk for 25.x), verifies and installs it; the updater installs itself too:</span></p>
           <div class="copy"><code>cd /tmp &amp;&amp; wget -O install.sh https://gitee.com/xautlx/doti-kids-router/raw/main/install.sh &amp;&amp; sh install.sh</code><button type="button" data-copy="cd /tmp &amp;&amp; wget -O install.sh https://gitee.com/xautlx/doti-kids-router/raw/main/install.sh &amp;&amp; sh install.sh"><span lang="zh">复制</span><span lang="en">Copy</span></button></div>
-          <div class="note"><i class="ic">⏱️</i><div><span lang="zh">一般半分钟左右装好，那个小组件会随安装一起从软件源下载。提示「软件源更新失败」或缺组件时，回到第 3 步换镜像、更新通过后再执行一次。</span><span lang="en">It usually takes about half a minute; that component is downloaded from the feeds as part of the install. If it says the feed update failed or something is missing, go back to step 3, switch mirrors, update until it passes, and run it again.</span></div></div>
+          <div class="note"><i class="ic">⏱️</i><div><span lang="zh">一般半分钟左右装好。提示「软件源更新失败」或缺组件时，回到第 3 步换镜像、更新通过后再执行一次。</span><span lang="en">It usually takes about half a minute. If it says the feed update failed or something is missing, go back to step 3, switch mirrors, update until it passes, and run it again.</span></div></div>
         </div>
         <div class="pane" id="pb">
           <p class="p"><span lang="zh">不想用命令行，就用电脑下载 <span class="kbd">doti-kids-router_all.ipk</span>（在下面任一发布页的最新版里），再到路由器管理页上传。<span class="b">只适用于 22.03–24.10</span>：25.x 的管理页只装有官方签名的包，请用上面的命令装。</span><span lang="en">Prefer not to use the command line? Download <span class="kbd">doti-kids-router_all.ipk</span> from the latest release on either page and upload it in the web admin. <span class="b">22.03–24.10 only</span>: on 25.x the web admin only installs officially signed packages, so use the command above.</span></p>
@@ -305,20 +307,20 @@ var _hmt = _hmt || [];
             <li><span lang="zh">进入 <span class="kbd">系统 → 软件包</span>，点 <span class="kbd">上传软件包…</span>。</span><span lang="en">Go to <span class="kbd">System → Software</span> and click <span class="kbd">Upload Package…</span>.</span></li>
             <li><span lang="zh">选刚下载的文件，点 <span class="kbd">上传</span>，再点 <span class="kbd">安装</span>。</span><span lang="en">Choose the file, click <span class="kbd">Upload</span>, then <span class="kbd">Install</span>.</span></li>
           </ol>
-          <p class="p"><span lang="zh">上传前也要先更新软件源：在 SSH 里做第 3 步，或在管理页 <span class="kbd">系统 → 软件包</span> 点「更新列表」，没有报错再上传。那个小组件会在安装时从软件源下载。</span><span lang="en">Update the feeds before uploading too: do step 3 over SSH, or click “Update lists” on <span class="kbd">System → Software</span>, and upload once it finishes without errors. That component is downloaded from the feeds during install.</span></p>
+          <p class="p"><span lang="zh">上传前也要先更新软件源：在 SSH 里做第 3 步，或在管理页 <span class="kbd">系统 → 软件包</span> 点「更新列表」，没有报错再上传。</span><span lang="en">Update the feeds before uploading too: do step 3 over SSH, or click “Update lists” on <span class="kbd">System → Software</span>, and upload once it finishes without errors.</span></p>
         </div>
         <div class="note"><i class="ic">✅</i><div><span lang="zh">装好后，管理页 <span class="kbd">服务 → 一点守护</span> 能看到安装成功、当前版本和最近更新时间。</span><span lang="en">Once installed, <span class="kbd">Services → 一点守护</span> in the web admin shows the installed version and last update time.</span></div></div>
       </section>
 
       <section class="step" id="s5">
         <h2><span class="n">5</span><span lang="zh">手机连上家长 WiFi，用小程序绑定</span><span lang="en">Pair your phone in WeChat</span></h2>
-        <p><span lang="zh">装好 1–2 分钟后，路由器会开一个不用密码的临时家长 WiFi（只在还没绑定时开，专门用来绑定）：</span><span lang="en">1–2 minutes after installing, the router opens a temporary, password-free parents’ WiFi (only while it’s unpaired, just for pairing):</span></p>
-        <div class="wifi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2.5 9a14 14 0 0 1 19 0M5.8 12.4a9.3 9.3 0 0 1 12.4 0M9.1 15.8a4.6 4.6 0 0 1 5.8 0"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>DOTI-TEMP-ADMIN</div>
-        <p><span lang="zh">手机连上它，打开微信小程序「一点守护」，按提示绑定路由器、设置孩子的 WiFi。设置时会给这个 WiFi 改名并设上密码。</span><span lang="en">Join it on your phone, open the “一点守护” mini program in WeChat, and follow the prompts to pair the router and set up the kids’ WiFi. Setup renames this WiFi and gives it a password.</span></p>
+        <p><span lang="zh">装好 1–2 分钟后，会出现路由器的家长 WiFi，还没绑定时不用密码：</span><span lang="en">1–2 minutes after installing, the router’s parents’ WiFi appears — no password until it’s paired:</span></p>
+        <div class="wifi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2.5 9a14 14 0 0 1 19 0M5.8 12.4a9.3 9.3 0 0 1 12.4 0M9.1 15.8a4.6 4.6 0 0 1 5.8 0"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>DOTI-编号-ADMIN</div>
+        <p><span lang="zh">手机连上它，打开微信小程序「一点守护」，按提示绑定路由器、给家长 WiFi 设个密码就好了；孩子的 WiFi 进小程序后按引导再连。</span><span lang="en">Join it on your phone, open the “一点守护” mini program in WeChat, and follow the prompts to pair the router and give the parents’ WiFi a password; the mini program then walks you through connecting the kids’ devices.</span></p>
         <div class="wx"><img src="../assets/intro-wechat.svg" alt=""><span lang="zh">微信里搜索「一点守护」</span><span lang="en">Search WeChat for “一点守护”</span></div>
-        <div class="note"><i class="ic">✅</i><div><span lang="zh">绑定好以后，这个临时 WiFi 会改名成 <span class="kbd">DOTI-编号-ADMIN</span> 并设上密码，搜不到 DOTI-TEMP-ADMIN 是正常的。</span><span lang="en">After pairing, this WiFi is renamed <span class="kbd">DOTI-xxxx-ADMIN</span> with a password — not seeing DOTI-TEMP-ADMIN any more is normal.</span></div></div>
-        <div class="note warn"><i class="ic">⏱</i><div><span lang="zh"><span class="b">请在 1 小时内完成绑定。</span>为了安全，这个不用密码的 WiFi 只开 1 小时，到时自动关闭；过了时间，把路由器断电再开，会再开 1 小时。</span><span lang="en"><span class="b">Finish pairing within 1 hour.</span> For safety, this open WiFi closes automatically after an hour. If you miss it, power-cycle the router to get another hour.</span></div></div>
-        <div class="note"><i class="ic">🔑</i><div><span lang="zh"><span class="b">路由器管理页的 root 密码：</span>原来没设的，绑定后自动设成家长 WiFi 密码（免得连上家里网络的人改掉设置），以后在小程序里改家长 WiFi 密码时，它会一起改；自己设过的不动。所以请记好家长 WiFi 密码，它也管着路由器的设置。</span><span lang="en"><span class="b">Router admin (root) password:</span> if you never set one, pairing sets it to the parents’ WiFi password (so nobody on your network can change the settings) and changes it whenever you change the parents’ WiFi password in the mini program; a password you set yourself is left alone. So keep the parents’ WiFi password safe — it also guards the router settings.</span></div></div>
+        <div class="note"><i class="ic">✅</i><div><span lang="zh">编号是路由器的 4 位编号，安装完成时命令行里会显示完整名字；一开始不用密码，绑定时会给它设上密码，名字不变。</span><span lang="en">xxxx is the router’s 4-character code — the install command prints the full name when it finishes. It starts with no password; pairing adds one and keeps the name.</span></div></div>
+        <div class="note warn"><i class="ic">⏱</i><div><span lang="zh"><span class="b">请在 30 分钟内完成绑定。</span>为了安全，这个不用密码的 WiFi 只开 30 分钟，到时自动关闭；过了时间，把路由器断电再开，会再开 30 分钟。</span><span lang="en"><span class="b">Finish pairing within 30 minutes.</span> For safety, this open WiFi closes automatically after 30 minutes. If you miss it, power-cycle the router to get another 30 minutes.</span></div></div>
+        <div class="note"><i class="ic">🔑</i><div><span lang="zh"><span class="b">路由器管理页的 root 密码：</span>原来没设的，绑定后自动设成家长 WiFi 密码，以后改家长 WiFi 密码时一起改；自己设过的不动。家长 WiFi 密码随时能在小程序「路由器」页查看，它也是路由器管理页的密码。</span><span lang="en"><span class="b">Router admin (root) password:</span> if you never set one, pairing sets it to the parents’ WiFi password and keeps it in step when you change that password; one you set yourself is left alone. You can look up the parents’ WiFi password any time on the mini program’s Router page — it’s also the router admin password.</span></div></div>
         <div class="note"><i class="ic">👉</i><div><span lang="zh"><span class="b">接下来：</span>跟着小程序给每个孩子设好 WiFi 和规则，孩子的手机、平板、电视连上自己的 WiFi，就开始管理了。</span><span lang="en"><span class="b">Next:</span> follow the mini program to set up each kid’s WiFi and rules. Once their phones, tablets and TVs join their own WiFi, Doti takes it from there.</span></div></div>
       </section>
 
@@ -337,8 +339,8 @@ var _hmt = _hmt || [];
         <dl class="faq">
           <dt><span lang="zh">更新软件源一直失败？</span><span lang="en">Feed update keeps failing?</span></dt><dd><span lang="zh">先确认路由器能上网；国内网络按第 3 步换成清华镜像再更新。</span><span lang="en">Make sure the router is online; in China switch to the Tsinghua mirror (step 3) and update again.</span></dd>
           <dt><span lang="zh">安装命令报错、装不上？</span><span lang="en">The install command fails?</span></dt><dd><span lang="zh">多半是软件源没更新通过，回到第 3 步更新通过后再执行；剩余空间不足 800KB 的路由器也装不了。</span><span lang="en">Usually the feeds weren’t updated — redo step 3 until it passes. Routers with under 800 KB free can’t install it.</span></dd>
-          <dt><span lang="zh">搜不到 DOTI-TEMP-ADMIN？</span><span lang="en">Can’t see DOTI-TEMP-ADMIN?</span></dt><dd><span lang="zh">装好后要等 1–2 分钟；超过 1 小时没绑定会自动关闭，把路由器断电再开就会重新出现。</span><span lang="en">Give it 1–2 minutes after installing. It closes after an hour if unpaired — power-cycle the router to bring it back.</span></dd>
-          <dt><span lang="zh">费用怎么算？</span><span lang="en">How much does it cost?</span></dt><dd><span lang="zh">在家管理（手机连着家里的 WiFi）一直免费。不在家时的远程管理按路由器算、全家共用，一年一期，<b>每一期都是先用、再决定付不付</b>：在这一期里付是优惠价 36 元（原价 60 元/年）；过了期再补这一期，按原价 60 元。第一期从绑定次月起算 12 个月（比如 11 月 15 日绑定，到第二年 11 月底）。不自动扣费；不付也不会断网，孩子的规则照常执行，只是不能在外面管。</span><span lang="en">Managing at home (phone on your home WiFi) is always free. Remote management while you're out is per router and shared by the whole family, one year per period, and <b>every period is use first, then decide</b>: pay during the period and it's ¥36 (list price ¥60/yr); pay for it after it ends and it's ¥60. Your first period counts 12 months from the month after you set up (set up on 15 November → through the end of next November). Nothing is charged automatically, and if you don't pay nothing gets cut off — your kids' rules keep running; you just can't manage from outside.</span></dd>
+          <dt><span lang="zh">搜不到 DOTI-编号-ADMIN？</span><span lang="en">Can’t see DOTI-xxxx-ADMIN?</span></dt><dd><span lang="zh">装好后要等 1–2 分钟；超过 30 分钟没绑定会自动关闭，把路由器断电再开就会重新出现。</span><span lang="en">Give it 1–2 minutes after installing. It closes after 30 minutes if unpaired — power-cycle the router to bring it back.</span></dd>
+          <dt><span lang="zh">费用怎么算？</span><span lang="en">How much does it cost?</span></dt><dd><span lang="zh">在家管理一直免费；远程管理一年一期，<b>每期都先用</b>，期内付 36 元，过期再补按原价 60 元。不自动扣费，不付也不断网。详见<a href="../#fee">首页「费用」</a>。</span><span lang="en">Managing at home is always free. Remote management runs in yearly periods, <b>each one use first</b>: ¥36 during the period, ¥60 if you pay after it ends. Nothing is charged automatically, and nothing gets cut off if you don't pay. See <a href="../#fee">Cost on the home page</a>.</span></dd>
         </dl>
       </section>
 
@@ -358,8 +360,8 @@ var _hmt = _hmt || [];
 
 <footer>
   <div class="wrap">
-    <span><span lang="zh">一点守护 · 孩子上网时间管理</span><span lang="en">Doti · Screen time for kids</span></span>
-    <span><a href="https://github.com/xautlx/doti-kids-router" target="_blank" rel="noopener">GitHub</a> · <a href="https://gitee.com/xautlx/doti-kids-router" target="_blank" rel="noopener">gitee</a> · GPL-3.0 · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">渝ICP备18007886号-9</a></span>
+    <span><span lang="zh">一点守护 · 用心「一点」，给孩子守护多一点</span><span lang="en">Doti · A little more care, a little more protection for your kids</span></span>
+    <span><a href="https://github.com/xautlx/doti-kids-router" target="_blank" rel="noopener">GitHub</a> · <a href="https://gitee.com/xautlx/doti-kids-router" target="_blank" rel="noopener">gitee</a> · GPL-3.0 · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">渝ICP备18007886号-11</a></span>
   </div>
 </footer>
 

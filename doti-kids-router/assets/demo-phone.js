@@ -18,12 +18,12 @@
     zh: { nav: '一点守护', router: '一点守护路由器 DEMO', home: '● 已连接', demo: '演示模式', ff: '快进 30 分', reset: '重来',
       tab0: '状态', tab1: '孩子', tab2: '路由器', tab3: '我的', ssub: '只管今天，过了半夜 12 点自动取消',
       oa: '今天一直开放', oad: '到今晚 12 点，睡觉时间也不限速', la: '今天一直限速', lad: '到今晚 12 点', cancel: '取消',
-      more: '其他临时安排', live: '最近 5 分钟网速', every: '每 10 秒刷新', peak: '最高 ', ago: '5 分钟前', now: '现在',
+      more: '其他 ▾', live: '最近 5 分钟网速', every: '每 10 秒刷新', peak: '最高 ', ago: '5 分钟前', now: '现在',
       full: '请微信搜索小程序「一点守护」完整体验', again: '从头再演示一遍', back: '已回到开始：大宝这一轮还能用 22 分钟', today: ' · 今天的临时安排' },
     en: { nav: 'Doti', router: 'Doti Router DEMO', home: '● Connected', demo: 'Demo', ff: '+30 min', reset: 'Reset',
       tab0: 'Status', tab1: 'Kids', tab2: 'Router', tab3: 'Me', ssub: 'For today only — resets at midnight',
       oa: 'Open all day', oad: 'Until midnight, bedtime included', la: 'Slow all day', lad: 'Until midnight', cancel: 'Cancel',
-      more: 'More options', live: 'Last 5 minutes', every: 'Every 10 s', peak: 'Peak ', ago: '5 min ago', now: 'Now',
+      more: 'More ▾', live: 'Last 5 minutes', every: 'Every 10 s', peak: 'Peak ', ago: '5 min ago', now: 'Now',
       full: 'Search WeChat for the mini program “一点守护” for the full experience', again: 'Playing the demo again',
       back: 'Back to the start: Kid 1 has 22 min left this round', today: ' · Today only' }
   }
@@ -100,7 +100,7 @@
         '<div class="m-head" data-a="info"><div class="m-top"><div class="m-ic">' + (c.cls === 'open' ? '✓' : '!') + '</div><div class="m-w">' + c.word + '</div>' +
         (c.tag ? '<div class="m-ptag' + (c.temp ? ' m-temp' : '') + '">' + esc(c.tag) + '</div>' : '') + '</div>' +
         '<div class="m-desc">' + esc(c.desc) + '<span class="wxt"> ›</span></div></div>' +
-        '<div class="m-btns"><div class="m-bb m-main" data-a="' + c.main.action + '" data-k="' + n.key + '" data-m="' + (c.main.minutes || '') + '">' + c.main.text + '</div>' +
+        '<div class="m-btns"><div class="m-bb m-main" data-a="' + c.main.action + '" data-k="' + n.key + '" data-m="' + (c.main.minutes || '') + '">' + c.main.text + '</div><div class="m-bsep"></div>' +
         '<div class="m-bb m-ghost" data-a="more" data-k="' + n.key + '">' + t('more') + '</div></div>' +
         '<div class="m-foot"><div class="m-used" data-a="info">' + esc(c.used) + ' ›</div><div class="m-rate" data-a="live" data-k="' + n.key + '">' + (lv ? lv.now : rate) + '<div class="m-tri' + (lv ? ' m-up' : '') + '"></div></div></div>' +
         (lv ? '<div class="m-live" data-a="info"><div class="m-lh"><span class="wxt">' + t('live') + '</span><span class="wxt">' + t('every') + '</span></div>' +

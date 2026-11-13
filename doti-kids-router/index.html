@@ -9,16 +9,16 @@
 <meta name="author" content="一点守护">
 <meta name="robots" content="index,follow">
 <meta name="theme-color" content="#5b3bff">
-<link rel="canonical" href="https://doti.entdiy.xyz/">
-<link rel="alternate" hreflang="zh-CN" href="https://doti.entdiy.xyz/">
-<link rel="alternate" hreflang="en" href="https://doti.entdiy.xyz/?lang=en">
-<link rel="alternate" hreflang="x-default" href="https://doti.entdiy.xyz/">
+<link rel="canonical" href="https://doti.top/">
+<link rel="alternate" hreflang="zh-CN" href="https://doti.top/">
+<link rel="alternate" hreflang="en" href="https://doti.top/?lang=en">
+<link rel="alternate" hreflang="x-default" href="https://doti.top/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="一点守护 Doti">
 <meta property="og:title" content="一点守护 · 孩子上网时间管理">
 <meta property="og:description" content="到点只限速不断网，家长不用催，孩子不嫌烦。路由器程序开源。">
-<meta property="og:url" content="https://doti.entdiy.xyz/">
-<meta property="og:image" content="https://doti.entdiy.xyz/assets/og.jpg">
+<meta property="og:url" content="https://doti.top/">
+<meta property="og:image" content="https://doti.top/assets/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="zh_CN">
@@ -26,7 +26,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Doti · Screen time for kids, handled by your router">
 <meta name="twitter:description" content="When time is up, the internet slows down instead of cutting off. Open-source router software for OpenWrt, managed from WeChat.">
-<meta name="twitter:image" content="https://doti.entdiy.xyz/assets/og.jpg">
+<meta name="twitter:image" content="https://doti.top/assets/og.jpg">
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <script type="application/ld+json">
@@ -38,8 +38,8 @@
   "description": "装在家里路由器上的孩子上网时间管理：到点只限速不断网，家长在微信小程序里管理，孩子设备上什么都不用装。",
   "applicationCategory": "UtilitiesApplication",
   "operatingSystem": "OpenWrt 22.03+",
-  "url": "https://doti.entdiy.xyz/",
-  "image": "https://doti.entdiy.xyz/assets/og.jpg",
+  "url": "https://doti.top/",
+  "image": "https://doti.top/assets/og.jpg",
   "license": "https://www.gnu.org/licenses/gpl-3.0.html",
   "isAccessibleForFree": true,
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CNY" },
@@ -75,6 +75,8 @@
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:80px}
+/* 点菜单跳到各段：抵掉一部分段落上边距，标题不要离顶栏太远（用户 11-09） */
+section[id]{scroll-margin-top:-36px}
 body{margin:0;background:var(--bg);color:var(--t1);font:16px/1.7 -apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
 img{display:block}
@@ -87,6 +89,10 @@ html[data-lang="zh"] [lang="en"],html[data-lang="en"] [lang="zh"]{display:none!i
 .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px}
 .brand img{width:34px;height:34px;border-radius:9px}
 .brand small{font-weight:600;font-size:13px;color:var(--t3)}
+.brand img.lk{width:auto;height:40px;border-radius:0}
+.brand img.lk.d{display:none}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .brand img.lk.l{display:none}:root:not([data-theme="light"]) .brand img.lk.d{display:block}}
+:root[data-theme="dark"] .brand img.lk.l{display:none}:root[data-theme="dark"] .brand img.lk.d{display:block}
 .links{display:flex;gap:24px;margin-left:12px;font-size:15px;color:var(--t2)}
 .links a:hover{color:var(--brand)}
 /* 滚到哪一段，顶栏对应的菜单项文字下面出一条下划线 */
@@ -124,7 +130,7 @@ h1 em{font-style:normal;background:var(--hero);-webkit-background-clip:text;back
 .btn.qs:hover{background:var(--brand-soft)}
 .btn.qs svg{width:20px;height:20px}
 .btn img{width:22px;height:22px}
-.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-top:44px;padding-top:30px;border-top:1px solid var(--line);color:var(--t3);font-size:14px}
+.facts{display:grid;grid-template-columns:repeat(2,1fr);gap:22px 40px;margin-top:44px;padding-top:30px;border-top:1px solid var(--line);color:var(--t3);font-size:14px}
 .facts b{display:block;font-size:22px;color:var(--t1)}
 /* 时段时钟（和小程序介绍页同一个圆环、同一节奏：一圈 28 秒） */
 .clockcard{background:var(--card);border-radius:32px;box-shadow:var(--shadow-lg);padding:30px 30px 26px;border:1px solid var(--line)}
@@ -139,41 +145,46 @@ h1 em{font-style:normal;background:var(--hero);-webkit-background-clip:text;back
 .pill{position:absolute;transform:translate(-50%,-50%);height:32px;padding:0 14px;border-radius:16px;display:flex;align-items:center;font-size:14px;font-weight:700;white-space:nowrap}
 .pill.lit{background:var(--lit);color:#fff}.pill.low{background:var(--low);color:var(--on-low)}
 .pill.any{border:2px dashed var(--lit);color:var(--lit);background:var(--card)}
-.p-any{left:15%;top:12%}.p-surf{left:85%;top:12%}.p-lim{left:50%;top:95%}
+.p-any{left:15%;top:12%}.p-surf{left:85%;top:12%}.p-lim{left:auto;right:0;top:95%;transform:translate(0,-50%)}
+/* 远程临时开放：微信绿标签在左下，微信图标挂在圆环左下（225°）的位置上（和小程序介绍页一致） */
+.pill.rmt{background:#07c160;color:#fff}.p-rmt{left:0;top:95%;transform:translate(0,-50%)}
+.cwx{position:absolute;z-index:3;left:27.6%;top:75.7%;width:42px;height:42px;margin:-21px 0 0 -21px;padding:4px;border-radius:13px;background:var(--card);box-shadow:0 4px 12px rgba(7,193,96,.35)}
+.cwx img{display:block;width:100%;height:100%}
 .cm{position:absolute;left:37%;top:40.33%;width:26%;height:26%;border-radius:22%}
 .state{position:relative;height:30px;margin-top:14px}
 .state div{position:absolute;inset:0;text-align:center;font-weight:700;color:var(--lit);opacity:0}
-.state .s2{color:#a88a00}
+.state .s2{color:#a88a00}.state .s4{color:#07a85a;animation:s4 28s linear infinite}
 .state .s1{animation:s1 28s linear infinite}.state .s2{animation:s2 28s linear infinite}.state .s3{animation:s3 28s linear infinite}
 @keyframes s1{0%,25%{opacity:1}25.6%,100%{opacity:0}}
-@keyframes s2{0%,24.4%{opacity:0}25%,75%{opacity:1}75.6%,100%{opacity:0}}
+@keyframes s2{0%,24.4%{opacity:0}25%,57%{opacity:1}57.6%,67.4%{opacity:0}68%,75%{opacity:1}75.6%,100%{opacity:0}}
+@keyframes s4{0%,57%{opacity:0}57.6%,67.4%{opacity:1}68%,100%{opacity:0}}
 @keyframes s3{0%,74.4%{opacity:0}75%,100%{opacity:1}}
 /* 区块 */
-section{padding:96px 0}
+section{padding:64px 0}
 section.alt{background:var(--bg2)}
 .kicker{color:var(--brand);font-weight:800;font-size:14px;letter-spacing:.12em;text-transform:uppercase}
-h2{margin:10px 0 14px;font-size:38px;line-height:1.3;font-weight:850;letter-spacing:-.3px}
+h2{margin:6px 0 10px;font-size:38px;line-height:1.3;font-weight:850;letter-spacing:-.3px}
 .sub{margin:0;color:var(--t2);font-size:18px;max-width:720px}
 /* 折行时各行长短均匀，不留一个词孤零零在第二行（英文版句子长） */
 h1,h2,.sub,.lead,.ending p,.ending .key{text-wrap:balance}
 .center{text-align:center}.center .sub{margin:0 auto}
 /* 痛点：两段对话 */
-.chats{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:48px}
-.chat{background:var(--card);border-radius:28px;padding:28px 28px 24px;box-shadow:var(--shadow);border:1px solid var(--line);display:flex;flex-direction:column;gap:14px}
+.chats{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:32px}
+.chat{background:var(--card);border-radius:28px;padding:22px 26px 20px;box-shadow:var(--shadow);border:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
 .chat h3{margin:0 0 6px;font-size:18px;display:flex;align-items:center;gap:10px}
 .chat h3 span{display:inline-flex;width:28px;height:28px;border-radius:50%;background:var(--brand-soft);color:var(--brand);align-items:center;justify-content:center;font-size:14px}
 .msg{display:flex;align-items:flex-start;gap:12px}
 .msg.kid{justify-content:flex-end}
 .av{flex:none;width:44px;height:44px;border-radius:12px}
-.bub{position:relative;max-width:78%;padding:11px 16px;border-radius:14px;background:var(--brand-soft);line-height:1.55}
+.bub{position:relative;max-width:78%;padding:9px 16px;border-radius:14px;background:var(--brand-soft);line-height:1.55}
 .bub::before{content:"";position:absolute;top:14px;left:-8px;border:8px solid transparent;border-left:0;border-right-color:var(--brand-soft)}
 .kid .bub{background:var(--low);color:var(--on-low);font-weight:700}
 .kid .bub::before{left:auto;right:-8px;border:8px solid transparent;border-right:0;border-left-color:var(--low)}
 .tm{text-align:center;font-size:13px;color:var(--t3);margin:2px 0}
 .tm span{padding:2px 12px;border-radius:999px;background:var(--bg2)}
-.ending{margin:44px auto 0;text-align:center}
+.ending{margin:28px auto 0;text-align:center}
 /* 「安心」段里接着讲开源：和上面的卡片拉开距离 */
-.osshead{margin-top:88px;scroll-margin-top:96px}
+.osshead{margin-top:64px;scroll-margin-top:96px}
 .ending>p,.ending>.key{max-width:960px;margin-left:auto;margin-right:auto}
 .ending p{margin:0 auto;color:var(--t2);font-size:17px}
 .ending .key{margin-top:18px;font-size:24px;font-weight:850;color:var(--t1)}
@@ -187,67 +198,65 @@ h1,h2,.sub,.lead,.ending p,.ending .key{text-wrap:balance}
 .ending .pain p{margin:10px 0 0;color:var(--t2);font-size:15px;line-height:1.7;text-wrap:pretty}
 @media (max-width:760px){.pains{grid-template-columns:1fr}}
 /* 承上启下：和小程序介绍页一样，接到「怎么工作」 */
-.ending .go{display:inline-block;margin-top:16px;font-size:19px;font-weight:700;color:var(--brand)}
+.ending .go{display:inline-block;margin-top:10px;font-size:19px;font-weight:700;color:var(--brand)}
 .ending .go:hover{text-decoration:underline;text-underline-offset:4px}
 /* 怎么工作 */
-.how{display:grid;grid-template-columns:.95fr 1.05fr;gap:56px;align-items:stretch;margin-top:52px}
-.how .clockcard{display:flex;flex-direction:column;justify-content:center;padding:30px}
-.steps{height:100%;display:flex;flex-direction:column;gap:18px}
+.how{display:grid;grid-template-columns:.78fr 1.22fr;gap:40px;align-items:stretch;margin-top:32px}
+.how .clockcard{display:flex;flex-direction:column;justify-content:center;padding:18px 24px}
+.steps{height:100%;display:flex;flex-direction:column;gap:12px}
 .how .step{flex:1;align-items:center}
-.how .clock{max-width:340px}
-.step{display:flex;gap:18px;padding:22px 24px;border-radius:22px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
+.how .clock{max-width:290px}
+.step{display:flex;gap:18px;padding:16px 24px;border-radius:22px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
 .sn{flex:none;width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:850;font-size:17px}
-.sn.lit{background:var(--lit);color:#fff}.sn.low{background:var(--low);color:var(--on-low)}
+.sn.swx{border-radius:13px;overflow:hidden}.sn.swx img{width:100%;height:100%}.sn.lit{background:var(--lit);color:#fff}.sn.low{background:var(--low);color:var(--on-low)}
 .step h4{margin:0 0 4px;font-size:19px}
 .step p{margin:0;color:var(--t3)}
 .tg{display:inline-block;padding:0 10px;border-radius:999px;font-size:14px;font-weight:700;line-height:24px;margin:0 2px}
 .tg.lit{background:var(--lit);color:#fff}.tg.low{background:var(--low);color:var(--on-low)}
-.note{margin-top:14px;font-size:13px;color:var(--t3);text-align:center}
-.extra{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px;justify-content:center}
+.note{margin-top:8px;font-size:13px;color:var(--t3);text-align:center}
+.extra{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;justify-content:center}
 .chip{padding:8px 16px;border-radius:999px;background:var(--card);border:1px solid var(--line);font-size:14px;font-weight:600;color:var(--t2)}
 /* 示意图：宽带 → 路由器 → 三个 WiFi */
-.topo{margin-top:56px;display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
-.diagram{background:var(--card);border-radius:32px;padding:36px 28px;border:1px solid var(--line);box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center}
+.topo{margin-top:32px;display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
+.diagram{background:var(--card);border-radius:32px;padding:16px 24px;border:1px solid var(--line);box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center}
 .node{display:flex;align-items:center;gap:12px;padding:12px 22px;border-radius:18px;background:var(--brand-soft)}
 .node img{width:30px;height:30px}
 .node b{font-size:16px}.node small{color:var(--t3);font-size:13px}
-.vl{width:3px;height:30px;background:var(--wire)}
+.vl{width:3px;height:22px;background:var(--wire)}
 .rj{width:34px;height:26px}
 .gear{position:relative;display:flex;align-items:center;gap:14px;padding:16px 26px 16px 16px;border-radius:24px;background:var(--hero);color:#fff;box-shadow:0 14px 36px rgba(91,59,255,.35)}
 .gear img{width:54px;height:54px;border-radius:14px}
 .gear b{display:block;font-size:18px}.gear small{opacity:.85}
-.wx{position:absolute;z-index:2;left:calc(50% + 40px);bottom:calc(100% + 44px);display:flex;align-items:center;gap:12px;padding:12px 22px 12px 12px;border-radius:20px;background:var(--hero);color:#fff;font-size:16px;font-weight:700;line-height:1.4;white-space:nowrap;box-shadow:0 14px 36px rgba(91,59,255,.35)}
+.wx{position:absolute;z-index:2;left:calc(50% + 40px);bottom:calc(100% + 28px);display:flex;align-items:center;gap:12px;padding:12px 22px 12px 12px;border-radius:20px;background:var(--hero);color:#fff;font-size:16px;font-weight:700;line-height:1.4;white-space:nowrap;box-shadow:0 14px 36px rgba(91,59,255,.35)}
 .wx img{width:44px;height:44px}
-.wx::before{content:"";position:absolute;left:33px;top:100%;height:44px;border-left:3px dashed var(--wire)}
-.vl.long{height:84px}
-.fan{position:relative;width:100%;height:36px}
+.wx::before{content:"";position:absolute;left:33px;top:100%;height:28px;border-left:3px dashed var(--wire)}
+.vl.long{height:62px}
+.fan{position:relative;width:100%;height:28px}
 .fan i{position:absolute;background:var(--wire)}
-.fan .a{left:50%;top:0;width:3px;height:18px;margin-left:-1.5px}
-.fan .b{left:16.66%;right:16.66%;top:18px;height:18px;border:3px solid var(--wire);border-bottom:0;border-radius:14px 14px 0 0;background:none}
-.fan .c{left:50%;top:18px;width:3px;height:18px;margin-left:-1.5px}
-.kids{width:100%;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.kidn{padding:14px 8px 16px;border-radius:20px;text-align:center;display:flex;flex-direction:column;align-items:center}
+.fan .a{left:50%;top:0;width:3px;height:14px;margin-left:-1.5px}
+.fan .b{left:16.66%;right:16.66%;top:14px;height:14px;border:3px solid var(--wire);border-bottom:0;border-radius:14px 14px 0 0;background:none}
+.fan .c{left:50%;top:14px;width:3px;height:14px;margin-left:-1.5px}
+.kids{width:100%;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.kidn{padding:10px 8px 10px;border-radius:20px;text-align:center;display:flex;flex-direction:column;align-items:center}
 .kidn.k1{background:var(--low);color:var(--on-low)}.kidn.k2{background:var(--k2);color:var(--on-k2)}.kidn.p{background:var(--pw);color:var(--t2)}
-.kidn .wf{width:30px;height:30px}
+.kidn .wf{width:26px;height:26px}
 .kidn b{font-size:15px}.kidn small{font-size:12px;opacity:.85}
-.devs{display:flex;gap:12px;margin-top:8px;font-size:12px}
+.devs{display:flex;gap:12px;margin-top:4px;font-size:12px}
 .devs span{display:flex;flex-direction:column;align-items:center}
 .devs i{font-style:normal}
-/* 首屏左上：一点 logo，右上角星芒呼吸光晕（和小程序介绍页一样） */
+/* 首屏左上：一点 logo（星芒不加呼吸光晕，11-11 用户定） */
 .heroart{position:relative;width:240px;height:240px}
 .heroart img{width:100%;height:100%;border-radius:22%;box-shadow:0 30px 80px rgba(60,20,180,.35)}
-.heroart .glow{position:absolute;left:84.2%;top:29.3%;width:76px;height:76px;margin:-38px 0 0 -38px;border-radius:50%;background:radial-gradient(circle,rgba(255,246,170,.75) 0%,rgba(255,230,0,.3) 35%,rgba(255,230,0,0) 70%);animation:star 2.4s ease-in-out infinite}
-@keyframes star{0%,100%{opacity:.3;transform:scale(.85)}50%{opacity:.7;transform:scale(1.05)}}
-@media (max-width:960px){.heroart{width:160px;height:160px}.heroart .glow{width:56px;height:56px;margin:-28px 0 0 -28px}}
-.devs img{width:28px;height:28px}
+@media (max-width:960px){.heroart{width:160px;height:160px}}
+.devs img{width:24px;height:24px}
 .tl{display:flex;flex-direction:column;gap:6px}
-.tli{position:relative;display:flex;gap:16px;padding-bottom:22px}
+.tli{position:relative;display:flex;gap:16px;padding-bottom:16px}
 .tli::after{content:"";position:absolute;left:17px;top:40px;bottom:0;width:3px;border-radius:2px;background:var(--wire)}
 .tli:last-child::after{display:none}
 .tln{flex:none;position:relative;z-index:1;width:37px;height:37px;border-radius:50%;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800}
 .tli h4{margin:4px 0 4px;font-size:18px}.tli p{margin:0;color:var(--t3)}
 /* 安心 */
-.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:48px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:32px}
 /* 关于费用（一句话，hld ADR-54）：放在「使用安心」四张卡片下面 */
 .feel{margin:6px 0;padding-left:20px}.feel li{margin:2px 0}
 .fee{display:flex;gap:14px;align-items:flex-start;max-width:860px;margin:24px auto 0;padding:18px 22px;border-radius:18px;background:var(--card);border:1px solid var(--line);color:var(--t2);font-size:15.5px;line-height:1.7}
@@ -295,12 +304,11 @@ footer a:hover{color:var(--brand)}
 .hmain{display:flex;flex-direction:column}
 .hgrid .htop{grid-template-columns:auto 1fr;gap:36px}
 .hgrid .heroart{width:200px;height:200px}
-.hgrid .heroart .glow{width:66px;height:66px;margin:-33px 0 0 -33px}
 .hgrid h1{font-size:52px;line-height:1.3;margin:26px 0 0}
 .hgrid .lead{font-size:21px;line-height:1.9}
 .hgrid .hrow{flex-direction:column;align-items:flex-start;gap:30px;margin-top:36px}
-.hgrid .facts{margin-top:36px;padding-top:30px;gap:24px;font-size:15px}
-.hgrid .facts b{font-size:23px;margin-bottom:6px}
+.hgrid .facts{margin-top:26px;padding-top:0;border-top:0;gap:14px 40px;font-size:14px}   /* 11-09 四个卖点替换首屏那段说明，放在按钮上面 */
+.hgrid .facts b{font-size:19px;margin-bottom:2px}
 .dwrap{position:relative;display:flex;flex-direction:column;align-items:center}
 /* 「请微信搜索…完整体验 ›」：在四个卖点下面 */
 .dcap{align-self:flex-end;margin-top:22px;font-size:13px;color:var(--t3);opacity:.7}
@@ -376,11 +384,10 @@ html[data-lang="en"] .hgrid .facts b{font-size:19px;white-space:nowrap}
   .brand small{display:none}
   .tools .gh{display:none}
   h1{font-size:32px}h2{font-size:28px}
-  section{padding:64px 0}
+  section{padding:64px 0}section[id]{scroll-margin-top:-36px}
   .cards{grid-template-columns:1fr}
   .htop{grid-template-columns:1fr;gap:20px}
   .heroart{width:120px;height:120px}
-  .heroart .glow{width:42px;height:42px;margin:-21px 0 0 -21px}
   .hrow{flex-direction:column;align-items:flex-start;gap:24px}
   .facts{gap:18px}
   .outro .box{padding:40px 20px}
@@ -393,6 +400,62 @@ html[data-lang="en"] .hgrid .facts b{font-size:19px;white-space:nowrap}
   .wx::before{left:23px}
 }
 @media (prefers-reduced-motion:reduce){.spin,.state div{animation:none}.state .s1{opacity:1}}
+
+/* 首屏（11-09 定稿 B + 浅紫标签 + 定位句 + 十字线）：定位句在 logo 行下面通栏，四个卖点 2×2 带渐变圆形图标，中间十字分隔线 */
+.hgrid .pos{margin:0;font-size:19px;line-height:1.6;color:var(--t2)}
+.hgrid .facts2{margin-top:22px;padding-top:22px;border-top:1px solid var(--line)}
+.facts2 b{display:block;color:var(--t1)}.facts2 span{display:block;color:var(--t2)}
+
+.vb{display:grid;grid-template-columns:1fr 1fr;gap:22px 36px}
+.vb .fx{display:flex;gap:14px;align-items:flex-start}
+.vb .fi{flex:none;width:42px;height:42px;border-radius:50%;background:var(--hero);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(91,59,255,.3)}
+.vb .fi svg{width:22px;height:22px}
+.vb b{font-size:24px;font-weight:850;line-height:1.2}.vb span{font-size:15.5px;margin-top:4px}
+.tag{background:var(--brand-soft);color:var(--brand);border:1px solid color-mix(in srgb,var(--brand) 22%,transparent)}
+.vb{position:relative;gap:0}
+.vb .fx{padding:18px 16px 18px 24px}.vb .fx:nth-child(even){padding-right:0}
+.vb .fx:nth-child(odd){padding-left:0}
+.vb::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:linear-gradient(transparent,var(--line) 18%,var(--line) 82%,transparent)}
+.vb::after{content:"";position:absolute;top:50%;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--line) 12%,var(--line) 88%,transparent)}
+.hgrid .facts2{border-top:0;padding-top:0;margin-top:0}
+
+@media (max-width:640px){.vb{grid-template-columns:1fr}.vb::before,.vb::after{display:none}.vb .fx,.vb .fx:nth-child(odd),.vb .fx:nth-child(even){padding:12px 0}.vb .fx+.fx{border-top:1px solid var(--line)}.hgrid .pos{font-size:17px}}
+
+.feehead{margin-top:56px;scroll-margin-top:96px}
+/* 费用（11-09 重做）：先用一年全部功能 → 分叉成两条路（继续远程管理 / 只在家管理）→ 底部几条保证 */
+.fee{display:block;max-width:none;margin:22px 0 0;padding:26px 28px 22px;border-radius:24px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);color:var(--t2)}
+.fhd{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.fhd b{font-size:19px;color:var(--t1)}.fhd small{font-size:14px;color:var(--t3)}
+.fflow{display:grid;grid-template-columns:minmax(0,.85fr) 210px minmax(0,1.05fr);align-items:center;margin-top:22px}
+.fstart{padding:22px 22px 20px;border-radius:20px;background:var(--hero);color:#fff;box-shadow:0 14px 36px rgba(91,59,255,.3)}
+.fstart>i{display:inline-flex;align-items:center;gap:6px;font-style:normal;font-size:12.5px;font-weight:800;padding:3px 11px 3px 9px;border-radius:999px;background:var(--spark,#ffe600);color:#1b1640}
+.fstart>i::before{content:"";width:7px;height:7px;border-radius:50%;background:#1b1640}
+.fstart h4{margin:0 0 10px;font-size:23px;font-weight:850}
+.fstart p{margin:0;font-size:15px;line-height:1.6;opacity:.92}
+.fstart .fm{display:flex;flex-direction:column;gap:8px;margin-top:2px}
+.fstart .fm{gap:12px;margin-top:6px}.fstart .fm div{display:flex;flex-direction:column;font-size:14px;line-height:1.55}
+.fstart .fm div>span{padding-left:28px;opacity:.85}
+.fstart .fm b{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:800;color:#fff}
+.fstart .fm .mi{position:relative;flex:none;width:22px;height:22px;border-radius:7px;background:#fff;color:#5b3bff;display:flex;align-items:center;justify-content:center}
+.fstart .fm .mi svg{width:16px;height:16px}
+.fstart .fm .mi em{position:absolute;left:-9px;top:-7px;font-style:normal;font-size:8.5px;font-weight:900;line-height:1;padding:2px 3px;border-radius:5px;background:var(--spark,#ffe600);color:#1b1640}
+.fstart .fm div>span{padding-left:30px}
+.fstart small{display:block;margin-top:10px;font-size:12.5px;line-height:1.55;opacity:.78}
+.fmid{position:relative;align-self:stretch;min-height:180px}.ffork{position:absolute;inset:0;width:100%;height:100%;color:var(--wire,var(--line))}
+.fmid .fpl{position:absolute;top:50%;left:42%;transform:translate(-50%,-50%);padding:8px 14px;border-radius:14px;background:var(--card);border:1.5px solid var(--wire,var(--line));font-size:13.5px;font-weight:700;line-height:1.55;color:var(--brand);text-align:center;white-space:nowrap}
+.fpaths{position:relative;display:flex;flex-direction:column;gap:12px}
+
+.fp{padding:14px 18px;border-radius:16px;border:2px solid var(--line);background:var(--card)}
+.fp.a{border-color:var(--brand);background:var(--brand-soft)}
+.fp.b{border-color:var(--brand);background:var(--brand-soft)}
+.fp .fa{display:flex;align-items:center;justify-content:space-between;gap:10px;font-weight:800;font-size:17px;color:var(--t1)}
+.fp em{flex:none;font-style:normal;font-size:13px;font-weight:800;padding:3px 10px;border-radius:999px;background:var(--bg2);color:var(--t2);border:1px solid var(--line)}
+.fp em s{margin-left:6px;opacity:.7;font-weight:600}
+.fp em.z{background:var(--bg2);color:var(--t2);border:1px solid var(--line)}
+.fp p{margin:5px 0 0;font-size:14px;line-height:1.6;color:var(--t2)}
+.fok{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:18px;padding-top:14px;border-top:1px dashed var(--line);font-size:14px;color:var(--t2)}
+.fok span{white-space:nowrap}
+@media (max-width:860px){.fflow{grid-template-columns:1fr}.fflow{margin-top:18px}.ffork{display:none}.fmid{min-height:0;margin:14px 0}.fmid .fpl{position:static;transform:none;display:inline-block}.fmid{text-align:center}.fhd small{display:block}}
 </style>
 <!-- 百度统计 -->
 <script>
@@ -410,19 +473,18 @@ var _hmt = _hmt || [];
 if(t==='light'||t==='dark')r.setAttribute('data-theme',t);
 if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches))r.classList.add('dk')})();
 </script>
-<link rel="stylesheet" href="assets/demo-ui.css?v=6dbdd433"><!-- 首屏手机演示的小程序样式要在页面画出来之前就位，否则图标先按原图大小闪一下 -->
+<link rel="stylesheet" href="assets/demo-ui.css?v=cdbdf44c"><!-- 首屏手机演示的小程序样式要在页面画出来之前就位，否则图标先按原图大小闪一下 -->
 </head>
 <body>
 
 <header class="nav">
   <div class="wrap">
-    <a class="brand" href="#top"><img src="assets/logo.svg" alt=""><span lang="zh">一点守护</span><span lang="en">Doti</span><small lang="zh">孩子上网时间管理</small><small lang="en">Screen time for kids</small></a>
+    <a class="brand" href="#top"><img class="lk l" lang="zh" src="assets/logo-lockup.svg?v=4bc1366a" alt="一点守护 www.doti.top"><img class="lk d" lang="zh" src="assets/logo-lockup-dark.svg?v=474ea081" alt="一点守护 www.doti.top"><img lang="en" src="assets/logo.svg" alt=""><span lang="en">Doti</span><small lang="en">Screen time for kids</small></a>
     <nav class="links">
       <a href="#why"><span lang="zh">为什么</span><span lang="en">Why</span></a>
       <a href="#how"><span lang="zh">怎么工作</span><span lang="en">How it works</span></a>
       <a href="#setup"><span lang="zh">怎么用</span><span lang="en">Setup</span></a>
-      <a href="#trust"><span lang="zh">放心</span><span lang="en">Peace of mind</span></a>
-      <a href="#fee"><span lang="zh">费用</span><span lang="en">Cost</span></a>
+      <a href="#trust"><span lang="zh">使用安心</span><span lang="en">Peace of mind</span></a>
       <a class="qs" href="quick-start/"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></svg><span lang="zh">快速开始</span><span lang="en">Quick Start</span></a>
     </nav>
     <div class="tools">
@@ -440,25 +502,20 @@ if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches)
    <div class="hgrid">
     <div class="hmain">
     <div class="htop">
-      <div class="heroart" aria-hidden="true"><img src="assets/logo.svg" alt=""><span class="glow"></span></div>
+      <div class="heroart" aria-hidden="true"><img src="assets/logo.svg" alt=""></div>
       <div>
         <span class="tag"><span lang="zh">一点守护 · 孩子上网时间管理</span><span lang="en">Doti · Screen time for kids, handled by your router</span></span>
-        <h1><span lang="zh">不用等固定时段，<br><em>到点只限速，不断网</em></span><span lang="en">No fixed time slots.<br><em>When time's up, it slows down — never cuts off.</em></span></h1>
+        <h1><span lang="zh">用心「一点」，<br><em>给孩子守护多一点</em></span><span lang="en">A little more care,<br><em>a little more protection for your kids.</em></span></h1>
       </div>
     </div>
     <div class="hrow">
-      <p class="lead"><span lang="zh">孩子什么时候开始用，就从什么时候计时；用一会儿、慢一会儿自动轮换，限速时发消息、查资料还能用。规则装在家里的路由器上，原来的 WiFi 照常用；在家管理一直免费。</span><span lang="en">The clock starts when your child starts. Online for a while, slower for a while, on repeat — and while it's slow, messages and homework lookups still get through. The rules live on your home router, your existing WiFi keeps working, and managing at home is always free.</span></p>
+      <p class="pos"><span lang="zh">装在家里的路由器上，配合微信小程序，轻松管好孩子什么时候上网、用多久。</span><span lang="en">It runs on your home router and works with a WeChat mini program — making it easy to handle when your kids go online and for how long.</span></p>
+      <div class="facts2 vb"><div class="fx"><div class="ft"><b lang="zh">自动管</b><b lang="en">Hands-free</b><span lang="zh">用一会儿、慢一会儿，自动轮换</span><span lang="en">online a while, slower a while, on repeat</span></div></div><div class="fx"><div class="ft"><b lang="zh">不固定</b><b lang="en">No fixed slots</b><span lang="zh">孩子什么时候开始用，就从什么时候计时</span><span lang="en">the clock starts when your child starts</span></div></div><div class="fx"><div class="ft"><b lang="zh">不断网</b><b lang="en">Never cut off</b><span lang="zh">到点只限速，消息照常收发</span><span lang="en">slower, but messages still get through</span></div></div><div class="fx"><div class="ft"><b lang="zh">零安装</b><b lang="en">Nothing to install</b><span lang="zh">装在路由器上，孩子设备什么都不用装</span><span lang="en">runs on the router, no apps on kids' devices</span></div></div></div>
       <div class="ctas">
         <a class="btn p" href="#start"><img src="assets/intro-wechat.svg" alt=""><span lang="zh">微信搜「一点守护」，先模拟体验</span><span lang="en">Try it in WeChat: search “一点守护”</span></a>
         <a class="btn qs" href="quick-start/"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></svg><span lang="zh">自己装到 OpenWrt 路由器</span><span lang="en">Install on your OpenWrt router</span></a>
       </div>
     </div>
-      <div class="facts">
-        <div><b lang="zh">不固定</b><b lang="en">No fixed slots</b><span lang="zh">有空就能用，不用干等时段</span><span lang="en">online whenever there's free time</span></div>
-        <div><b lang="zh">不断网</b><b lang="en">Never cut off</b><span lang="zh">到点只限速，消息照常收发</span><span lang="en">slower, but messages still get through</span></div>
-        <div><b lang="zh">零安装</b><b lang="en">Nothing to install</b><span lang="zh">孩子设备上什么都不用装</span><span lang="en">no apps on kids' devices</span></div>
-        <div><b lang="zh">各管各</b><b lang="en">One WiFi per child</b><span lang="zh">每个孩子一个 WiFi，规则各管各</span><span lang="en">each child gets their own rules</span></div>
-      </div>
       <p class="dcap"><span lang="zh">没有路由器也能在小程序里模拟体验完整界面；右边的手机也可以直接点一点。</span><span lang="en">No router needed to try the full app in demo mode — or tap around the phone on the right.</span></p>
     </div>
     <!-- 首屏手机演示：assets/demo-core.js 是小程序演示模式同一份逻辑（scripts/build-site-demo.py 生成），demo-phone.js 画界面 -->
@@ -497,7 +554,7 @@ if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches)
     <div class="center">
       <div class="kicker"><span lang="zh">为什么</span><span lang="en">Why</span></div>
       <h2><span lang="zh">这一幕，你家是不是也常上演？</span><span lang="en">Does this sound familiar?</span></h2>
-      <p class="sub"><span lang="zh">固定时段要干等，到点了又停不下来——两头都是拉锯。</span><span lang="en">Kids wait for a fixed slot, then can't stop when it ends. A tug-of-war either way.</span></p>
+      <p class="sub"><span lang="zh">固定时段要干等，到点了又停不下来，两头都是拉锯。</span><span lang="en">Kids wait for a fixed slot, then can't stop when it ends. A tug-of-war either way.</span></p>
     </div>
     <div class="chats">
       <div class="chat">
@@ -518,7 +575,7 @@ if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches)
     </div>
     <div class="ending">
       <div class="key"><span lang="zh">大人刷手机都难自觉停下来，何况是孩子。</span><span lang="en">Even adults struggle to put the phone down. Why expect more from kids?</span></div>
-      <p><span lang="zh">放任怕沉迷，硬管伤感情，工具又只认固定时段——缺的是一个顺着生活来的办法。</span><span lang="en">Hands off and you worry; too strict and it hurts; tools only know fixed slots. What's missing is something that fits real life.</span></p>
+      <p><span lang="zh">放任怕沉迷，硬管伤感情，工具又只认固定时段，缺的是一个顺着生活来的办法。</span><span lang="en">Hands off and you worry; too strict and it hurts; tools only know fixed slots. What's missing is something that fits real life.</span></p>
       <a class="go" href="#how"><span lang="zh">看看「一点守护」路由器如何来帮忙？</span><span lang="en">See how the Doti router can help</span> ↓</a>
     </div>
   </div>
@@ -541,12 +598,15 @@ if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches)
           <div class="pill any p-any"><span lang="zh">随时可上网</span><span lang="en">Ready anytime</span></div>
           <div class="pill lit p-surf"><span lang="zh">上网 30 分钟</span><span lang="en">30 min online</span></div>
           <div class="pill low p-lim"><span lang="zh">限速 60 分钟</span><span lang="en">60 min slow</span></div>
+          <div class="cwx"><img src="assets/intro-wechat.svg" alt=""></div>
+          <div class="pill rmt p-rmt"><span lang="zh">远程临时开放</span><span lang="en">Open remotely</span></div>
           <img class="cm" src="assets/logo.svg" alt="">
         </div>
         <div class="state">
           <div class="s1"><span lang="zh">网速正常 · 正在计时</span><span lang="en">Full speed · timer running</span></div>
           <div class="s2"><span lang="zh">网速慢下来 · 不断网</span><span lang="en">Slowed down · still connected</span></div>
-          <div class="s3"><span lang="zh">网速恢复 · 随时可上网</span><span lang="en">Back to full speed · ready anytime</span></div>
+          <div class="s3"><span lang="zh">网速恢复 · 下一轮随时开始</span><span lang="en">Back to full speed · next round anytime</span></div>
+          <div class="s4"><span lang="zh">微信小程序 · 远程临时开放</span><span lang="en">WeChat mini program · open remotely</span></div>
         </div>
       </div>
       <div>
@@ -554,6 +614,7 @@ if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches)
           <div class="step"><div class="sn lit">1</div><div><h4><span lang="zh">随时开始上网</span><span lang="en">Start anytime</span></h4><p><span lang="zh">网络一直开着，孩子什么时候开始用，就从什么时候计时。</span><span lang="en">The network is always on. The clock only starts when your child actually goes online.</span></p></div></div>
           <div class="step"><div class="sn low">2</div><div><h4><span lang="zh">到点自动限速</span><span lang="en">Slows down on time</span></h4><p><span lang="zh">用满<span class="tg lit">30 分钟</span>，网速自动慢下来；不断网，发个消息、查个资料还能用。</span><span lang="en">After <span class="tg lit">30 min</span> the speed drops automatically — but it never disconnects, so messages and homework lookups still work.</span></p></div></div>
           <div class="step"><div class="sn lit">3</div><div><h4><span lang="zh">网速自动恢复</span><span lang="en">Full speed comes back</span></h4><p><span lang="zh">限速满<span class="tg low">60 分钟</span>后网速自动恢复，孩子下次用时自动开始新一轮。</span><span lang="en">After <span class="tg low">60 min</span> of slow speed, full speed comes back by itself; the next round starts the next time they go online.</span></p></div></div>
+          <div class="step"><div class="sn swx"><img src="assets/intro-wechat.svg" alt=""></div><div><h4><span lang="zh">远程临时开放</span><span lang="en">Open it up remotely</span></h4><p><span lang="zh">限速时孩子临时要用，你在外面也能在微信小程序里点一下放开。</span><span lang="en">Kid needs it during a slow spell? Open it up with one tap in the WeChat mini program, even when you're out.</span></p></div></div>
         </div>
       </div>
     </div>
@@ -561,10 +622,9 @@ if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches)
       <span class="chip" lang="zh">🌙 睡觉时段</span><span class="chip" lang="en">🌙 Bedtime</span>
       <span class="chip" lang="zh">📚 网课时段</span><span class="chip" lang="en">📚 Online classes</span>
       <span class="chip" lang="zh">⏱ 每天最多</span><span class="chip" lang="en">⏱ Daily limit</span>
-      <span class="chip" lang="zh">✋ 临时开放</span><span class="chip" lang="en">✋ Open for now</span>
-      <span class="chip" lang="zh">🎒 按年龄的模板</span><span class="chip" lang="en">🎒 Age-based presets</span>
+      <span class="chip" lang="zh">🚫 游戏/视频网站屏蔽</span><span class="chip" lang="en">🚫 Block game/video sites</span>
         </div>
-    <div class="note"><span lang="zh">* 上述时长只是示例，家长可以自由设置和选择</span><span lang="en">* Durations are examples — parents choose their own.</span></div>
+    <div class="note"><span lang="zh">* 上述时长只是示例，家长可以自己设</span><span lang="en">* Durations are examples — parents choose their own.</span></div>
   </div>
 </section>
 
@@ -580,7 +640,7 @@ if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches)
       <div class="diagram">
         <div class="node"><img src="assets/intro-modem.svg" data-dark="assets/intro-modem-dark.svg" alt=""><div><b lang="zh">家里的宽带</b><b lang="en">Home broadband</b><br><small lang="zh">光猫或路由器</small><small lang="en">modem or router</small></div></div>
         <div class="vl"></div><img class="rj" src="assets/intro-rj45.svg" data-dark="assets/intro-rj45-dark.svg" alt=""><div class="vl long"></div>
-        <div class="gear"><img src="assets/logo.svg" alt=""><div><b lang="zh">「一点守护」路由器</b><b lang="en">Doti router</b><small lang="zh">预装或自己安装开源程序</small><small lang="en">pre-installed or DIY, open source</small></div>
+        <div class="gear"><img src="assets/logo.svg" alt=""><div><b lang="zh">「一点守护」路由器</b><b lang="en">Doti router</b><small lang="zh">一键安装，简单几步配置就能用</small><small lang="en">one-command install, set up in a few steps</small></div>
           <div class="wx"><img src="assets/intro-wechat.svg" alt=""><span lang="zh">「一点守护」<br>微信小程序</span><span lang="en">“一点守护”<br>WeChat app</span></div>
         </div>
         <div class="fan"><i class="a"></i><i class="b"></i><i class="c"></i></div>
@@ -589,14 +649,14 @@ if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches)
             <div class="devs"><span><img src="assets/intro-tablet-k1.svg" alt=""><i lang="zh">平板</i><i lang="en">Tablet</i></span><span><img src="assets/intro-phone-k1.svg" alt=""><i lang="zh">手机</i><i lang="en">Phone</i></span></div></div>
           <div class="kidn k2"><img class="wf" src="assets/intro-wifi-k2.svg" alt=""><b lang="zh">二宝的 WiFi</b><b lang="en">Kid 2's WiFi</b><small lang="zh">多孩不干扰</small><small lang="en">own rules per child</small>
             <div class="devs"><span><img src="assets/intro-tablet-k2.svg" alt=""><i lang="zh">平板</i><i lang="en">Tablet</i></span><span><img src="assets/intro-tv-k2.svg" alt=""><i lang="zh">电视</i><i lang="en">TV</i></span></div></div>
-          <div class="kidn p"><img class="wf" src="assets/intro-wifi-p.svg" data-dark="assets/intro-wifi-p-dark.svg" alt=""><b lang="zh">家长的 WiFi</b><b lang="en">Parents' WiFi</b><small lang="zh">自由不影响</small><small lang="en">never limited</small>
+          <div class="kidn p"><img class="wf" src="assets/intro-wifi-p.svg" data-dark="assets/intro-wifi-p-dark.svg" alt=""><b lang="zh">家长的 WiFi</b><b lang="en">Parents' WiFi</b><small lang="zh">自由不受限</small><small lang="en">works as usual, no limits</small>
             <div class="devs"><span><img src="assets/intro-phone-p.svg" data-dark="assets/intro-phone-p-dark.svg" alt=""><i lang="zh">手机</i><i lang="en">Phone</i></span><span><img src="assets/intro-pc-p.svg" data-dark="assets/intro-pc-p-dark.svg" alt=""><i lang="zh">电脑</i><i lang="en">PC</i></span></div></div>
         </div>
       </div>
       <div class="tl">
-        <div class="tli"><div class="tln">1</div><div><h4><span lang="zh">接好「一点守护」路由器</span><span lang="en">Plug in the Doti router</span></h4><p><span lang="zh">预装好的路由器接上网线、插电就能用，想买的话在小程序里问客服；家里有 OpenWrt 路由器，也可以自己装。家里原来的 WiFi 照常用，孩子另外连自己的 WiFi。</span><span lang="en">A pre-installed one just needs the cable and power (ask us whether one is available). Or install it yourself on a supported OpenWrt router. Your existing WiFi keeps working; the kids join their own WiFi.</span></p></div></div>
+        <div class="tli"><div class="tln">1</div><div><h4><span lang="zh">接好「一点守护」路由器</span><span lang="en">Plug in the Doti router</span></h4><p><span lang="zh">预装好的接上网线、插电就能用，在小程序里问客服；家里有 OpenWrt 路由器也可以自己装。原来的 WiFi 照常用。</span><span lang="en">A pre-installed one just needs the cable and power (ask us whether one is available). Or install it yourself on a supported OpenWrt router. Your existing WiFi keeps working.</span></p></div></div>
         <div class="tli"><div class="tln">2</div><div><h4><span lang="zh">微信里几步设置</span><span lang="en">A few taps in WeChat</span></h4><p><span lang="zh">打开小程序，自动发现「一点守护」路由器，跟着提示几步设好。</span><span lang="en">Open the mini program — it finds the router on its own and walks you through setup.</span></p></div></div>
-        <div class="tli"><div class="tln">3</div><div><h4><span lang="zh">孩子设备连上孩子的 WiFi</span><span lang="en">Kids join their own WiFi</span></h4><p><span lang="zh">手机、平板、电视连上就行，设备上什么都不用装，自动开始管理；家长 WiFi 用单独的密码，不告诉孩子，就不用担心孩子随手改连家长 WiFi 绕开规则。</span><span lang="en">Phones, tablets, TVs — just connect. Nothing to install on any device. The parents' WiFi has its own password; keep it from the kids and they can't hop over to dodge the rules.</span></p></div></div>
+        <div class="tli"><div class="tln">3</div><div><h4><span lang="zh">孩子设备连上孩子的 WiFi</span><span lang="en">Kids join their own WiFi</span></h4><p><span lang="zh">手机、平板、电视连上就行，什么都不用装。家长 WiFi 单独设密码，孩子连不上，也就绕不开规则。</span><span lang="en">Phones, tablets, TVs — just connect, nothing to install. The parents' WiFi has its own password, so the kids can't hop over to dodge the rules.</span></p></div></div>
         <div class="tli"><div class="tln">4</div><div><h4><span lang="zh">日常不用管，临时点一下就开</span><span lang="en">Then forget about it</span></h4><p><span lang="zh">日常全自动，不用天天盯；孩子临时要用，家长在小程序里点一下就开。</span><span lang="en">It runs itself day to day. Need an exception? One tap in the mini program.</span></p></div></div>
       </div>
     </div>
@@ -607,20 +667,30 @@ if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches)
 <section id="trust">
   <div class="wrap">
     <div class="center">
-      <div class="kicker"><span lang="zh">放心</span><span lang="en">Peace of mind</span></div>
+      <div class="kicker"><span lang="zh">使用安心</span><span lang="en">Peace of mind</span></div>
       <h2><span lang="zh">只管时间，不看内容</span><span lang="en">Time, not content</span></h2>
       <p class="sub"><span lang="zh">守护的是节奏和习惯，不是监视。</span><span lang="en">It's about rhythm and habits — not surveillance.</span></p>
     </div>
     <div class="cards">
       <div class="card"><div class="ic"><img src="assets/intro-shield.svg" data-dark="assets/intro-shield-dark.svg" alt=""></div><h4><span lang="zh">不看上网内容</span><span lang="en">No snooping</span></h4><p><span lang="zh">只管网速和时长，不看孩子上网的内容。</span><span lang="en">Only speed and time are managed — never what your kids are looking at.</span></p></div>
-      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--brand)"><path d="M3 10l9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg></div><h4><span lang="zh">在家管理不经过云端</span><span lang="en">At home, no cloud in between</span></h4><p><span lang="zh">手机连着家里的 WiFi 时，直接和路由器通信。当天的统计只在路由器上；在远程管理服务期内，路由器才把前一天的统计（只有时长和设备，不含上网内容）交给云端，方便你在外面看。</span><span lang="en">On your home WiFi the app talks to the router directly. Today's stats stay on the router; only during a remote-management period does the router send yesterday's summary (time and devices only, no content) to the cloud so you can see it while out.</span></p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--brand)"><path d="M3 10l9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg></div><h4><span lang="zh">在家管理不经过云端</span><span lang="en">At home, no cloud in between</span></h4><p><span lang="zh">在家时手机直接和路由器通信。开着远程管理时，云端每天只收到前一天的上网时长，不含上网内容。</span><span lang="en">At home your phone talks to the router directly. With remote management on, the cloud only gets yesterday's screen time each day — no browsing content.</span></p></div>
       <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--brand)"><path d="M8 9l-4 3 4 3M16 9l4 3-4 3M13 6l-2 12"/></svg></div><h4><span lang="zh">程序开源可查</span><span lang="en">Open for inspection</span></h4><p><span lang="zh">路由器上的程序全部开源，懂技术的人都能检查它做了什么。</span><span lang="en">The router software is fully open source — anyone can check what it does.</span></p></div>
       <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="color:var(--brand)"><path d="M7 18a4.5 4.5 0 0 1-.6-8.96A6 6 0 0 1 18 9.5a4 4 0 0 1 0 8.5z"/><path d="M4 4l16 16"/></svg></div><h4><span lang="zh">WiFi 密码不上云</span><span lang="en">WiFi passwords stay off the cloud</span></h4><p><span lang="zh">家长和孩子的 WiFi 密码只存在家里的路由器和你们自己的设备上，不上传云端。</span><span lang="en">Parents' and kids' WiFi passwords stay on your home router and your own devices — never uploaded to the cloud.</span></p></div>
     </div>
-    <div class="fee" id="fee"><i class="ic">💡</i><div><span lang="zh"><b>费用：先用，再决定付不付</b><br>在家管理（手机连着家里的 WiFi）一直免费。不在家时的远程管理按路由器算、全家共用，一年一期，每一期都先用：<ul class="feel"><li>在这一期里付：优惠价 36 元（原价 60 元/年）</li><li>过了期再补这一期：按原价 60 元，付完开始新的一期，同样先用后付</li><li>第一期从绑定次月起算 12 个月（比如 11 月 15 日绑定，到第二年 11 月底）</li></ul>不自动扣费；不付也不会断网，孩子的规则照常执行，只是不能在外面管。</span><span lang="en"><b>Cost: use first, then decide</b><br>Managing at home (phone on your home WiFi) is always free. Remote management while you're out is per router, shared by the whole family, one year per period — and every period is use first:<ul class="feel"><li>Pay during the period: ¥36 (list price ¥60/yr)</li><li>Pay for it after it ends: ¥60, and a new period starts — again use first, pay later</li><li>Your first period counts 12 months from the month after you set up (set up on 15 November → through the end of next November)</li></ul>Nothing is charged automatically, and if you don't pay nothing gets cut off — your kids' rules keep running; you just can't manage from outside.</span></div></div>
+    <div class="center feehead"><h2><span lang="zh">先用，呵护孩子零门槛</span><span lang="en">Use first — no barrier to caring for your kids</span></h2><p class="sub"><span lang="zh">在家管理一直免费；远程管理全家共用，满意了再付。</span><span lang="en">Managing at home is always free; remote management is shared by the family — pay only if it's worth it.</span></p></div>
+    <div class="fee" id="fee">
+      <div class="fflow">
+        <div class="fstart"><h4><span lang="zh">先用一年，开放全部功能</span><span lang="en">Use everything for a year first</span></h4><div class="fm"><div><b><i class="mi" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M3 9.5a13 13 0 0 1 18 0"/><path d="M6.2 13a8.5 8.5 0 0 1 11.6 0"/><path d="M9.3 16.4a4 4 0 0 1 5.4 0"/><circle cx="12" cy="19.6" r="1.3" fill="currentColor" stroke="none"/></svg></i><span lang="zh">在家管理</span><span lang="en">At home</span></b><span lang="zh">在家直连「一点守护」路由器家长 WiFi，小程序操作所有管理功能</span><span lang="en">on the Doti router's parents' WiFi, use every feature in the mini program</span></div><div><b><i class="mi" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="2.5" y="15" width="3" height="5" rx="1"/><rect x="7" y="11.5" width="3" height="8.5" rx="1"/><rect x="11.5" y="8" width="3" height="12" rx="1"/><rect x="16" y="4.5" width="3" height="15.5" rx="1"/></svg></i><span lang="zh">远程管理</span><span lang="en">Remote</span></b><span lang="zh">办公室或手机 4G/5G 等任何网络下，可远程实时进行路由器管理以及服务端统计分析</span><span lang="en">from the office, on 4G/5G or any network, manage the router in real time and see cloud usage stats</span></div></div></div>
+        <div class="fmid"><svg class="ffork" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M0 50 H40 C64 50 58 24 100 24 M40 50 C64 50 58 76 100 76" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg><div class="fpl"><span lang="zh">先用的一年快到了<br>两条路随你选</span><span lang="en">First year nearly up?<br>Pick either path</span></div></div>
+        <div class="fpaths">
+          <div class="fp b"><div class="fa"><span lang="zh">「在家管理」就够</span><span lang="en">Home is enough</span><em class="z"><span lang="zh">一直免费</span><span lang="en">Always free</span></em></div><p><span lang="zh">什么都不用做。孩子的规则照常执行，连上家长 WiFi 照常管；以后想在外面管，随时回来付。</span><span lang="en">Do nothing. Your kids' rules keep running and you manage on the parents' WiFi; come back and pay any time you want remote access.</span></p></div>
+          <div class="fp a"><div class="fa"><span lang="zh">继续「远程管理」</span><span lang="en">Keep remote management</span><em><span lang="zh">期内 36 元/年</span><span lang="en">¥36/yr in period</span><s>60</s></em></div><p><span lang="zh">这一期里任何时候付都是 36 元，付完下一期照样先用。过了期再补，按原价 60 元。</span><span lang="en">Pay any time during the period for ¥36, and the next period is use-first again. Paying after it ends is ¥60.</span></p></div>
+        </div>
+      </div>
+      <div class="fok"><span>✓ <span lang="zh">不自动扣费</span><span lang="en">Never charged automatically</span></span><span>✓ <span lang="zh">不付也不断网</span><span lang="en">No payment, no cut-off</span></span><span>✓ <span lang="zh">孩子的规则照常执行</span><span lang="en">Kids' rules keep running</span></span><span>✓ <span lang="zh">付一次全家都能用</span><span lang="en">One payment covers the family</span></span></div>
+    </div>
     <!-- 开源（和「安心」合成一段，菜单「使用安心」） -->
     <div class="center osshead" id="oss">
-      <div class="kicker"><span lang="zh">给懂技术的家长</span><span lang="en">For technical parents</span></div>
       <h2><span lang="zh">路由器程序全部开源</span><span lang="en">The router software is fully open source</span></h2>
       <p class="sub"><span lang="zh">放进家里网络的东西，应该经得起任何人检查。</span><span lang="en">Anything that sits in your home network should be open to inspection.</span></p>
     </div>
@@ -662,8 +732,8 @@ if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches)
 
 <footer>
   <div class="wrap">
-    <span><span lang="zh">一点守护 · 孩子上网时间管理</span><span lang="en">Doti · Screen time for kids</span></span>
-    <span><a href="https://github.com/xautlx/doti-kids-router" target="_blank" rel="noopener">GitHub</a> · <a href="https://gitee.com/xautlx/doti-kids-router" target="_blank" rel="noopener">gitee</a> · GPL-3.0 · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">渝ICP备18007886号-9</a></span>
+    <span><span lang="zh">一点守护 · 用心「一点」，给孩子守护多一点</span><span lang="en">Doti · A little more care, a little more protection for your kids</span></span>
+    <span><a href="https://github.com/xautlx/doti-kids-router" target="_blank" rel="noopener">GitHub</a> · <a href="https://gitee.com/xautlx/doti-kids-router" target="_blank" rel="noopener">gitee</a> · GPL-3.0 · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">渝ICP备18007886号-11</a></span>
   </div>
 </footer>
 
@@ -720,7 +790,7 @@ if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches)
   window.addEventListener('resize', spy); spy()
 })();
 </script>
-<script src="assets/demo-core.js?v=37477af2"></script>
-<script src="assets/demo-phone.js?v=d56d2f4f"></script>
+<script src="assets/demo-core.js?v=3e42f404"></script>
+<script src="assets/demo-phone.js?v=30e917fe"></script>
 </body>
 </html>

@@ -285,13 +285,10 @@
             o.main = planOn(n, now) ? {
                 action: "auto",
                 text: "取消临时安排"
-            } : o.cls === "limit" ? {
+            } : {
                 action: "open",
                 minutes: 30,
                 text: "开放 30 分钟"
-            } : {
-                action: "openAll",
-                text: "今天一直开放"
             };
             o.used = n.onlineMinToday != null ? `今天已上网 ${usedText(n.onlineMinToday)}` : `今天用了 ${usedText(n.usedMinToday || 0)}` + (n.dailyMaxMin ? `（最多 ${dailyLabel(n.dailyMaxMin)}）` : "");
             return o;

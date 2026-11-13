@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://doti.entdiy.xyz/sitemap.xml
+Sitemap: https://doti.top/sitemap.xml

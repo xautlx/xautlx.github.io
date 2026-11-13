@@ -168,10 +168,12 @@ html.dk .dui .m-ph{ color: #8f88b8; }
 .dui .m-t-open .m-w{ color: var(--green); }
 .dui .m-t-limit .m-w{ color: var(--red); }
 .dui .m-desc{ font-size: var(--fs-sub); line-height: 1.5; margin-top: 3px; padding-left: 4px; color: var(--t2); }
-.dui .m-btns{ display: flex; gap: 10px; margin-top: 6px; }
-.dui .m-bb{ flex: 1; height: 38px; border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: var(--fs-btn); font-weight: 800; white-space: nowrap; }
-.dui .m-bb.m-main{ background: var(--brand-soft); color: var(--brand); }
-.dui .m-bb.m-ghost{ background: var(--brand-soft); color: var(--brand); }
+.dui .m-btns{ display: flex; align-items: stretch; height: 40px; margin-top: 6px; border-radius: 20px; overflow: hidden; background: var(--brand-soft); }
+.dui .m-bb{ display: flex; align-items: center; justify-content: center; font-size: var(--fs-btn); font-weight: 800; white-space: nowrap; }
+.dui .m-bb.m-main{ flex: 2; }
+.dui .m-bb.m-ghost{ flex: 1; font-weight: 700; }
+.dui .m-bsep{ width: 1px; margin: 9px 0; background: var(--brand); opacity: .35; }
+.dui .m-bb.m-main, .dui .m-bb.m-ghost{ color: var(--brand); }
 .dui .m-foot{ display: flex; justify-content: space-between; align-items: stretch; margin: 10px -4px -2px; min-height: 26px; font-size: var(--fs-sub); color: var(--t2); }
 .dui .m-foot .m-used, .dui .m-foot .m-rate{ display: flex; align-items: center; padding: 2px 8px; border-radius: 12px; }
 .dui .m-foot .m-used{ flex: 1; min-width: 0; }
@@ -232,3 +234,4 @@ html.dk .dui .m-ph{ color: #8f88b8; }
 html.dk .dui .m-tb-pill{ background: #1c1836; border-color: #342d5c; box-shadow: 0 3px 12px rgba(0, 0, 0, .4); }
 html.dk .dui .m-tb-tx{ color: #b9b2dc; }
 html.dk .dui .m-tb-it.m-tb-on .m-tb-tx{ color: #b4a6ff; }
+.dui .m-tb-dim{ position: absolute; left: 0; top: -20px; right: 0; bottom: 0; z-index: 2; background: rgba(12, 10, 32, .66); }
