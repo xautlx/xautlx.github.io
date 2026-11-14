@@ -124,6 +124,23 @@
             if (n.allowDoh === false) a.push("拦截加密 DNS");
             return a.join(" · ");
         }
+        const BLOCK_CATS = [ {
+            key: "game",
+            name: "游戏"
+        }, {
+            key: "shortvideo",
+            name: "短视频和直播"
+        }, {
+            key: "film",
+            name: "影视"
+        } ];
+        function blockSummary(nb, custom) {
+            const b = nb || {}, cats = BLOCK_CATS.filter(c => (b.categories || []).includes(c.key)).map(c => c.name);
+            const list = custom || [], on = list.filter(d => !(b.off || []).includes(d)).length;
+            const a = cats.length ? [ cats.join("、") ] : [];
+            if (list.length) a.push(on === list.length ? `自己加的 ${on} 个` : `自己加的开 ${on}/${list.length} 个`);
+            return a.join(" · ");
+        }
         function adjusted(net) {
             const t = tplOf(net.template);
             if (!t) return false;
@@ -333,7 +350,7 @@
                 o = n.surfMin === 0 ? {
                     cls: "limit",
                     word: "休息中",
-                    desc: "要用网的时候找爸爸妈妈"
+                    desc: "要用网的时候找家长"
                 } : n.limitMin === 1440 ? {
                     cls: "limit",
                     word: "今天用完了",
@@ -366,7 +383,7 @@
                 o = {
                     cls: "open",
                     word: "开放中",
-                    tag: "爸爸妈妈临时开放",
+                    tag: "家长临时开放",
                     temp: true,
                     desc: `到 ${at(n.plan && n.plan.until)}，之后恢复平常的规则`
                 };
@@ -461,6 +478,8 @@
             template: key
         });
         module.exports = {
+            BLOCK_CATS: BLOCK_CATS,
+            blockSummary: blockSummary,
             planOn: planOn,
             kidCard: kidCard,
             SPEEDS: SPEEDS,
@@ -767,6 +786,10 @@
                 ver: 1,
                 name: "三娃的网络"
             });
+            k1.block = {
+                categories: [ "game" ],
+                off: []
+            };
             return {
                 offset: 0,
                 seq: 0,
@@ -774,9 +797,7 @@
                     globalVer: 1,
                     routerName: NAME,
                     block: {
-                        categories: [ "game" ],
-                        custom: [],
-                        shareCustom: true
+                        custom: []
                     },
                     networks: [ k1, k2, k3 ]
                 },

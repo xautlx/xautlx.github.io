@@ -217,6 +217,7 @@ html.dk .dui .m-ph{ color: #8f88b8; }
 .dui .m-tchart .m-tl span.wxt{ position: absolute; left: 0; top: 0; transform: translateY(-50%); font-size: var(--fs-tag); line-height: 1.3; padding: 1px 6px; border-radius: 4px; background: var(--mute); color: var(--t2); white-space: nowrap; opacity: 1; }
 .dui .m-head{ margin: -4px -4px 0; padding: 4px; border-radius: 12px; }
 .dui .m-nh-bar .m-go.m-x{ color: var(--t3); margin-left: 4px; padding: 0 3px; }
+.dui .m-rd-line{ display: flex; justify-content: space-between; margin-top: 7px; padding: 7px 10px; border-radius: 9px; background: rgba(31,157,99,.14); color: #1f9d63; font-size: var(--fs-sub); font-weight: 700; }
 .dui .m-fab-area{ position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 9; pointer-events: none; }
 .dui .m-fab-mv{ width: auto; height: auto; pointer-events: auto; }
 .dui .m-fab{ display: flex; align-items: center; gap: 5px; padding: 6px 6px 6px 14px; border-radius: 499.5px; background: linear-gradient(135deg, #5b3bff, #8a2be2); color: #fff; box-shadow: 0 5px 15px rgba(60,30,180,.45); white-space: nowrap; }
