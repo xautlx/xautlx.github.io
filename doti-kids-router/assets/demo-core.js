@@ -324,12 +324,12 @@
             };
             if (view === "simple") return n.open ? {
                 cls: "open",
-                word: "开放中",
+                word: "网络开放中",
                 desc: "现在可以上网"
             } : {
                 cls: "limit",
-                word: "休息中",
-                desc: "现在休息一下"
+                word: "网络休息中",
+                desc: "等一会儿再上网"
             };
             const left = s => s >= 3600 ? `${Math.floor(s / 3600)} 小时 ${Math.round(s % 3600 / 60)} 分钟` : `${Math.max(1, Math.round(s / 60))} 分钟`;
             const at = t => {
@@ -337,16 +337,13 @@
                 const d = new Date(t * 1e3), n0 = new Date(now * 1e3), s = d.getHours() + ":" + String(d.getMinutes()).padStart(2, "0");
                 return d.toDateString() === n0.toDateString() ? s : "明天早上 " + s;
             };
-            const win = name => {
-                const b = String(name || "").replace(/（.*）$/, "").trim() || "休息";
-                return /(时间|时段)$/.test(b) ? b : b + "时间";
-            };
+            const ON = "网络开放中", OFF = "网络休息中";
             let o;
             switch (n.period) {
               case "smartOpen":
                 o = {
                     cls: "open",
-                    word: "开放中",
+                    word: ON,
                     desc: n.surfMin === 1440 ? "现在可以一直上网" : `这一轮还能用 ${left(n.remainSec || 0)}，${n.limitMin === 1440 ? "用完今天就休息了" : "用完休息 " + dur(n.limitMin)}`
                 };
                 break;
@@ -354,15 +351,15 @@
               case "smartLimit":
                 o = n.surfMin === 0 ? {
                     cls: "limit",
-                    word: "休息中",
+                    word: OFF,
                     desc: "要用网的时候找家长"
                 } : n.limitMin === 1440 ? {
                     cls: "limit",
-                    word: "今天用完了",
-                    desc: "明天恢复开放"
+                    word: OFF,
+                    desc: "今天的时间用完了，明天恢复开放"
                 } : {
                     cls: "limit",
-                    word: "休息中",
+                    word: OFF,
                     desc: `${at(now + (n.remainSec || 0))} 恢复开放`
                 };
                 break;
@@ -370,8 +367,7 @@
               case "fixedOpen":
                 o = {
                     cls: "open",
-                    word: "开放中",
-                    tag: win(n.periodName),
+                    word: ON,
                     desc: `开放到 ${at(n.next)}`
                 };
                 break;
@@ -379,7 +375,7 @@
               case "fixedLimit":
                 o = {
                     cls: "limit",
-                    word: win(n.periodName),
+                    word: OFF,
                     desc: `${at(n.next)} 恢复开放`
                 };
                 break;
@@ -387,7 +383,7 @@
               case "tempOpen":
                 o = {
                     cls: "open",
-                    word: "开放中",
+                    word: ON,
                     tag: "家长临时开放",
                     temp: true,
                     desc: `到 ${at(n.plan && n.plan.until)}，之后恢复平常的规则`
@@ -397,7 +393,7 @@
               case "allOpen":
                 o = {
                     cls: "open",
-                    word: "开放中",
+                    word: ON,
                     tag: "今天一直开放",
                     temp: true,
                     desc: "到今晚 12 点"
@@ -407,18 +403,18 @@
               case "allLimit":
                 o = {
                     cls: "limit",
-                    word: "休息中",
-                    tag: "今天一直休息",
+                    word: OFF,
+                    tag: "家长定的",
                     temp: true,
-                    desc: "到今晚 12 点"
+                    desc: "今天一直休息，到今晚 12 点"
                 };
                 break;
 
               case "quotaDone":
                 o = {
                     cls: "limit",
-                    word: "今天用完了",
-                    desc: "明天恢复开放"
+                    word: OFF,
+                    desc: "今天的时间用完了，明天恢复开放"
                 };
                 break;
 
@@ -435,7 +431,16 @@
                 o.round = {
                     used: used + " 分",
                     total: "每轮 " + dur(n.surfMin),
-                    pct: pct(used, n.surfMin)
+                    pct: pct(used, n.surfMin),
+                    left: Math.max(0, n.surfMin - used)
+                };
+            }
+            if (n.period === "smartLimit" && n.surfMin > 0 && n.limitMin > 0 && n.limitMin < 1440) {
+                const left = Math.max(1, Math.ceil((n.remainSec || 0) / 60));
+                o.rest = {
+                    left: left + " 分",
+                    total: "每次休息 " + dur(n.limitMin),
+                    pct: pct(n.limitMin - left, n.limitMin)
                 };
             }
             const usedMin = n.onlineMinToday != null ? n.onlineMinToday : n.usedMinToday || 0;
@@ -1245,6 +1250,14 @@
                     })
                 };
             }
+            if (op === "readMine") return {
+                ok: true,
+                on: true,
+                n: 20,
+                nr: 8,
+                nw: 12,
+                today: []
+            };
             throw {
                 code: "DEMO",
                 msg: "示例里不连云端"

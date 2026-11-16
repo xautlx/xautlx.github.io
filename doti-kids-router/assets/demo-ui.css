@@ -168,6 +168,8 @@ html.dk .dui .m-ph{ color: #8f88b8; }
 .dui .m-kid.m-k3 .m-gname{ background: linear-gradient(135deg, #2a8fd0, #3fa9e0); }
 .dui .m-ssid{ position: absolute; top: 8px; right: 14px; display: flex; align-items: center; gap: 4px; font-size: var(--fs-sub); font-weight: 700; color: var(--t2); white-space: nowrap; }
 .dui .m-ssid .m-wf{ width: 16px; height: 16px; flex: none; }
+.dui .m-ssid.m-go{ padding: 3px 0 3px 6px; margin: -3px 0 0; border-radius: 8px; }
+.dui .m-ssid .m-tri4{ width: 0; height: 0; margin-left: 2px; border-top: 4.5px solid transparent; border-bottom: 4.5px solid transparent; border-left: 5.5px solid var(--t3); }
 .dui .m-ptag{ align-self: flex-end; margin: 0 0 3px 2px; font-size: var(--fs-note); font-weight: 700; padding: 3px 10px; border-radius: 499.5px; white-space: nowrap; }
 .dui .m-t-open .m-ptag{ background: rgba(31,157,99,.14); color: var(--green); }
 .dui .m-t-limit .m-ptag{ background: rgba(214,51,108,.12); color: var(--red); }
