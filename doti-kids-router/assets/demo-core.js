@@ -5,6 +5,11 @@
         reLaunch: function() {}
     };
     var defs = {}, cache = {};
+    defs.tour = function(module) {
+        module.exports = {
+            demoReset: function() {}
+        };
+    };
     function req(p) {
         var k = p.replace(/^\.\//, "");
         if (!cache[k]) {
@@ -307,7 +312,7 @@
                 minutes: 30,
                 text: "开放 30 分钟"
             };
-            o.used = n.onlineMinToday != null ? `今天已上网 ${usedText(n.onlineMinToday)}` : `今天用了 ${usedText(n.usedMinToday || 0)}` + (n.dailyMaxMin ? `（最多 ${dailyLabel(n.dailyMaxMin)}）` : "");
+            o.used = `今天已上网 ${usedText(n.onlineMinToday || 0)}`;
             return o;
         }
         function kidCard(n, now, view) {
@@ -477,7 +482,51 @@
             ...n,
             template: key
         });
+        function withMain(c, lastMin) {
+            if (!c.main || c.main.action === "auto") return c;
+            return OPEN_MINS.includes(lastMin) ? {
+                ...c,
+                main: {
+                    action: "open",
+                    minutes: lastMin,
+                    text: "开放 " + minLabel(lastMin)
+                }
+            } : c;
+        }
+        function routerAlert(r, nets) {
+            if (r.running === false) return {
+                text: "路由器上的一点程序没在运行，稍等一会儿或重启路由器",
+                title: "一点程序没在运行",
+                desc: "稍等一会儿，或者重启路由器。",
+                kind: "bad"
+            };
+            if (r.wan === false) return {
+                text: "路由器连不上外网，检查上级网线或光猫",
+                title: "路由器连不上外网",
+                desc: "检查上级网线或光猫，通了以后自动恢复。",
+                kind: "bad"
+            };
+            if (r.parentWifiPassword === false) return {
+                text: "还没设置完：家长 WiFi 还没设密码，谁都能连上",
+                go: "接着设置",
+                to: "setup",
+                title: "还差一步就设置好了",
+                desc: "路由器已经绑定，家长 WiFi 还没设密码，谁都能连上。\n设好密码就完成了。",
+                kind: "warn"
+            };
+            if (!nets.length) return {
+                text: "孩子 WiFi 一个都没开，孩子连不上网",
+                go: "去打开",
+                to: "settings",
+                title: "孩子 WiFi 都关着",
+                desc: "孩子现在连不上网。\n打开后按规则自动管理。",
+                kind: "warn"
+            };
+            return null;
+        }
         module.exports = {
+            withMain: withMain,
+            routerAlert: routerAlert,
             BLOCK_CATS: BLOCK_CATS,
             blockSummary: blockSummary,
             planOn: planOn,
@@ -539,7 +588,7 @@
                     open: open,
                     limit: limit,
                     total: open + limit,
-                    md: dt.getMonth() + 1 + " 月 " + dt.getDate() + " 日",
+                    md: require("./util").md(dt),
                     hours: hs,
                     events: (d.events || {})[key] || null
                 };
@@ -824,6 +873,11 @@
                     }
                 },
                 plans: {},
+                hist: {
+                    k1: [],
+                    k2: [],
+                    k3: []
+                },
                 parents: [ {
                     idx: 1,
                     nick: "妈妈",
@@ -881,6 +935,7 @@
         function enter(f) {
             from = f || "";
             S = fresh();
+            require("./tour").demoReset();
             wx.switchTab({
                 url: "/pages/status/status"
             });
@@ -888,11 +943,11 @@
         function exit(to) {
             S = null;
             wx.reLaunch({
-                url: to || "/pages/guide/guide?step=prepare"
+                url: to || "/p-setup/guide/guide?step=prepare"
             });
         }
         function back() {
-            const f = from || "/pages/guide/guide";
+            const f = from || "/p-setup/guide/guide";
             exit(f);
         }
         const current = () => ({
@@ -976,6 +1031,8 @@
                     if (!S.on[k]) continue;
                     if (p && p.action === "open" && t >= p.until) delete S.plans[k];
                     const st = status(k).period;
+                    S.hist[k].push([ t, openNow(k) ]);
+                    if (S.hist[k].length > 30) S.hist[k].shift();
                     if (st === "smartOpen" || st === "tempOpen" || st === "allOpen") r.used++;
                     if (st === "smartOpen" && n.surfMin !== 1440) {
                         r.left -= 60;
@@ -1008,7 +1065,7 @@
                 k2: [ 15, 15, 12, 15, 15, 15, 0 ]
             };
             for (let i = 6; i >= 0; i--) {
-                const d = new Date((t - i * 86400) * 1e3), date = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+                const d = new Date((t - i * 86400) * 1e3), date = require("./util").ymd(d);
                 const nets = [];
                 for (const k of [ "k1", "k2" ]) {
                     const total = i === 0 ? S.run[k].used : shape[k][6 - i], hours = [];
@@ -1059,16 +1116,37 @@
             }
             return out;
         }
+        function openNow(k) {
+            const st = status(k);
+            return S.on[k] && st.period !== "wifiOff" && !/Limit|quotaDone/.test(st.period);
+        }
+        function openAt(k, ts) {
+            const h = S.hist[k] || [];
+            for (let i = h.length - 1; i >= 0; i--) if (h[i][0] <= ts) return h[i][1];
+            return openNow(k);
+        }
+        const noise = x => {
+            const v = Math.sin(x * 12.9898 + 78.233) * 43758.5453;
+            return v - Math.floor(v);
+        };
         function speed() {
             const t = Math.floor(now() / 10);
             return S.settings.networks.map(n => {
-                const st = status(n.key), open = S.on[n.key] && st.period !== "wifiOff" && !/Limit|quotaDone/.test(st.period), points = [];
+                const k = n.key, base = k === "k1" ? 26e5 : 19e5, points = [];
                 for (let i = 59; i >= 0; i--) {
-                    const x = t - i, w = Math.sin(x / 2.3) * .25 + Math.sin(x * 7.1) * .08;
-                    points.push(open ? [ Math.round(26e5 * (1 + w)), Math.round(9e4 * (1 + w)) ] : S.on[n.key] ? [ Math.round(11e3 * (1 + w)), 1500 ] : [ 0, 0 ]);
+                    const x = t - i;
+                    if (!S.on[k]) {
+                        points.push([ 0, 0 ]);
+                        continue;
+                    }
+                    const w = Math.sin(x / 4.7) * .22 + Math.sin(x / 1.9 + 1.3) * .12 + (noise(x) - .5) * .35 + (noise(x * 3.1) > .92 ? .45 : 0);
+                    const o = openAt(k, x * 10), was = openAt(k, (x - 1) * 10);
+                    const lvl = o === was ? o ? 1 : 0 : .35;
+                    const down = lvl > 0 ? base * lvl * (1 + w) : 11e3 * (1 + w * .6);
+                    points.push([ Math.max(800, Math.round(down)), Math.max(300, Math.round(down * (lvl > 0 ? .035 : .12))) ]);
                 }
                 return {
-                    key: n.key,
+                    key: k,
                     points: points
                 };
             });
