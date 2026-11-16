@@ -1058,63 +1058,197 @@
             }
             return `快进 ${min} 分钟：孩子一直在用网，时间照常扣`;
         }
+        const HOURS = {
+            wd: [ 7, 8, 16, 17, 18, 19, 20 ],
+            we: [ 9, 10, 11, 14, 15, 16, 17, 18, 19, 20 ]
+        };
+        function minutesOf(k, date) {
+            const x = new Date(date.replace(/-/g, "/")), day = Math.floor(x.getTime() / 864e5), r = noise(day + (k === "k1" ? 0 : 999));
+            if (k === "k2") return 15 + Math.round(r * 3) * 5;
+            const md = date.slice(5), off = x.getDay() === 0 || x.getDay() === 6 || md >= "07-10" && md <= "08-31" || md >= "01-20" && md <= "02-20";
+            return Math.min(90, off ? 70 + Math.round(r * 30) : 40 + Math.round(r * 30));
+        }
+        function hoursOf(k, date, total) {
+            const x = new Date(date.replace(/-/g, "/")), off = x.getDay() === 0 || x.getDay() === 6, r = noise(Math.floor(x.getTime() / 864e5) + 7);
+            const slots = (off ? HOURS.we : HOURS.wd).concat(off && r > .8 ? [ 22 ] : []);
+            const hours = [];
+            let left = total;
+            for (let i = slots.length - 1; i >= 0 && left > 0; i--) {
+                const h = slots[i], m = Math.min(left, h === 22 ? 10 : h >= 18 ? 25 : 12), bytes = m * 35e6;
+                const devs = k === "k1" ? [ {
+                    mac: DEV.pad,
+                    openMin: m,
+                    limitMin: 0,
+                    down: Math.round(bytes * .92),
+                    up: Math.round(bytes * .04)
+                } ].concat(h >= 19 ? [ {
+                    mac: DEV.phone,
+                    openMin: Math.min(m, 8),
+                    limitMin: 0,
+                    down: Math.round(bytes * .04),
+                    up: 2e5
+                } ] : []) : [ {
+                    mac: DEV.ipad,
+                    openMin: m,
+                    limitMin: 0,
+                    down: Math.round(bytes * .95),
+                    up: Math.round(bytes * .05)
+                } ];
+                hours.unshift({
+                    h: h,
+                    openMin: m,
+                    limitMin: 0,
+                    bytes: bytes,
+                    down: Math.round(bytes * .96),
+                    up: Math.round(bytes * .04),
+                    devs: devs
+                });
+                left -= m;
+            }
+            return hours;
+        }
+        const ymdOf = ts => require("./util").ymd(new Date(ts * 1e3));
+        function dayOf(date, today) {
+            return {
+                date: date,
+                networks: [ "k1", "k2" ].map(k => ({
+                    key: k,
+                    hours: hoursOf(k, date, today ? S.run[k].used : minutesOf(k, date))
+                }))
+            };
+        }
         function usage() {
             const out = [], t = now();
-            const shape = {
-                k1: [ 42, 51, 33, 54, 66, 84, 0 ],
-                k2: [ 15, 15, 12, 15, 15, 15, 0 ]
-            };
-            for (let i = 6; i >= 0; i--) {
-                const d = new Date((t - i * 86400) * 1e3), date = require("./util").ymd(d);
-                const nets = [];
-                for (const k of [ "k1", "k2" ]) {
-                    const total = i === 0 ? S.run[k].used : shape[k][6 - i], hours = [];
-                    let left = total;
-                    for (const h of [ 7, 8, 12, 13, 16, 17, 18, 19, 20 ]) {
-                        if (left <= 0) break;
-                        const m = Math.min(left, h >= 16 ? 34 : 12);
-                        const o = Math.max(0, m - (h === 18 ? 4 : 0)), l = h === 18 ? Math.min(4, m) : 0, bytes = m * 35e6;
-                        const devs = k === "k1" ? [ {
-                            mac: DEV.pad,
-                            openMin: o,
-                            limitMin: l,
-                            down: Math.round(bytes * .92),
-                            up: Math.round(bytes * .04)
-                        } ].concat(h >= 19 ? [ {
-                            mac: DEV.phone,
-                            openMin: Math.min(o, 8),
-                            limitMin: 0,
-                            down: Math.round(bytes * .04),
-                            up: 2e5
-                        } ] : []) : [ {
-                            mac: DEV.ipad,
-                            openMin: o,
-                            limitMin: l,
-                            down: Math.round(bytes * .95),
-                            up: Math.round(bytes * .05)
-                        } ];
-                        hours.push({
-                            h: h,
-                            openMin: o,
-                            limitMin: l,
-                            bytes: bytes,
-                            down: Math.round(bytes * .96),
-                            up: Math.round(bytes * .04),
-                            devs: devs
-                        });
-                        left -= m;
+            for (let i = 6; i >= 0; i--) out.push(dayOf(ymdOf(t - i * 86400), i === 0));
+            return out;
+        }
+        function summaryOf(date) {
+            const nets = {};
+            for (const n of dayOf(date, false).networks) {
+                const h = new Array(24).fill(0), dev = {};
+                let o = 0;
+                for (const x of n.hours) {
+                    o += x.openMin;
+                    h[x.h] += x.openMin;
+                    for (const v of x.devs) {
+                        const d = dev[v.mac] = dev[v.mac] || {
+                            m: 0,
+                            h: {}
+                        };
+                        d.m += v.openMin;
+                        d.h[x.h] = (d.h[x.h] || 0) + v.openMin;
                     }
-                    nets.push({
-                        key: k,
-                        hours: hours
+                }
+                const temp = n.key === "k2" ? 1 : noise(date.length + Date.parse(date) / 864e5) > .93 ? 1 : 0;
+                nets[n.key] = {
+                    o: o,
+                    h: h,
+                    dev: dev,
+                    ev: {
+                        quota: n.key === "k1" && o >= 90 ? 1 : 0,
+                        temp: temp,
+                        tempMin: n.key === "k2" ? o : temp * 30
+                    }
+                };
+            }
+            return {
+                date: date,
+                nets: nets,
+                names: devInfo()
+            };
+        }
+        function eventsOf(date) {
+            const at = (h, m) => Math.floor(new Date(date.replace(/-/g, "/") + " " + h + ":" + m).getTime() / 1e3), k2m = minutesOf("k2", date);
+            return {
+                k1: [ {
+                    t: at(0, 0),
+                    e: "p",
+                    p: "fixedLimit",
+                    n: "睡觉",
+                    x: at(7, 0),
+                    d: 1
+                }, {
+                    t: at(7, 0),
+                    e: "p",
+                    p: "smartOpen",
+                    r: 1800,
+                    x: 0
+                }, {
+                    t: at(19, 5),
+                    e: "u",
+                    r: 1800
+                }, {
+                    t: at(19, 35),
+                    e: "p",
+                    p: "smartLimit",
+                    r: 3600,
+                    x: at(20, 35)
+                }, {
+                    t: at(20, 35),
+                    e: "p",
+                    p: "smartOpen",
+                    r: 1800,
+                    x: 0
+                }, {
+                    t: at(21, 0),
+                    e: "p",
+                    p: "fixedLimit",
+                    n: "睡觉",
+                    x: at(7, 0) + 86400
+                } ],
+                k2: [ {
+                    t: at(0, 0),
+                    e: "p",
+                    p: "smartLimit",
+                    d: 1
+                }, {
+                    t: at(18, 30),
+                    e: "s",
+                    a: "open",
+                    m: k2m,
+                    u: at(18, 30) + k2m * 60,
+                    b: 1
+                }, {
+                    t: at(18, 30) + k2m * 60,
+                    e: "x"
+                } ]
+            };
+        }
+        function cloud(op, q) {
+            const t = now(), DAY = 86400;
+            if (op === "usageHistory") {
+                const days = [];
+                for (let i = 7; i >= 1; i--) {
+                    const date = ymdOf(t - i * DAY);
+                    days.push({
+                        ...dayOf(date, false),
+                        events: eventsOf(date),
+                        has: true
                     });
                 }
-                out.push({
-                    date: date,
-                    networks: nets
-                });
+                return {
+                    ok: true,
+                    days: days,
+                    devices: devInfo()
+                };
             }
-            return out;
+            if (op === "usageStats") {
+                const US = require("./usagestats"), rows = [];
+                for (let i = 1; i <= 2 * q.span; i++) rows.push(summaryOf(ymdOf(t - i * DAY)));
+                return {
+                    ok: true,
+                    ...US.stats(rows, {
+                        to: ymdOf(t - DAY),
+                        span: q.span,
+                        key: q.net,
+                        mac: q.mac || ""
+                    })
+                };
+            }
+            throw {
+                code: "DEMO",
+                msg: "示例里不连云端"
+            };
         }
         function openNow(k) {
             const st = status(k);
@@ -1298,7 +1432,12 @@
             });
             if (p === "parents") {
                 if (q.op === "profile") {
-                    const me = S.parents[0];
+                    const me = S.parents[q.idx ? q.idx - 1 : 0];
+                    if (!me) return {
+                        ok: false,
+                        error: "BAD_REQUEST",
+                        msg: "示例里不能这样做"
+                    };
                     if (q.nick != null) me.nick = q.nick || "妈妈";
                     if (q.avatar != null) me.avatar = q.avatar;
                 }
@@ -1323,6 +1462,7 @@
             exit: exit,
             current: current,
             api: api,
+            cloud: cloud,
             forward: forward,
             NAME: NAME,
             back: back
