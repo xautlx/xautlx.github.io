@@ -456,6 +456,17 @@ html[data-lang="en"] .hgrid .facts b{font-size:19px;white-space:nowrap}
 .fok{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:18px;padding-top:14px;border-top:1px dashed var(--line);font-size:14px;color:var(--t2)}
 .fok span{white-space:nowrap}
 @media (max-width:860px){.fflow{grid-template-columns:1fr}.fflow{margin-top:18px}.ffork{display:none}.fmid{min-height:0;margin:14px 0}.fmid .fpl{position:static;transform:none;display:inline-block}.fmid{text-align:center}.fhd small{display:block}}
+/* 界面一览（真机截图拼图，scripts/build-oss-screenshots.sh 生成）：只在电脑端显示；图片滚到附近才加载，点开放大 */
+.shots{display:flex;flex-direction:column;gap:36px;margin-top:32px}
+.shots figure{margin:0}
+.shots figcaption{margin:0 0 12px 4px;font-weight:800;font-size:17px;color:var(--t1)}
+.shots figcaption small{margin-left:10px;font-weight:500;font-size:15px;color:var(--t3)}
+.shots a{display:block;border-radius:22px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow-lg);cursor:zoom-in;background:#f1eeff;aspect-ratio:1600/851}
+.shots img{display:block;width:100%;height:auto}
+.zoombox{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:28px;background:rgba(12,10,25,.86);cursor:zoom-out}
+.zoombox.on{display:flex}
+.zoombox img{max-width:100%;max-height:100%;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+@media (max-width:900px){#shots{display:none}}
 </style>
 <!-- 百度统计 -->
 <script>
@@ -713,6 +724,24 @@ if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches)
   </div>
 </section>
 
+<!-- 界面一览（电脑端才显示，手机上看不清四张并排） -->
+<section id="shots" class="alt">
+  <div class="wrap">
+    <div class="center">
+      <div class="kicker"><span lang="zh">界面一览</span><span lang="en">Screenshots</span></div>
+      <h2><span lang="zh">家长管得轻松，孩子看得明白</span><span lang="en">Easy for parents, clear for kids</span></h2>
+      <p class="sub"><span lang="zh">真机截图，点开看大图。</span><span lang="en">Real screenshots — click to enlarge.</span></p>
+    </div>
+    <div class="shots">
+      <figure><figcaption><span lang="zh">家长端</span><span lang="en">Parent side</span><small lang="zh">状态 · 孩子网络的规则 · 今天的上网记录 · 远程历史统计</small><small lang="en">Status · a kid network's rules · today's usage · remote usage history</small></figcaption>
+        <a href="assets/shots/parent.jpg" data-zoom><img src="assets/shots/parent.jpg" width="1600" height="851" loading="lazy" decoding="async" alt="家长端界面：状态、规则、上网记录、远程统计"></a></figure>
+      <figure><figcaption><span lang="zh">孩子端</span><span lang="en">Kid side</span><small lang="zh">加入 · 网络开放中 · 网络休息中 · 找家长要时间</small><small lang="en">Joining · network open · network resting · asking a parent for time</small></figcaption>
+        <a href="assets/shots/kid.jpg" data-zoom><img src="assets/shots/kid.jpg" width="1600" height="851" loading="lazy" decoding="async" alt="孩子端界面：加入、开放中、休息中、找家长要时间"></a></figure>
+    </div>
+  </div>
+</section>
+<div class="zoombox" id="zoombox"><img alt=""></div>
+
 <!-- 结尾 -->
 <div class="outro" id="start">
   <div class="wrap">
@@ -790,7 +819,13 @@ if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches)
   window.addEventListener('resize', spy); spy()
 })();
 </script>
-<script src="assets/demo-core.js?v=9dc17750"></script>
+<script src="assets/demo-core.js?v=7f32c94b"></script>
 <script src="assets/demo-phone.js?v=30e917fe"></script>
+<script>
+// 界面一览点开放大；点任意处或 Esc 关掉
+(function(){var b=document.getElementById('zoombox');if(!b)return;var im=b.querySelector('img');
+document.querySelectorAll('[data-zoom]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();im.src=a.getAttribute('href');b.classList.add('on')})});
+b.addEventListener('click',function(){b.classList.remove('on')});document.addEventListener('keydown',function(e){if(e.key==='Escape')b.classList.remove('on')})})();
+</script>
 </body>
 </html>

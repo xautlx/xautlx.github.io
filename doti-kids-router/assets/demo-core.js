@@ -1219,6 +1219,25 @@
                 } ]
             };
         }
+        function periodEnd(t) {
+            const d = new Date((t + 8 * 3600) * 1e3);
+            return Date.UTC(d.getUTCFullYear() + 1, d.getUTCMonth() + 1, 1) / 1e3 - 8 * 3600;
+        }
+        function pay(action) {
+            if (action === "status") return {
+                ok: true,
+                enabled: true,
+                price: {
+                    fee: 3600,
+                    base: 6e3
+                },
+                records: []
+            };
+            throw {
+                code: "DEMO",
+                msg: "示例里不能付款"
+            };
+        }
         function cloud(op, q) {
             const t = now(), DAY = 86400;
             if (op === "usageHistory") {
@@ -1235,6 +1254,15 @@
                     ok: true,
                     days: days,
                     devices: devInfo()
+                };
+            }
+            if (op === "usageStats" && q.date) {
+                const US = require("./usagestats"), r = q.date <= ymdOf(t - DAY) ? summaryOf(q.date) : null, detail = r ? US.dayOf(r, q.net, q.mac || "") : null;
+                return {
+                    ok: true,
+                    date: q.date,
+                    detail: detail,
+                    names: r ? r.names || {} : {}
                 };
             }
             if (op === "usageStats") {
@@ -1257,6 +1285,13 @@
                 nr: 8,
                 nw: 12,
                 today: []
+            };
+            if (op === "memberInfo") return {
+                ok: true,
+                open: true,
+                until: periodEnd(t),
+                serviceAt: t - 30 * DAY,
+                seenAt: t
             };
             throw {
                 code: "DEMO",
@@ -1307,6 +1342,58 @@
             };
             return o;
         };
+        const VERSION = "2.0.0";
+        const CMD = {
+            today: a => [ "today", a ],
+            settings: (a, base) => [ "settings", {
+                ...a,
+                base: base || {}
+            } ],
+            wifiToggle: a => [ "wifi", {
+                op: "toggle",
+                key: a.key,
+                on: a.on
+            } ],
+            wifiPw: a => [ "wifi", a.key === "admin" ? {
+                op: "setParent",
+                password: a.password
+            } : {
+                op: "regen",
+                key: a.key,
+                password: a.password
+            } ],
+            profile: a => [ "parents", {
+                op: "profile",
+                ...a
+            } ]
+        };
+        function snap(t) {
+            const st = api("status"), w = api("wifi");
+            return {
+                v: 1,
+                at: t,
+                tags: {
+                    router: "d" + t,
+                    networks: "d" + t,
+                    settings: "d" + t,
+                    wifi: "d" + t,
+                    parents: "d" + t
+                },
+                router: st.router,
+                networks: st.networks,
+                settings: JSON.parse(JSON.stringify(S.settings)),
+                wifi: {
+                    kids: w.kids,
+                    parent: {
+                        ssid: "DOTI-DEMO-ADMIN",
+                        set: true
+                    }
+                },
+                parents: S.parents.map(x => ({
+                    ...x
+                }))
+            };
+        }
         function api(path, opt) {
             const method = opt && opt.method || "GET", q = opt && opt.data || {}, t = now();
             const ok = x => ({
@@ -1319,7 +1406,7 @@
                 router: {
                     code: CODE,
                     name: S.settings.routerName,
-                    version: "1.0.0",
+                    version: VERSION,
                     wan: true,
                     registered: true,
                     parentWifiPassword: true,
@@ -1462,6 +1549,29 @@
                     max: 10
                 });
             }
+            if (p === "snapshot") return ok({
+                snapshot: snap(t),
+                me: 1
+            });
+            if (p === "cmd") {
+                const a = q.args || {}, x = CMD[q.type] && CMD[q.type](a, q.base);
+                if (!x) return {
+                    ok: false,
+                    error: "BAD_REQUEST",
+                    msg: "示例里不能这样做"
+                };
+                const r = api(x[0], {
+                    method: "POST",
+                    data: x[1]
+                });
+                if (!r.ok) return r;
+                return ok({
+                    result: r,
+                    applied: true,
+                    snapshot: snap(now()),
+                    me: 1
+                });
+            }
             if (p === "unbind" && q.confirm === "UNBIND") return ok({});
             return {
                 ok: false,
@@ -1476,9 +1586,11 @@
             current: current,
             api: api,
             cloud: cloud,
+            pay: pay,
             forward: forward,
             NAME: NAME,
-            back: back
+            back: back,
+            VERSION: VERSION
         };
     };
     window.DotiDemo = {
