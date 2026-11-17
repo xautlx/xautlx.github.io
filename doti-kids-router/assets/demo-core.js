@@ -1097,6 +1097,7 @@
             const x = new Date(date.replace(/-/g, "/")), day = Math.floor(x.getTime() / 864e5), r = noise(day + (k === "k1" ? 0 : 999));
             if (k === "k2") return 15 + Math.round(r * 3) * 5;
             const md = date.slice(5), off = x.getDay() === 0 || x.getDay() === 6 || md >= "07-10" && md <= "08-31" || md >= "01-20" && md <= "02-20";
+            if (x.getDay() === 6) return 90;
             return Math.min(90, off ? 70 + Math.round(r * 30) : 40 + Math.round(r * 30));
         }
         function hoursOf(k, date, total) {
