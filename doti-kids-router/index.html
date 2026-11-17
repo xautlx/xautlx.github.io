@@ -466,7 +466,7 @@ html[data-lang="en"] .hgrid .facts b{font-size:19px;white-space:nowrap}
 .zoombox{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:28px;background:rgba(12,10,25,.86);cursor:zoom-out}
 .zoombox.on{display:flex}
 .zoombox img{max-width:100%;max-height:100%;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
-@media (max-width:900px){#shots{display:none}}
+@media (max-width:900px){#shots,.nav-shots{display:none!important}}
 </style>
 <!-- 百度统计 -->
 <script>
@@ -496,6 +496,7 @@ if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches)
       <a href="#how"><span lang="zh">怎么工作</span><span lang="en">How it works</span></a>
       <a href="#setup"><span lang="zh">怎么用</span><span lang="en">Setup</span></a>
       <a href="#trust"><span lang="zh">使用安心</span><span lang="en">Peace of mind</span></a>
+      <a href="#shots" class="nav-shots"><span lang="zh">界面一览</span><span lang="en">Screenshots</span></a>
       <a class="qs" href="quick-start/"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></svg><span lang="zh">快速开始</span><span lang="en">Quick Start</span></a>
     </nav>
     <div class="tools">
