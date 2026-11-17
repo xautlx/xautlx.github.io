@@ -828,5 +828,34 @@ if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches)
 document.querySelectorAll('[data-zoom]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();im.src=a.getAttribute('href');b.classList.add('on')})});
 b.addEventListener('click',function(){b.classList.remove('on')});document.addEventListener('keydown',function(e){if(e.key==='Escape')b.classList.remove('on')})})();
 </script>
+<script>
+// 百度统计事件（推广埋点，130.BIZ/030.MKT §7）：只记点了什么，不记身份；百度统计没加载出来也不影响页面
+(function () {
+  function ev(c, a, l) { try { window._hmt && _hmt.push(['_trackEvent', c, a, l || '']) } catch (e) {} }
+  // 外链和站内跳转：按去哪分
+  function where(h) {
+    if (/quick-start/.test(h)) return 'quickstart'
+    if (/releases/.test(h)) return 'release'
+    if (/github\.com/.test(h)) return 'github'
+    if (/gitee\.com/.test(h)) return 'gitee'
+    return ''
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href]')
+    if (a) { var w = where(a.getAttribute('href')); if (w) ev('link', w, location.pathname) }
+    var b = e.target.closest && e.target.closest('[data-copy]')
+    if (b) { var s = b.getAttribute('data-copy'); ev('copy', /install\.sh/.test(s) ? 'install' : /opkg|apk|distfeeds/.test(s) ? 'feed' : /sha256/i.test(s) ? 'sha256' : 'other', s.slice(0, 60)) }
+    var z = e.target.closest && e.target.closest('[data-zoom]')
+    if (z) ev('shots', 'zoom', z.getAttribute('href'))
+  }, true)
+  // 首屏手机演示：第一次碰（每次打开页面只记一次），之后每个按钮动作
+  var ph = document.getElementById('dphone')
+  if (ph) {
+    var hit = false
+    ph.addEventListener('pointerdown', function () { if (!hit) { hit = true; ev('demo', 'touch') } })
+    ph.addEventListener('click', function (e) { var b = e.target.closest && e.target.closest('[data-a]'); if (b) ev('demo', b.getAttribute('data-a')) })
+  }
+})();
+</script>
 </body>
 </html>
