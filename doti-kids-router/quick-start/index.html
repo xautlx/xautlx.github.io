@@ -173,6 +173,8 @@ footer a:hover{color:var(--brand)}
   .copy{flex-direction:column}
   .copy button{border-left:0;border-top:1px solid rgba(255,255,255,.12);padding:10px}
 }
+/* 界面一览只在电脑端有（首页窄屏不显示那一块），菜单项跟着藏 */
+@media (max-width:900px){.nav-shots{display:none!important}}
 </style>
 <!-- 百度统计 -->
 <script>
@@ -195,6 +197,7 @@ var _hmt = _hmt || [];
       <a href="../#how"><span lang="zh">怎么工作</span><span lang="en">How it works</span></a>
       <a href="../#setup"><span lang="zh">怎么用</span><span lang="en">Setup</span></a>
       <a href="../#trust"><span lang="zh">使用安心</span><span lang="en">Peace of mind</span></a>
+      <a href="../#shots" class="nav-shots"><span lang="zh">界面一览</span><span lang="en">Screenshots</span></a>
       <a class="qs on" href="./" aria-current="page"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></svg><span lang="zh">快速开始</span><span lang="en">Quick Start</span></a>
     </nav>
     <div class="tools">
