@@ -238,6 +238,9 @@ html.dk .dui .m-ph{ color: #8f88b8; }
 .dui .m-fab{ display: flex; align-items: center; gap: calc(5px * var(--sp-k)); padding: calc(6px * var(--sp-k)) calc(6px * var(--sp-k)) calc(6px * var(--sp-k)) calc(14px * var(--sp-k)); border-radius: 499.5px; background: linear-gradient(135deg, #5b3bff, #8a2be2); color: #fff; box-shadow: 0 5px 15px rgba(60,30,180,.45); white-space: nowrap; }
 .dui .m-fab-k{ font-size: var(--fs-btn); font-weight: 800; margin-right: 3px; }
 .dui .m-fab-b{ font-size: var(--fs-btn); font-weight: 700; padding: calc(6px * var(--sp-k)) calc(11px * var(--sp-k)); border-radius: 499.5px; background: rgba(255,255,255,.2); }
+.dui .m-fab-seg{ display: flex; padding: 2px; border-radius: 499.5px; background: rgba(255,255,255,.18); }
+.dui .m-fab-seg span.wxt{ font-size: var(--fs-sub); font-weight: 700; padding: calc(5px * var(--sp-k)) calc(10px * var(--sp-k)); border-radius: 499.5px; color: rgba(255,255,255,.85); }
+.dui .m-fab-seg span.wxt.m-on{ background: #fff; color: #5b3bff; }
 .dui .m-fab-msg{ position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); margin-bottom: calc(6px * var(--sp-k)); width: 280px; padding: calc(9px * var(--sp-k)) calc(12px * var(--sp-k)); border-radius: 10px; background: rgba(20,12,60,.88); color: #fff; font-size: var(--fs-sub); line-height: 1.5; white-space: normal; }
 .dui .m-hover{ opacity: .6; }
 .dui .m-tb-bar{ position: absolute; left: 0; right: 0; bottom: 0; z-index: 50; padding: 0 12px calc(10px + 34px); }

@@ -937,10 +937,13 @@
             return !!S;
         }
         let from = "";
-        function enter(f) {
+        function enter(f, side) {
             from = f || "";
             S = fresh();
             require("./tour").demoReset();
+            if (side === "kid") return wx.reLaunch({
+                url: "/pages/look/look?pv=1&kd=1&key=k1"
+            });
             wx.switchTab({
                 url: "/pages/status/status"
             });
@@ -1024,6 +1027,29 @@
                 remainSec: n.limitMin === 1440 ? midnight(t) - t : r.left,
                 next: n.limitMin === 1440 ? midnight(t) : t + r.left
             };
+        }
+        const OPEN_P = {
+            smartOpen: 1,
+            fixedOpen: 1,
+            tempOpen: 1,
+            allOpen: 1
+        };
+        function isOpen(k) {
+            return !!OPEN_P[status(k).period];
+        }
+        function setOpen(k, open) {
+            const n = net(k), r = S.run[k];
+            delete S.plans[k];
+            if (open && n.dailyMaxMin && r.used >= n.dailyMaxMin) r.used = Math.max(0, n.dailyMaxMin - 30);
+            r.mode = open ? "open" : "limit";
+            r.left = (open ? n.surfMin : n.limitMin) * 60;
+        }
+        function once(k) {
+            if (!S) return false;
+            S.once = S.once || {};
+            if (S.once[k]) return false;
+            S.once[k] = 1;
+            return true;
         }
         function forward(min) {
             const before = {};
@@ -1588,6 +1614,9 @@
             cloud: cloud,
             pay: pay,
             forward: forward,
+            isOpen: isOpen,
+            setOpen: setOpen,
+            once: once,
             NAME: NAME,
             back: back,
             VERSION: VERSION
