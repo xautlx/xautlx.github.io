@@ -1,0 +1,6 @@
+{
+  "redirects": [
+    { "source": "/quick-start/", "destination": "/quick-start.html", "statusCode": 301 },
+    { "source": "/quick-start", "destination": "/quick-start.html", "statusCode": 301 }
+  ]
+}
