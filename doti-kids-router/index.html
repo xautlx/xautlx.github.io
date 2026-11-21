@@ -90,12 +90,11 @@ html[data-lang="zh"] [lang="en"],html[data-lang="en"] [lang="zh"]{display:none!i
 .brand img{width:34px;height:34px;border-radius:9px}
 .brand small{font-weight:600;font-size:13px;color:var(--t3)}
 /* 英文版左上角（11-20）：图标 + Doti / www.doti.top 两行，和中文图文标志同样的排法 */
-.brand .bt{display:flex;flex-direction:column;line-height:1.05}.brand .bt b{font-size:21px;font-weight:850;letter-spacing:.2px}.brand .bt small{font-size:11px;font-weight:700;color:var(--t2);letter-spacing:.2px;margin-top:2px}
-.brand img[lang=en]{width:38px;height:38px}
 .links a,.tbtn{white-space:nowrap}
 @media (max-width:1180px){.links{gap:14px;font-size:14px;margin-left:4px}}
 @media (max-width:1100px){html[lang=en] .links a.nav-shots{display:none}}
 .brand img.lk{width:auto;height:40px;border-radius:0}
+.brand{min-width:163px}   /* 中英文图文 logo 同高，英文较窄：占同样宽度，切换语言时菜单不跳 */
 .brand img.lk.d{display:none}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .brand img.lk.l{display:none}:root:not([data-theme="light"]) .brand img.lk.d{display:block}}
 :root[data-theme="dark"] .brand img.lk.l{display:none}:root[data-theme="dark"] .brand img.lk.d{display:block}
@@ -559,7 +558,7 @@ if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches)
 
 <header class="nav">
   <div class="wrap">
-    <a class="brand" href="#top"><img class="lk l" lang="zh" src="assets/logo-lockup.svg?v=c8c91ad1" alt="一点守护 www.doti.top"><img class="lk d" lang="zh" src="assets/logo-lockup-dark.svg?v=7fb263a0" alt="一点守护 www.doti.top"><img lang="en" src="assets/logo.svg" alt=""><span lang="en" class="bt"><b>Doti</b><small>www.doti.top</small></span></a>
+    <a class="brand" href="#top"><img class="lk l" lang="zh" src="assets/logo-lockup.svg?v=c8c91ad1" alt="一点守护 www.doti.top"><img class="lk d" lang="zh" src="assets/logo-lockup-dark.svg?v=7fb263a0" alt="一点守护 www.doti.top"><img class="lk l" lang="en" src="assets/logo-lockup-en.svg?v=1496ea93" alt="Doti for kids www.doti.top"><img class="lk d" lang="en" src="assets/logo-lockup-en-dark.svg?v=246294c2" alt="Doti for kids www.doti.top"></a>
     <nav class="links">
       <a href="#why"><span lang="zh">为什么</span><span lang="en">Why</span></a>
       <a href="#how"><span lang="zh">怎么工作</span><span lang="en">How it works</span></a>
@@ -739,7 +738,7 @@ if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches)
         <div class="tli"><div class="tln">1</div><div><h4><span lang="zh">安装「一点守护」路由器程序</span><span lang="en">Install the Doti router software</span></h4><p><span lang="zh">预装好的接上网线、插电即可，自动出现家长 WiFi 管理热点；家里有 OpenWrt 路由器也可以自己刷机一键安装。</span><span lang="en">A pre-installed router just needs the cable and power — the parents’ admin WiFi shows up on its own. Have an OpenWrt router? Flash it yourself with a one-click install.</span></p></div></div>
         <div class="tli"><div class="tln">2</div><div><h4><span lang="zh">连上家长 WiFi 微信小程序绑定设备</span><span lang="en">Join the parents’ WiFi and bind in WeChat</span></h4><p><span lang="zh">打开「一点守护」小程序，按照指引连上无密码家长 WiFi 热点，自动发现并一键绑定「一点守护」路由器。</span><span lang="en">Open the Doti mini program and follow the guide to join the open parents’ WiFi; it finds the Doti router and binds it in one tap.</span></p></div></div>
         <div class="tli"><div class="tln">3</div><div><h4><span lang="zh">孩子设备连上孩子的 WiFi</span><span lang="en">Kids join their own WiFi</span></h4><p><span lang="zh">手机、平板、电视连上就行，什么都不用装，自动按预置规则管理孩子上网时间。家长可按需调整适合孩子的时间规则节奏。</span><span lang="en">Phones, tablets, TVs — just connect, nothing to install. Screen time is managed automatically by preset rules, and parents can tune the rhythm to suit each child.</span></p></div></div>
-        <div class="tli"><div class="tln">4</div><div><h4><span lang="zh">日常不用管，临时点一下就开</span><span lang="en">Then forget about it</span></h4><p><span lang="zh">日常全自动，不用天天盯；孩子临时要用网，课外阅读奖励，家长在「一点守护」小程序里点一下就开。</span><span lang="en">Fully automatic day to day, no need to keep watch. When a kid needs time online — or earns a reading reward — one tap in the Doti mini program opens it up.</span></p></div></div>
+        <div class="tli"><div class="tln">4</div><div><h4><span lang="zh">日常不用管，全家点一下就能管</span><span lang="en">Hands-off, and easy for the whole family</span></h4><p><span lang="zh">日常全自动，不用天天盯。孩子临时要用网、读完书想要点奖励，打开微信里的「一点守护」小程序点一下就行；爸爸妈妈、爷爷奶奶都能管，在家在外都一样方便。</span><span lang="en">Fully automatic day to day. When a kid needs time online or earns a reading reward, one tap in the “一点守护” WeChat mini program does it — parents and grandparents alike, at home or away.</span></p></div></div>
       </div>
     </div>
   </div>
@@ -864,7 +863,7 @@ if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches)
 <footer>
   <div class="wrap">
     <span><span lang="zh">一点守护 · 用心「一点」，给孩子守护多一点</span><span lang="en">Doti · A little more care, a little more protection for your kids</span></span>
-    <span><a href="https://github.com/xautlx/doti-kids-router" target="_blank" rel="noopener">GitHub</a> · <a href="https://gitee.com/xautlx/doti-kids-router" target="_blank" rel="noopener">gitee</a> · GPL-3.0 · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">渝ICP备18007886号-11</a></span>
+    <span><a href="https://github.com/xautlx/doti-kids-router" target="_blank" rel="noopener">GitHub</a> · <a href="https://gitee.com/xautlx/doti-kids-router" target="_blank" rel="noopener">gitee</a> · Apache-2.0 · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">渝ICP备18007886号-11</a></span>
   </div>
 </footer>
 
@@ -921,7 +920,7 @@ if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches)
   window.addEventListener('resize', spy); spy()
 })();
 </script>
-<script src="assets/demo-core.js?v=8dd758d0"></script>
+<script src="assets/demo-core.js?v=bbd0ff66"></script>
 <script src="assets/demo-phone.js?v=30e917fe"></script>
 <script>
 // 界面一览点开放大；点任意处或 Esc 关掉

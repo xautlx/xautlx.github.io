@@ -1,4 +1,4 @@
-// 自动生成，别手改：python3 scripts/build-site-demo.py（来源 miniapp/miniprogram/lib/rules.js、usage.js、demo.js）
+// 自动生成，别手改：python3 scripts/build-site-demo.py（来源 miniapp/miniprogram/lib/feature.js、rules.js、usage.js、demo.js）
 (function() {
     var wx = {
         switchTab: function() {},
@@ -21,7 +21,34 @@
         }
         return cache[k].exports;
     }
+    defs["feature"] = function(module, exports, require) {
+        const MIN = {
+            snapshot: "2.0.0",
+            catKeys: "2.1.0"
+        };
+        function cmp(a, b) {
+            const x = String(a || "").split(".").map(n => parseInt(n, 10) || 0), y = String(b || "").split(".").map(n => parseInt(n, 10) || 0);
+            for (let i = 0; i < Math.max(x.length, y.length); i++) {
+                const d = (x[i] || 0) - (y[i] || 0);
+                if (d) return d > 0 ? 1 : -1;
+            }
+            return 0;
+        }
+        function atLeast(ver, min) {
+            return !!ver && cmp(ver, min) >= 0;
+        }
+        function has(name, ver) {
+            return !MIN[name] || atLeast(ver, MIN[name]);
+        }
+        module.exports = {
+            MIN: MIN,
+            cmp: cmp,
+            atLeast: atLeast,
+            has: has
+        };
+    };
     defs["rules"] = function(module, exports, require) {
+        const feature = require("./feature");
         const SURF = [ 15, 30, 45, 60, 75, 90, 120, 240, 1440, 0 ];
         const LIMIT = [ 15, 30, 45, 60, 75, 90, 120, 240, 1440 ];
         const DAILY = [ 30, 60, 90, 120, 180, 240, 480, 720, 960, 0 ];
@@ -133,14 +160,20 @@
             key: "game",
             name: "游戏"
         }, {
-            key: "shortvideo",
+            key: "short-video-live",
             name: "短视频和直播"
         }, {
-            key: "film",
+            key: "movie-tv-vod",
             name: "影视"
         } ];
+        const OLD_CATS = {
+            shortvideo: "short-video-live",
+            film: "movie-tv-vod"
+        };
+        const catsIn = l => [ ...new Set((l || []).map(c => OLD_CATS[c] || c)) ];
+        const catsOut = (l, ver) => feature.has("catKeys", ver) ? (l || []).slice() : (l || []).map(c => Object.keys(OLD_CATS).find(k => OLD_CATS[k] === c) || c);
         function blockSummary(nb, custom) {
-            const b = nb || {}, cats = BLOCK_CATS.filter(c => (b.categories || []).includes(c.key)).map(c => c.name);
+            const b = nb || {}, cats = BLOCK_CATS.filter(c => catsIn(b.categories).includes(c.key)).map(c => c.name);
             const list = custom || [], on = list.filter(d => !(b.off || []).includes(d)).length;
             const a = cats.length ? [ cats.join("、") ] : [];
             if (list.length) a.push(on === list.length ? `自己加的 ${on} 个` : `自己加的开 ${on}/${list.length} 个`);
@@ -533,6 +566,8 @@
             withMain: withMain,
             routerAlert: routerAlert,
             BLOCK_CATS: BLOCK_CATS,
+            catsIn: catsIn,
+            catsOut: catsOut,
             blockSummary: blockSummary,
             planOn: planOn,
             kidCard: kidCard,
@@ -1369,7 +1404,7 @@
             };
             return o;
         };
-        const VERSION = "2.0.0";
+        const VERSION = "2.1.0";
         const CMD = {
             today: a => [ "today", a ],
             settings: (a, base) => [ "settings", {

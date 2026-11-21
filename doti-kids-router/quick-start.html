@@ -56,12 +56,11 @@ html[data-lang="zh"] [lang="en"],html[data-lang="en"] [lang="zh"]{display:none!i
 .brand img{width:34px;height:34px;border-radius:9px}
 .brand small{font-weight:600;font-size:13px;color:var(--t3)}
 /* 英文版左上角（11-20）：图标 + Doti / www.doti.top 两行，和中文图文标志同样的排法 */
-.brand .bt{display:flex;flex-direction:column;line-height:1.05}.brand .bt b{font-size:21px;font-weight:850;letter-spacing:.2px}.brand .bt small{font-size:11px;font-weight:700;color:var(--t2);letter-spacing:.2px;margin-top:2px}
-.brand img[lang=en]{width:38px;height:38px}
 .links a,.tbtn{white-space:nowrap}
 @media (max-width:1180px){.links{gap:14px;font-size:14px;margin-left:4px}}
 @media (max-width:1100px){html[lang=en] .links a.nav-shots{display:none}}
 .brand img.lk{width:auto;height:40px;border-radius:0}
+.brand{min-width:163px}   /* 中英文图文 logo 同高，英文较窄：占同样宽度，切换语言时菜单不跳 */
 .brand img.lk.d{display:none}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .brand img.lk.l{display:none}:root:not([data-theme="light"]) .brand img.lk.d{display:block}}
 :root[data-theme="dark"] .brand img.lk.l{display:none}:root[data-theme="dark"] .brand img.lk.d{display:block}
@@ -197,7 +196,7 @@ var _hmt = _hmt || [];
 
 <header class="nav">
   <div class="wrap">
-    <a class="brand" href="./"><img class="lk l" lang="zh" src="assets/logo-lockup.svg?v=c8c91ad1" alt="一点守护 www.doti.top"><img class="lk d" lang="zh" src="assets/logo-lockup-dark.svg?v=7fb263a0" alt="一点守护 www.doti.top"><img lang="en" src="assets/logo.svg" alt=""><span lang="en" class="bt"><b>Doti</b><small>www.doti.top</small></span></a>
+    <a class="brand" href="./"><img class="lk l" lang="zh" src="assets/logo-lockup.svg?v=c8c91ad1" alt="一点守护 www.doti.top"><img class="lk d" lang="zh" src="assets/logo-lockup-dark.svg?v=7fb263a0" alt="一点守护 www.doti.top"><img class="lk l" lang="en" src="assets/logo-lockup-en.svg?v=1496ea93" alt="Doti for kids www.doti.top"><img class="lk d" lang="en" src="assets/logo-lockup-en-dark.svg?v=246294c2" alt="Doti for kids www.doti.top"></a>
     <nav class="links">
       <a href="./#why"><span lang="zh">为什么</span><span lang="en">Why</span></a>
       <a href="./#how"><span lang="zh">怎么工作</span><span lang="en">How it works</span></a>
@@ -362,7 +361,7 @@ var _hmt = _hmt || [];
 <footer>
   <div class="wrap">
     <span><span lang="zh">一点守护 · 用心「一点」，给孩子守护多一点</span><span lang="en">Doti · A little more care, a little more protection for your kids</span></span>
-    <span><a href="https://github.com/xautlx/doti-kids-router" target="_blank" rel="noopener">GitHub</a> · <a href="https://gitee.com/xautlx/doti-kids-router" target="_blank" rel="noopener">gitee</a> · GPL-3.0 · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">渝ICP备18007886号-11</a></span>
+    <span><a href="https://github.com/xautlx/doti-kids-router" target="_blank" rel="noopener">GitHub</a> · <a href="https://gitee.com/xautlx/doti-kids-router" target="_blank" rel="noopener">gitee</a> · Apache-2.0 · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">渝ICP备18007886号-11</a></span>
   </div>
 </footer>
 
