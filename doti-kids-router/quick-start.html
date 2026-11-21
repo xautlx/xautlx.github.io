@@ -187,6 +187,8 @@ footer a:hover{color:var(--brand)}
 <script>
 var _hmt = _hmt || [];
 (function() {
+  // EdgeOne 部署后截预览图的临时域名（*.edgeone.*）不计入统计
+  if (/(^|\.)edgeone\./.test(location.hostname)) return;
   var hm = document.createElement("script");
   hm.src = "https://hm.baidu.com/hm.js?88de0966ec072fe2c24bb42264bb8a0c";
   var s = document.getElementsByTagName("script")[0];
