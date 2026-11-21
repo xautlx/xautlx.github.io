@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>一点守护 · 孩子上网时间管理 | 到点只限速不断网的家长控制路由器</title>
-<meta name="description" content="一点守护（Doti）是装在家里路由器上的孩子上网时间管理：孩子网络用一会儿、慢一会儿自动轮换，到点只限速不断网，家长在微信小程序里管理，孩子设备上什么都不用装。路由器程序开源，支持 OpenWrt 路由器。">
-<meta name="keywords" content="一点守护,孩子上网时间管理,儿童上网管理,家长控制,家长控制路由器,限制孩子上网时间,防沉迷,屏幕时间,网络限速,孩子WiFi,OpenWrt,开源路由器,微信小程序,Doti,parental control,screen time,kids WiFi,router">
+<meta name="description" content="一点守护（Doti）是装在家里路由器上的孩子上网时间管理插件：不用等固定时段，孩子开始用才计时，用一会儿、慢一会儿自动轮换，到点只限速不断网，家长在微信小程序里管理，孩子设备上什么都不用装。路由器程序开源，支持 OpenWrt 路由器。">
+<meta name="keywords" content="一点守护,孩子上网时间管理,儿童上网管理,家长控制,家长控制路由器,限制孩子上网时间,路由器管孩子上网,OpenWrt家长控制插件,OpenWrt插件,防沉迷,屏幕时间,网络限速,孩子WiFi,OpenWrt,开源路由器,微信小程序,Doti,parental control,screen time,kids WiFi,router">
 <meta name="author" content="一点守护">
 <meta name="robots" content="index,follow">
 <meta name="theme-color" content="#5b3bff">
@@ -34,16 +34,44 @@
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
   "name": "一点守护",
-  "alternateName": ["Doti", "一点守护·孩子上网时间管理"],
-  "description": "装在家里路由器上的孩子上网时间管理：到点只限速不断网，家长在微信小程序里管理，孩子设备上什么都不用装。",
+  "alternateName": [
+    "Doti",
+    "Doti for kids",
+    "一点守护·孩子上网时间管理"
+  ],
+  "description": "装在 OpenWrt 路由器上的孩子上网时间管理插件：不用等固定时段，孩子开始用才计时，用满一轮自动限速、歇够自动恢复；到点只限速不断网。家长在微信小程序「一点守护」里管理，在家、在外面都能管，孩子设备上什么都不用装。",
   "applicationCategory": "UtilitiesApplication",
+  "applicationSubCategory": "Parental control",
   "operatingSystem": "OpenWrt 22.03+",
+  "softwareVersion": "2.1.0",
   "url": "https://doti.top/",
   "image": "https://doti.top/assets/og.jpg",
-  "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+  "downloadUrl": "https://doti.top/quick-start.html",
+  "installUrl": "https://doti.top/quick-start.html",
+  "featureList": [
+    "不用等固定时段：孩子开始用才计时，用一会儿、慢一会儿自动轮换",
+    "到点只限速不断网：消息、查资料照常能用",
+    "按孩子管，不按设备管：一个孩子的几台设备时长算在一起",
+    "最多三个孩子 WiFi，各用各的规则；家长 WiFi 不受限",
+    "固定时段：睡觉、吃饭、网课时段单独安排",
+    "每天最多时长",
+    "网站屏蔽：成人、赌博、诈骗始终屏蔽；游戏、短视频和直播、影视可选",
+    "微信小程序管理，在家直连路由器，不在家经云端远程管理",
+    "全家一起管：爷爷奶奶点一下邀请就能一起管",
+    "孩子拍照打卡找家长要时间",
+    "只管时间，不看内容：不记录孩子访问了哪些网站"
+  ],
+  "license": "https://www.apache.org/licenses/LICENSE-2.0",
   "isAccessibleForFree": true,
-  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CNY" },
-  "sameAs": ["https://github.com/xautlx/doti-kids-router", "https://gitee.com/xautlx/doti-kids-router"]
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "CNY"
+  },
+  "sameAs": [
+    "https://github.com/xautlx/doti-kids-router",
+    "https://gitee.com/xautlx/doti-kids-router"
+  ]
 }
 </script>
 <style>

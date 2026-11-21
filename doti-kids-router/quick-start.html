@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>快速开始 · 自己安装一点守护 | 一点守护</title>
-<meta name="description" content="把一点守护装到自己的 OpenWrt 路由器：确认系统、接好路由器、一条命令安装、手机连上不用密码的 DOTI-XXXX-ADMIN 用微信小程序「一点守护」绑定。">
+<meta name="description" content="把一点守护装到自己的 OpenWrt 路由器：确认系统、接好路由器、一条命令安装、手机连上不用密码的 DOTI-XXXX-ADMIN 用微信小程序「一点守护」绑定。附常见问题：和定时断网有什么不同、支持哪些路由器、会不会看孩子上网内容。">
 <meta name="robots" content="index,follow">
 <meta name="theme-color" content="#5b3bff">
 <link rel="canonical" href="https://doti.top/quick-start.html">
@@ -14,6 +14,70 @@
 <meta property="og:description" content="OpenWrt 22.03 及以上路由器，四步装好，家长不用懂网络。">
 <meta property="og:url" content="https://doti.top/quick-start.html">
 <meta property="og:image" content="https://doti.top/assets/og.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "一点守护是什么？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "一点守护是装在 OpenWrt 路由器上的孩子上网时间管理插件。孩子的手机、平板连单独的孩子 WiFi，开始用才计时，用满一轮（比如 30 分钟）网速自动降下来，歇够一段（比如 60 分钟）自动恢复；到点只限速不断网，回消息、查资料还能用。家长在微信小程序「一点守护」里管理，在家、在外面都能管，孩子设备上什么都不用装。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "和路由器自带的家长控制、定时断网有什么不同？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "路由器自带的家长控制大多按「几点到几点能上网」或到点断网来管，规则清楚、设置简单，适合作息固定的家庭。一点守护换了个思路：不规定时段，孩子什么时候开始用就从什么时候计时，「用一会儿、歇一会儿」自动轮换；到点只是变慢，不会正聊着天就被掐断，家长也不用当那个喊停的人。需要固定作息的，睡觉、吃饭、网课时段也能单独安排。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "孩子有好几台设备，换着用能绕过去吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "不能。一点守护按孩子管，不按设备管：同一个孩子 WiFi 下的手机、平板、电脑合在一起算时长，手机到点换平板也一样慢。最多三个孩子 WiFi，各用各的规则；家长 WiFi 不受限。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "支持哪些路由器？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "官方 OpenWrt 22.03 及以上都能装（依赖 firewall4 / nftables）；纯脚本，和 CPU 架构无关，8MB 闪存的老路由器也能装（安装前剩余空间至少 800KB）。实测过斐讯 K2P（OpenWrt 22.03、24.10、25.12）和斐讯 K2（24.10）；ImmortalWrt 等基于新版 OpenWrt 的固件一般也能装。原装系统不是 OpenWrt 的，见第 1 步。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "会看孩子上了哪些网站吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "不会。一点守护只管网速和时长，不记录孩子访问了哪些网站。成人、赌博、诈骗网站始终屏蔽；游戏、短视频和直播、影视网站可以按孩子单独选择屏蔽。在家时手机直接和路由器通信，管理操作不经过云端；WiFi 密码只存在路由器和你们自己的设备上。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "有什么管不到的？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "路由器只能管连着它的 WiFi：孩子的手机用自己的流量卡上网时管不到，这时要配合手机自带的屏幕使用时间。一点守护也不按 App 单独计时，管的是总的上网时长和节奏。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "要花钱吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "现在免费使用，在家管理、远程管理都不收费，也不会自动扣费。以后如果有调整，至少提前 3 个月在小程序里告诉大家。"
+      }
+    }
+  ]
+}
+</script>
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <style>
@@ -330,6 +394,12 @@ var _hmt = _hmt || [];
       <section class="step" id="faq">
         <h2><span class="n">?</span><span lang="zh">常见问题</span><span lang="en">FAQ</span></h2>
         <dl class="faq">
+          <dt id="what"><span lang="zh">一点守护是什么？</span><span lang="en">What is Doti?</span></dt><dd><span lang="zh">一点守护是装在 OpenWrt 路由器上的孩子上网时间管理插件。孩子的手机、平板连单独的孩子 WiFi，开始用才计时，用满一轮（比如 30 分钟）网速自动降下来，歇够一段（比如 60 分钟）自动恢复；到点只限速不断网，回消息、查资料还能用。家长在微信小程序「一点守护」里管理，在家、在外面都能管，孩子设备上什么都不用装。</span><span lang="en">Doti is a screen-time package for OpenWrt routers. Kids’ phones and tablets join their own Wi-Fi; the clock starts when they start, the speed drops after one round (say 30 minutes) and comes back after a rest (say 60 minutes). Time’s up only slows things down — messages and homework lookups still work. Parents manage it from the WeChat mini program “一点守护”, at home or away, with nothing installed on the kids’ devices.</span></dd>
+          <dt id="vs-timer"><span lang="zh">和路由器自带的家长控制、定时断网有什么不同？</span><span lang="en">How is this different from the router’s own parental controls or scheduled cut-offs?</span></dt><dd><span lang="zh">路由器自带的家长控制大多按「几点到几点能上网」或到点断网来管，规则清楚、设置简单，适合作息固定的家庭。一点守护换了个思路：不规定时段，孩子什么时候开始用就从什么时候计时，「用一会儿、歇一会儿」自动轮换；到点只是变慢，不会正聊着天就被掐断，家长也不用当那个喊停的人。需要固定作息的，睡觉、吃饭、网课时段也能单独安排。</span><span lang="en">Most built-in parental controls work by time slots (“online from X to Y”) or a hard cut-off — clear and simple, and a good fit for families with a fixed routine. Doti takes another route: no slots, the clock starts when the kids start, and “use a while, rest a while” rotates on its own. Time’s up only slows things down, so nobody gets cut off mid-chat and the parent doesn’t have to be the one saying stop. Bedtime, meals and online classes can still get their own fixed schedule.</span></dd>
+          <dt id="devices"><span lang="zh">孩子有好几台设备，换着用能绕过去吗？</span><span lang="en">Can kids get around it by switching devices?</span></dt><dd><span lang="zh">不能。一点守护按孩子管，不按设备管：同一个孩子 WiFi 下的手机、平板、电脑合在一起算时长，手机到点换平板也一样慢。最多三个孩子 WiFi，各用各的规则；家长 WiFi 不受限。</span><span lang="en">No. Doti times each kid, not each device: the phone, tablet and computer on one kid’s Wi-Fi share one clock, so switching from the phone to the tablet doesn’t help. Up to three kids’ Wi-Fi networks, each with its own rules; the parents’ Wi-Fi is never limited.</span></dd>
+          <dt id="routers"><span lang="zh">支持哪些路由器？</span><span lang="en">Which routers does it support?</span></dt><dd><span lang="zh">官方 OpenWrt 22.03 及以上都能装（依赖 firewall4 / nftables）；纯脚本，和 CPU 架构无关，8MB 闪存的老路由器也能装（安装前剩余空间至少 800KB）。实测过斐讯 K2P（OpenWrt 22.03、24.10、25.12）和斐讯 K2（24.10）；ImmortalWrt 等基于新版 OpenWrt 的固件一般也能装。原装系统不是 OpenWrt 的，见第 1 步。</span><span lang="en">Official OpenWrt 22.03 or later (it needs firewall4 / nftables). It’s pure script, so any CPU architecture works, even 8 MB-flash routers (at least 800 KB free before installing). Tested on the Phicomm K2P (OpenWrt 22.03, 24.10, 25.12) and Phicomm K2 (24.10); ImmortalWrt and other firmware based on recent OpenWrt usually work too. Stock firmware isn’t OpenWrt? See step 1.</span></dd>
+          <dt id="privacy"><span lang="zh">会看孩子上了哪些网站吗？</span><span lang="en">Does it see which sites kids visit?</span></dt><dd><span lang="zh">不会。一点守护只管网速和时长，不记录孩子访问了哪些网站。成人、赌博、诈骗网站始终屏蔽；游戏、短视频和直播、影视网站可以按孩子单独选择屏蔽。在家时手机直接和路由器通信，管理操作不经过云端；WiFi 密码只存在路由器和你们自己的设备上。</span><span lang="en">No. Doti manages speed and duration only and never records which sites kids visit. Adult, gambling and scam sites are always blocked; games, short video &amp; live streaming and films &amp; series can be blocked per kid. At home your phone talks to the router directly and management skips the cloud; Wi-Fi passwords stay on the router and your own devices.</span></dd>
+          <dt id="limits"><span lang="zh">有什么管不到的？</span><span lang="en">What can’t it do?</span></dt><dd><span lang="zh">路由器只能管连着它的 WiFi：孩子的手机用自己的流量卡上网时管不到，这时要配合手机自带的屏幕使用时间。一点守护也不按 App 单独计时，管的是总的上网时长和节奏。</span><span lang="en">A router only manages devices on its Wi-Fi: when a kid’s phone uses mobile data, Doti can’t see it — pair it with the phone’s own screen-time settings. Doti also doesn’t time individual apps; it manages overall time online and the rhythm of use.</span></dd>
           <dt id="feeds"><span lang="zh">安装时提示软件源更新失败、缺组件？</span><span lang="en">Feed update failed or a component missing?</span></dt>
           <dd>
             <p class="p"><span lang="zh">安装时要从软件源下载一个小组件（包名 <span class="kbd">mosquitto-client-nossl</span>，远程管理用），安装脚本会先试国内镜像、再用系统软件源自动补装。都连不上时，先确认路由器能上网，再按系统版本手动更新一次：</span><span lang="en">The install fetches a small component from the package feeds (package <span class="kbd">mosquitto-client-nossl</span>, used for remote management); the script tries a mirror in China first, then the system feeds. If neither works, check the router is online, then update the feeds by hand for your release:</span></p>

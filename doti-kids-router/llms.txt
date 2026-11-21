@@ -1,0 +1,60 @@
+# 一点守护（Doti）
+
+> 一点守护是装在 OpenWrt 路由器上的孩子上网时间管理插件：不用等固定时段，孩子开始用才计时，用满一轮自动限速、歇够自动恢复；到点只限速不断网，回消息、查资料照常能用。家长用微信小程序「一点守护」管理，在家、在外面都能管，孩子设备上什么都不用装。现在免费使用。
+
+设计理念：不是不让玩，是不让一直玩。
+
+## 解决什么问题
+
+- 常见的家长控制只认「几点到几点能上网」，孩子早早写完作业也只能干等；按每天总时长管，孩子又会一口气用完。
+- 一到点就断网，孩子正聊着、正查着就被掐断，于是讨价还价，家长只能当「坏人」。
+- 按设备设规则，手机到点换平板，每台都没超，加起来早超了。
+
+## 怎么管
+
+- 不用等固定时段：网络一直开着，孩子什么时候开始用就从什么时候计时，挂着不用不算。
+- 到点只限速不断网：用满一轮（比如 30 分钟）网速自动降下来，歇够一段（比如 60 分钟）自动恢复；时长由家长自己设。
+- 按孩子管，不按设备管：同一个孩子 WiFi 下的手机、平板、电脑合在一起算时长；最多三个孩子 WiFi，各用各的规则；家长 WiFi 不受限。
+- 固定时段：睡觉、吃饭、网课时段单独安排，一直限速或一直开放。
+- 每天最多：一天累计用满就不再开新一轮。
+- 网站屏蔽：成人、赌博、诈骗网站始终屏蔽；游戏、短视频和直播、影视可按孩子选择屏蔽，也能自己加网站。
+- 临时开放：家长在小程序里点一下就能给孩子加时间，人在外面也能点。
+- 打卡要时间：孩子拍照发阅读、作业打卡找家长要时间。
+- 全家一起管：只要微信，爷爷奶奶点一下邀请就能一起管；孩子不用注册账号。
+
+## 简单在哪
+
+- 一键安装：官方 OpenWrt 上 SSH 执行一条命令，30–50 秒装好；纯 ucode 脚本，一个包适配所有 CPU 架构。
+- 一键绑定：手机连上家长 WiFi（DOTI-XXXX-ADMIN），打开微信小程序按提示绑定。
+- 平时全自动，家长不用天天盯。
+
+## 适用条件
+
+- 系统：官方 OpenWrt 22.03 及以上（依赖 firewall4 / nftables）；22.03–24.10 用 ipk，25.x 用 apk，安装脚本自动判断。
+- 硬件：和 CPU 架构无关，8MB 闪存的老路由器也能装（安装前剩余空间至少 800KB）。
+- 实测：斐讯 K2P（OpenWrt 22.03、24.10、25.12）、斐讯 K2（OpenWrt 24.10）。ImmortalWrt 等基于新版 OpenWrt 的固件一般也能装。
+
+## 隐私
+
+- 只管网速和时长，不记录孩子访问了哪些网站。
+- 在家时手机直接和路由器通信，管理操作不经过云端；不在家时经云端远程管理（MQTT 通知 + HTTPS 同步，几秒内送到）。
+- WiFi 密码只存在路由器和家长自己的设备上。
+- 路由器程序开源（Apache-2.0），安装包由 GitHub Actions 从公开代码构建，可复现。
+
+## 局限
+
+- 路由器只能管连着它的 WiFi，孩子手机用流量卡上网时管不到，要配合手机自带的屏幕使用时间。
+- 不按 App 单独计时，管的是总的上网时长和节奏。
+- 需要 OpenWrt 系统；原装厂商系统要先刷 OpenWrt。
+
+## 链接
+
+- [项目主页](https://doti.top/)：功能介绍、界面截图、在线演示
+- [快速开始](https://doti.top/quick-start.html)：安装步骤和常见问题
+- [开源仓库（GitHub）](https://github.com/xautlx/doti-kids-router)：路由器程序源码、安装包、问题反馈
+- [开源仓库（gitee）](https://gitee.com/xautlx/doti-kids-router)：国内镜像
+- 微信小程序：搜索「一点守护」
+
+## English
+
+Doti is screen time for kids, handled by an OpenWrt router (22.03+, any CPU architecture). No fixed time slots: the clock starts when the kids start, speed drops after one round (e.g. 30 minutes) and comes back after a rest (e.g. 60 minutes). Time's up only slows things down, never cuts off. Timed per kid, not per device. Parents manage it from the WeChat mini program "一点守护" at home or remotely; nothing is installed on the kids' devices. Router software is open source (Apache-2.0): https://github.com/xautlx/doti-kids-router
