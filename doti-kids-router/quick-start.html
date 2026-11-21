@@ -57,8 +57,9 @@ html[data-lang="zh"] [lang="en"],html[data-lang="en"] [lang="zh"]{display:none!i
 .brand small{font-weight:600;font-size:13px;color:var(--t3)}
 /* 英文版左上角（11-20）：图标 + Doti / www.doti.top 两行，和中文图文标志同样的排法 */
 .links a,.tbtn{white-space:nowrap}
-@media (max-width:1180px){.links{gap:14px;font-size:14px;margin-left:4px}}
-@media (max-width:1100px){html[lang=en] .links a.nav-shots{display:none}}
+@media (max-width:1300px){.links{gap:14px;font-size:14px;margin-left:4px}}
+@media (max-width:1220px){.links a.nav-home{display:none}.gt .gtt{display:none}}   /* 加了「首页」和 gitee 后放不下：窄屏先收起首页（点 logo 也回顶部）和 gitee 文字 */
+@media (max-width:1140px){.links a.nav-shots{display:none}}
 .brand img.lk{width:auto;height:40px;border-radius:0}
 .brand{min-width:163px}   /* 中英文图文 logo 同高，英文较窄：占同样宽度，切换语言时菜单不跳 */
 .brand img.lk.d{display:none}
@@ -199,6 +200,7 @@ var _hmt = _hmt || [];
   <div class="wrap">
     <a class="brand" href="./"><img class="lk l" lang="zh" src="assets/logo-lockup.svg?v=c8c91ad1" alt="一点守护 www.doti.top"><img class="lk d" lang="zh" src="assets/logo-lockup-dark.svg?v=7fb263a0" alt="一点守护 www.doti.top"><img class="lk l" lang="en" src="assets/logo-lockup-en.svg?v=1496ea93" alt="Doti for kids www.doti.top"><img class="lk d" lang="en" src="assets/logo-lockup-en-dark.svg?v=246294c2" alt="Doti for kids www.doti.top"></a>
     <nav class="links">
+      <a href="./" class="nav-home"><span lang="zh">首页</span><span lang="en">Home</span></a>
       <a href="./#why"><span lang="zh">为什么</span><span lang="en">Why</span></a>
       <a href="./#how"><span lang="zh">怎么工作</span><span lang="en">How it works</span></a>
       <a href="./#setup"><span lang="zh">怎么用</span><span lang="en">Setup</span></a>
