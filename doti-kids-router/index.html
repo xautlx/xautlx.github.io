@@ -896,7 +896,7 @@ if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches)
 <footer>
   <div class="wrap">
     <span><span lang="zh">一点守护 · 用心「一点」，给孩子守护多一点</span><span lang="en">Doti · A little more care, a little more protection for your kids</span></span>
-    <span><a href="https://github.com/xautlx/doti-kids-router" target="_blank" rel="noopener">GitHub</a> · <a href="https://gitee.com/xautlx/doti-kids-router" target="_blank" rel="noopener">gitee</a> · Apache-2.0 · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">渝ICP备18007886号-11</a></span>
+    <span><a href="https://github.com/xautlx/doti-kids-router" target="_blank" rel="noopener">GitHub</a> · <a href="https://gitee.com/xautlx/doti-kids-router" target="_blank" rel="noopener">gitee</a> · Apache-2.0 · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">渝ICP备18007886号-11</a> · <span style="display:inline-flex;align-items:center;gap:3px;white-space:nowrap"><img src="assets/beian-gongan.png" alt="" width="14" height="16" style="display:inline-block"><a href="https://beian.mps.gov.cn/#/query/webSearch?code=50010602505408" rel="noreferrer" target="_blank">渝公网安备50010602505408号</a></span></span>
   </div>
 </footer>
 
@@ -965,6 +965,8 @@ b.addEventListener('click',function(){b.classList.remove('on')});document.addEve
 // 百度统计事件（推广埋点，130.BIZ/030.MKT §7）：只记点了什么，不记身份；百度统计没加载出来也不影响页面
 (function () {
   function ev(c, a, l) { try { window._hmt && _hmt.push(['_trackEvent', c, a, l || '']) } catch (e) {} }
+  // 免费版百度统计看不到事件报告：关键动作另记一个虚拟页面 /v/…，在「受访页面」里按次数看
+  function vpv(p) { try { window._hmt && _hmt.push(['_trackPageview', '/v/' + p]) } catch (e) {} }
   // 外链和站内跳转：按去哪分
   function where(h) {
     if (/quick-start/.test(h)) return 'quickstart'
@@ -975,9 +977,9 @@ b.addEventListener('click',function(){b.classList.remove('on')});document.addEve
   }
   document.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('a[href]')
-    if (a) { var w = where(a.getAttribute('href')); if (w) ev('link', w, location.pathname) }
+    if (a) { var w = where(a.getAttribute('href')); if (w) { ev('link', w, location.pathname); if (w != 'quickstart') vpv('out-' + w) } }
     var b = e.target.closest && e.target.closest('[data-copy]')
-    if (b) { var s = b.getAttribute('data-copy'); ev('copy', /install\.sh/.test(s) ? 'install' : /opkg|apk|distfeeds/.test(s) ? 'feed' : /sha256/i.test(s) ? 'sha256' : 'other', s.slice(0, 60)) }
+    if (b) { var s = b.getAttribute('data-copy'), k = /install\.sh/.test(s) ? 'install' : /opkg|apk|distfeeds/.test(s) ? 'feed' : /sha256/i.test(s) ? 'sha256' : 'other'; ev('copy', k, s.slice(0, 60)); vpv('copy-' + k) }
     var z = e.target.closest && e.target.closest('[data-zoom]')
     if (z) ev('shots', 'zoom', z.getAttribute('href'))
   }, true)
@@ -985,7 +987,7 @@ b.addEventListener('click',function(){b.classList.remove('on')});document.addEve
   var ph = document.getElementById('dphone')
   if (ph) {
     var hit = false
-    ph.addEventListener('pointerdown', function () { if (!hit) { hit = true; ev('demo', 'touch') } })
+    ph.addEventListener('pointerdown', function () { if (!hit) { hit = true; ev('demo', 'touch'); vpv('demo-touch') } })
     ph.addEventListener('click', function (e) { var b = e.target.closest && e.target.closest('[data-a]'); if (b) ev('demo', b.getAttribute('data-a')) })
   }
 })();

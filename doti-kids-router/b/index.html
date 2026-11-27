@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>请用微信扫码 | 一点守护</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#5b3bff">
+<link rel="icon" href="../assets/apple-touch-icon.png">
+<style>
+:root{--bg:#f6f5fb;--panel:#fff;--ink:#1b1640;--muted:#6b6590;--brand:#5b3bff;--line:#e6e3f2}
+@media (prefers-color-scheme:dark){:root{--bg:#110e22;--panel:#1a1631;--ink:#ece9ff;--muted:#a29bc9;--brand:#b4a6ff;--line:#2c2750}}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg);color:var(--ink);font:16px/1.7 -apple-system,"PingFang SC","Hiragino Sans GB",system-ui,sans-serif;padding:24px 16px}
+.card{max-width:420px;width:100%;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:32px 24px;text-align:center}
+img{width:56px;height:56px;border-radius:14px}
+h1{font-size:22px;margin:14px 0 6px}
+.code{display:inline-block;font:700 20px Menlo,monospace;color:var(--brand);letter-spacing:2px;margin:4px 0 10px}
+p{color:var(--muted);margin:8px 0}
+b{color:var(--ink)}
+a{color:var(--brand)}
+</style>
+</head>
+<body>
+<div class="card">
+  <img src="../assets/apple-touch-icon.png" alt="">
+  <h1>请用微信扫码</h1>
+  <div id="c"></div>
+  <p>这是一点守护路由器的绑定码。请回到路由器后台页面，用<b>微信「扫一扫」</b>扫码，会直接打开「一点守护」小程序。</p>
+  <p>扫码前，手机先连上这台路由器的家长 WiFi（后台页面上第 1 个码）。</p>
+  <p>也可以在微信里搜索「一点守护」。<br><a href="../quick-start.html">安装和绑定说明 ›</a></p>
+</div>
+<script>
+(function () {
+  var m = /[?&]c=([0-9A-Fa-f]{4})(?:&|$)/.exec(location.search), el = document.getElementById('c');
+  if (m) el.innerHTML = '路由器编号 <span class="code">' + m[1].toUpperCase() + '</span><br><span style="color:var(--muted);font-size:14px">家长 WiFi：DOTI-' + m[1].toUpperCase() + '-ADMIN</span>';
+})();
+</script>
+</body>
+</html>
